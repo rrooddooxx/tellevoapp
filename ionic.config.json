@@ -1,0 +1,7 @@
+{
+  "name": "carsharing_formab",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
