@@ -1,4 +1,5 @@
 
 export const environment = {
-   ENV: ''
+   production: false,
+   SUPABASE_API_JWT: "undefined",
 };
