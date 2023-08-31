@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { UserModel } from '../../routes/login/model/user.model';
 import { supabaseHeaders } from './api.config';
 
 @Injectable({
@@ -8,11 +10,12 @@ import { supabaseHeaders } from './api.config';
 export class ApiService {
   constructor(private httpClient: HttpClient) {}
 
-  async getUsers() {
-    return this.httpClient.get(
+  getUsers(): Observable<UserModel[]> {
+    return this.httpClient.get<UserModel[]>(
       'https://tsctbsjuktimnuztflau.supabase.co/rest/v1/users',
       {
         headers: supabaseHeaders,
+        responseType: 'json',
       }
     );
   }

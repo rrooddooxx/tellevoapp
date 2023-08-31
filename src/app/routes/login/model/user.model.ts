@@ -1,17 +1,9 @@
 export interface UserModel {
   id: number;
+  user_name: string;
+  user_phone: number;
+  user_pwd: string;
+  user_email: string;
   rut: string;
-  email: string;
-  name: string;
-  last_name: string;
-  user_type: UserType;
-  user_enabled: boolean;
-  phone: string;
-  address: string;
-  password: string;
-}
-
-export enum UserType {
-  USER = 'user',
-  ADMIN = 'admin',
+  created_at: string;
 }

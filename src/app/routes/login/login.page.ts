@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { userDB } from '../../../data/user.db';
+import { ApiService } from '../../providers/db-api/api.service';
 import { UserLoginInput } from './domain/user-login-input.domain';
-import { UserModel, UserType } from './model/user.model';
+import { UserModel } from './model/user.model';
 
 @Component({
   selector: 'app-login',
@@ -21,12 +21,24 @@ export class LoginPage implements OnInit {
   };
   public showLoginError: boolean = false;
   public showInputError: boolean = false;
+  userDB: UserModel[] = [];
 
-  constructor(private readonly router: Router) {
+  constructor(
+    private readonly router: Router,
+    private readonly apiProvider: ApiService
+  ) {
     this.clearLoginCredentials();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getUsers();
+  }
+
+  async getUsers() {
+    this.apiProvider.getUsers().subscribe((data) => {
+      this.userDB = data;
+    });
+  }
 
   clearLoginCredentials() {
     this.userLoginInput.userEmail = '';
@@ -39,10 +51,10 @@ export class LoginPage implements OnInit {
       this.showLoginError = true;
     }
 
-    const loginResult: UserModel | undefined = userDB.find(
+    const loginResult: UserModel | undefined = this.userDB.find(
       (user) =>
-        user.email === loginCredentials.userEmail &&
-        user.password === loginCredentials.userPwd
+        user.user_email === loginCredentials.userEmail &&
+        user.user_pwd === loginCredentials.userPwd
     );
     if (!loginResult) {
       this.showLoginError = true;
@@ -52,15 +64,13 @@ export class LoginPage implements OnInit {
     this.doAuthorize(loginResult);
   }
 
-  doAuthorize(userInfo: UserModel) {
+  doAuthorize(userInfo: UserModel): void {
     const userInfoState: NavigationExtras = {
       state: {
         userInfo,
       },
     };
 
-    return userInfo.user_type === UserType.ADMIN
-      ? this.router.navigate(['/home'], userInfoState)
-      : this.router.navigate(['/home'], userInfoState);
+    this.router.navigate(['/home'], userInfoState);
   }
 }
