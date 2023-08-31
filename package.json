@@ -11,7 +11,8 @@
     "watch": "npm run config -- --env=dev && ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "clear-env": "npm run config -- --env=clear"
+    "clear-env": "npm run config -- --env=clear",
+    "dev-env": "npm run config -- --env=dev"
   },
   "pre-push": [
     "clear-env"

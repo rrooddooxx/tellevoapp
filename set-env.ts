@@ -23,7 +23,7 @@ export const environment = {
   environmentFileContent = `
 export const environment = {
    production: ${isProduction},
-   SUPABASE_API_JWT: ${supabaseJwt},
+   SUPABASE_API_JWT: "${supabaseJwt}",
 };`;
 }
 
