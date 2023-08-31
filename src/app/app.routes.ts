@@ -8,15 +8,17 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    loadComponent: () => import('./login/login.page').then((m) => m.LoginPage),
+    loadComponent: () =>
+      import('./routes/login/login.page').then((m) => m.LoginPage),
   },
   {
     path: 'home',
-    loadComponent: () => import('./home/home.page').then(m => m.HomePage)
+    loadComponent: () =>
+      import('./routes/home/home.page').then((m) => m.HomePage),
   },
   {
     path: 'register',
-    loadComponent: () => import('./register/register.page').then(m => m.RegisterPage)
+    loadComponent: () =>
+      import('./register/register.page').then((m) => m.RegisterPage),
   },
-
 ];

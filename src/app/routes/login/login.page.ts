@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { userDB } from '../../data/user.db';
+import { userDB } from '../../../data/user.db';
 import { UserLoginInput } from './domain/user-login-input.domain';
 import { UserModel, UserType } from './model/user.model';
 

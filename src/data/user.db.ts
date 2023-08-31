@@ -1,4 +1,4 @@
-import { UserModel, UserType } from '../app/login/model/user.model';
+import { UserModel, UserType } from '../app/routes/login/model/user.model';
 
 export const userDB: UserModel[] = [
   {
