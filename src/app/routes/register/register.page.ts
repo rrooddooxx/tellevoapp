@@ -8,6 +8,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { NavigationExtras, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ApiService } from 'src/app/providers/db-api/api.service';
 import { validators } from 'src/app/utils/validators';
@@ -26,7 +27,8 @@ export class RegisterPage implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private readonly apiProvider: ApiService
+    private readonly apiProvider: ApiService,
+    private router: Router
   ) {
     this.form = this.formBuilder.group({})
   }
@@ -76,14 +78,28 @@ export class RegisterPage implements OnInit {
       this.form.get('repeatPassword')?.value
     ) {
       this.showPasswordError = false;
-      const newUser = {
-        "user_name": this.form.get('name')?.value,
-        "rut": this.form.get('rut')?.value,
-        "user_pwd": this.form.get('password')?.value,
-        "user_email": this.form.get('email')?.value,
-        "user_phone": this.form.get('tel')?.value
-      }
+      this.doRegister();
     }
+  }
+
+  doRegister() {
+    const newUser = {
+      "user_name": this.form.get('name')?.value,
+      "rut": this.form.get('rut')?.value,
+      "user_pwd": this.form.get('password')?.value,
+      "user_email": this.form.get('email')?.value,
+      "user_phone": this.form.get('tel')?.value
+    }
+
+    this.apiProvider.addUser(newUser).subscribe();
+
+    const userInfoState: NavigationExtras = {
+      state: {
+        newUser,
+      },
+    };
+
+    this.router.navigate(['/home'], userInfoState);
   }
 
   clearFields() {

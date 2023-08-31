@@ -24,9 +24,9 @@ export class ApiService {
   addUser(body: UserRegisterForm): Observable<Object> {
     return this.httpClient.post(
       'https://tsctbsjuktimnuztflau.supabase.co/rest/v1/users',
+      body,
       {
-        headers: supabaseHeaders,
-        body: body
+        headers: supabaseHeaders
       }
     )
   }
