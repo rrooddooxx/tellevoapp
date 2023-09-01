@@ -8,7 +8,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { NavigationExtras, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { ApiService } from 'src/app/providers/db-api/api.service';
+import { validators } from 'src/app/utils/validators';
 
 @Component({
   selector: 'app-register',
@@ -18,18 +21,38 @@ import { IonicModule } from '@ionic/angular';
   imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule],
 })
 export class RegisterPage implements OnInit {
-  form: FormGroup;
-  showPasswordError: boolean = false;
+  public showPasswordError: boolean = false;
+  public emailRegex = validators.emailRegex;
+  public form: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
-    this.formBuilder = formBuilder;
+  constructor(
+    private formBuilder: FormBuilder,
+    private readonly apiProvider: ApiService,
+    private router: Router
+  ) {
+    this.form = this.formBuilder.group({})
+  }
+
+  ngOnInit() {
+    this.createForm();
+  }
+
+  createForm() {
     this.form = this.formBuilder.group({
-      username: new FormControl('', [
+      name: new FormControl('', [
         Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(20),
+        Validators.minLength(1),
+        Validators.maxLength(30),
+      ]),
+      rut: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(9),
       ]),
       email: new FormControl('', [Validators.required]),
+      tel: new FormControl('', [
+        Validators.required,
+      ]),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(6),
@@ -41,9 +64,7 @@ export class RegisterPage implements OnInit {
     });
   }
 
-  ngOnInit() {}
-
-  onSubmit() {
+  async onSubmit() {
     if (
       this.form.get('password')?.value !==
       this.form.get('repeatPassword')?.value
@@ -54,11 +75,31 @@ export class RegisterPage implements OnInit {
     if (
       this.form.valid &&
       this.form.get('password')?.value ===
-        this.form.get('repeatPassword')?.value
+      this.form.get('repeatPassword')?.value
     ) {
       this.showPasswordError = false;
-      console.log('Registro exitoso!');
+      this.doRegister();
     }
+  }
+
+  doRegister() {
+    const newUser = {
+      "user_name": this.form.get('name')?.value,
+      "rut": this.form.get('rut')?.value,
+      "user_pwd": this.form.get('password')?.value,
+      "user_email": this.form.get('email')?.value,
+      "user_phone": this.form.get('tel')?.value
+    }
+
+    this.apiProvider.addUser(newUser).subscribe();
+
+    const userInfoState: NavigationExtras = {
+      state: {
+        newUser,
+      },
+    };
+
+    this.router.navigate(['/home'], userInfoState);
   }
 
   clearFields() {

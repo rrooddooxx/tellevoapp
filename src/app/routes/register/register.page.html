@@ -9,43 +9,64 @@
     <ion-card-content>
       <form [formGroup]="form" class="grid gap-3">
         <ion-input
-          label="Username"
+          label="Nombre"
           labelPlacement="floating"
-          counter="true"
-          helper-text="Username should have min 4 characters"
-          error-text="Please enter a valid username"
-          clear-input="true"
-          formControlName="username"
+          error-text="Ingrese su nombre"
+          formControlName="name"
+          fill="solid"
+        ></ion-input>
+        <ion-input
+          label="Rut"
+          labelPlacement="floating"
+          helper-text="Ingresar RUT sin puntos ni guión"
+          error-text="Debe ingresar un RUT válido"
+          formControlName="rut"
+          fill="solid"
         ></ion-input>
         <ion-input
           label="Email"
           labelPlacement="floating"
-          error-text="Please enter a valid email"
-          clear-input="true"
+          error-text="Ingrese un email válido"
           type="email"
           formControlName="email"
           placeholder="email@example.com"
+          pattern={{emailRegex}}
+          fill="solid"
         ></ion-input>
         <ion-input
-          label="Password"
+          label="Teléfono"
           labelPlacement="floating"
-          helper-text="Password should have min 6 characters"
-          error-text="Please enter a valid password"
+          helper-text="Ingresar teléfono sin +56"
+          error-text="Debe ingresar un número de teléfono válido"
+          formControlName="tel"
+          type="number"
+          min="100000000"
+          max="999999999"
+          fill="solid"
+        ></ion-input>
+        <ion-input
+          label="Contraseña"
+          labelPlacement="floating"
+          helper-text="Debe contener 6 caracteres como mínimo"
+          error-text="Ingrese una contraseña válida"
           formControlName="password"
           type="password"
           placeholder="******"
+          fill="solid"
         ></ion-input>
         <ion-input
-          label="Repeat password"
+          label="Repita contraseña"
           labelPlacement="floating"
           formControlName="repeatPassword"
+          helper-text="Ambas contraseñas deben ser iguales"
           type="password"
           placeholder="******"
+          fill="solid"
         ></ion-input>
         <div *ngIf="showPasswordError" class="text-[var(--ion-color-danger)]">Las contraseñas deben coincidir</div>
         <div class="flex justify-center gap-3">
-          <ion-button (click)="onSubmit()">Register</ion-button>
-          <ion-button (click)="clearFields()">Clear all</ion-button>
+          <ion-button (click)="onSubmit()">Registrarse</ion-button>
+          <ion-button (click)="clearFields()">Limpiar campos</ion-button>
         </div>
         
       </form>
