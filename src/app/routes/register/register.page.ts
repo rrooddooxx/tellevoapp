@@ -22,7 +22,7 @@ import { validators } from 'src/app/utils/validators';
 })
 export class RegisterPage implements OnInit {
   public showPasswordError: boolean = false;
-  public emailRegex = validators.emailRegex;
+  public emailRegex: string = validators.emailRegex;
   public form: FormGroup;
 
   constructor(
@@ -30,7 +30,7 @@ export class RegisterPage implements OnInit {
     private readonly apiProvider: ApiService,
     private router: Router
   ) {
-    this.form = this.formBuilder.group({})
+    this.form = this.formBuilder.group({});
   }
 
   ngOnInit() {
@@ -50,9 +50,7 @@ export class RegisterPage implements OnInit {
         Validators.maxLength(9),
       ]),
       email: new FormControl('', [Validators.required]),
-      tel: new FormControl('', [
-        Validators.required,
-      ]),
+      tel: new FormControl('', [Validators.required]),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(6),
@@ -75,7 +73,7 @@ export class RegisterPage implements OnInit {
     if (
       this.form.valid &&
       this.form.get('password')?.value ===
-      this.form.get('repeatPassword')?.value
+        this.form.get('repeatPassword')?.value
     ) {
       this.showPasswordError = false;
       this.doRegister();
@@ -84,18 +82,18 @@ export class RegisterPage implements OnInit {
 
   doRegister() {
     const newUser = {
-      "user_name": this.form.get('name')?.value,
-      "rut": this.form.get('rut')?.value,
-      "user_pwd": this.form.get('password')?.value,
-      "user_email": this.form.get('email')?.value,
-      "user_phone": this.form.get('tel')?.value
-    }
+      user_name: this.form.get('name')?.value,
+      rut: this.form.get('rut')?.value,
+      user_pwd: this.form.get('password')?.value,
+      user_email: this.form.get('email')?.value,
+      user_phone: this.form.get('tel')?.value,
+    };
 
     this.apiProvider.addUser(newUser).subscribe();
 
     const userInfoState: NavigationExtras = {
       state: {
-        newUser,
+        user: newUser,
       },
     };
 
