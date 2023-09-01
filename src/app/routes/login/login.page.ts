@@ -67,10 +67,18 @@ export class LoginPage implements OnInit {
   doAuthorize(userInfo: UserModel): void {
     const userInfoState: NavigationExtras = {
       state: {
-        userInfo,
+        user: userInfo,
       },
     };
 
     this.router.navigate(['/home'], userInfoState);
+  }
+
+  goToRegistration() {
+    this.router.navigate(['/register']);
+  }
+
+  goToResetPwd() {
+    this.router.navigate(['/reset-password']);
   }
 }

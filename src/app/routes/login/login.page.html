@@ -27,6 +27,8 @@
       </ion-item>
     </ion-card-content>
     <ion-button (click)="doLogin(userLoginInput)">Iniciar Sesión</ion-button>
+    <ion-button (click)="goToRegistration()">Registrarme</ion-button>
+    <ion-button (click)="goToResetPwd()">Olvidé Mi Contraseña</ion-button>
 
     <div *ngIf="showLoginError" class="errorFeedback">
       Credenciales Incorrectas :(
