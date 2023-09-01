@@ -12,6 +12,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ApiService } from 'src/app/providers/db-api/api.service';
 import { validators } from 'src/app/utils/validators';
+import { AddUserRequest } from '../../providers/db-api/model/api.model';
 
 @Component({
   selector: 'app-register',
@@ -81,7 +82,7 @@ export class RegisterPage implements OnInit {
   }
 
   doRegister() {
-    const newUser = {
+    const newUser: AddUserRequest = {
       user_name: this.form.get('name')?.value,
       rut: this.form.get('rut')?.value,
       user_pwd: this.form.get('password')?.value,
