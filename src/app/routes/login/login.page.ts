@@ -71,7 +71,7 @@ export class LoginPage implements OnInit {
       },
     };
 
-    this.router.navigate(['/home'], userInfoState);
+    this.router.navigate(['/dashboard'], userInfoState);
   }
 
   goToRegistration() {
