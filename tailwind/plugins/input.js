@@ -2,13 +2,22 @@ const plugin = require('tailwindcss/plugin')
 
 module.exports = plugin(function ({ addUtilities }) {
   const inputClasses = {
-    '.input': {
+    '.input-primary': {
         padding: '0 0.5rem !important',
         fontWidth: 'bold',
         '&:focus': {
-          background: '#82b5bf',
+          background: '#a08dfb',
+          color: '#141520'
+        },
+        '&:hover': {
+          background: '#a08dfb',
+          color: '#141520'
         }
     },
+    '.input-secondary': {
+      padding: '0 0.5rem !important',
+      fontWidth: 'bold',
+  },
   }
   addUtilities(inputClasses)
 })

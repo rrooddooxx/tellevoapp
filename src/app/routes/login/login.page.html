@@ -13,20 +13,20 @@
     </ion-header>
 
     <ion-card class="rounded-lg bg-transparent grid justify-items-center gap-4 p-8">
-      <ion-card-header>
+      <ion-card-header class="text-center">
         <ion-card-title class="text-black">Acceso a la plataforma</ion-card-title>
         <ion-card-subtitle class="text-black">Por favor, ingrese sus credenciales.</ion-card-subtitle>
       </ion-card-header>
 
 
       <ion-card-content class="card divide-y-2 divide-black text-black">
-        <ion-input class="input rounded-t-xl hover:bg-[var(--ion-color-primary)] hover:text-[var(--ion-color-primary-contrast)]" label="E-Mail:" placeholder="E-mail" [(ngModel)]="userLoginInput.userEmail"></ion-input>
-        <ion-input class="input rounded-b-xl hover:bg-[var(--ion-color-primary)] hover:text-[var(--ion-color-primary-contrast)]" label="Contraseña:" placeholder="Contraseña" [(ngModel)]="userLoginInput.userPwd" type="password"></ion-input>
+        <ion-input class="input-primary rounded-t-xl" label="E-Mail:" placeholder="E-mail" [(ngModel)]="userLoginInput.userEmail"></ion-input>
+        <ion-input class="input-primary rounded-b-xl" label="Contraseña:" placeholder="Contraseña" [(ngModel)]="userLoginInput.userPwd" type="password"></ion-input>
       </ion-card-content>
 
       <ion-button class="btn-primary-md" (click)="doLogin(userLoginInput)">Iniciar Sesión</ion-button>
       <ion-button class="btn-secondary-md" (click)="goToRegistration()">Registrarme</ion-button>
-      <ion-button class="btn-xl" (click)="goToResetPwd()">Olvidé Mi Contraseña</ion-button>
+      <ion-button class="btn-primary-lg" (click)="goToResetPwd()">Olvidé Mi Contraseña</ion-button>
 
       <div *ngIf="showLoginError" class="text-[var(--ion-color-danger)] font-bold">
         Credenciales Incorrectas :(
