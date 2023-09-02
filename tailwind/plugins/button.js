@@ -13,7 +13,7 @@ module.exports = plugin(function ({ addUtilities }) {
         color: '#000',
         height: '44px',
         width: '150px',
-        fontWidth: 'bold',
+        fontWeight: 'bold',
         fontSize: '16px',
         '&:hover': {
           background: '#836bfa',
@@ -33,7 +33,7 @@ module.exports = plugin(function ({ addUtilities }) {
         color: '#000',
         height: '44px',
         width: '150px',
-        fontWidth: 'bold',
+        fontWeight: 'bold',
         fontSize: '16px',
         '&:hover': {
           background: '#de5e75',
@@ -53,7 +53,7 @@ module.exports = plugin(function ({ addUtilities }) {
         color: '#000',
         height: '44px',
         width: '230px',
-        fontWidth: 'bold',
+        fontWeight: 'bold',
         fontSize: '16px',
         '&:hover': {
           background: '#836bfa',
@@ -73,7 +73,7 @@ module.exports = plugin(function ({ addUtilities }) {
         color: '#000',
         height: '44px',
         width: '230px',
-        fontWidth: 'bold',
+        fontWeight: 'bold',
         fontSize: '16px',
         '&:hover': {
           background: '#de5e75',
