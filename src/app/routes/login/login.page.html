@@ -12,7 +12,7 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-card class="rounded-lg bg-white grid justify-items-center gap-4 p-8">
+    <ion-card class="rounded-lg bg-transparent grid justify-items-center gap-4 p-8">
       <ion-card-header>
         <ion-card-title class="text-black">Acceso a la plataforma</ion-card-title>
         <ion-card-subtitle class="text-black">Por favor, ingrese sus credenciales.</ion-card-subtitle>
@@ -23,7 +23,7 @@
         <ion-input class="input rounded-t-xl hover:bg-[var(--ion-color-primary)] hover:text-[var(--ion-color-primary-contrast)]" label="E-Mail:" placeholder="E-mail" [(ngModel)]="userLoginInput.userEmail"></ion-input>
         <ion-input class="input rounded-b-xl hover:bg-[var(--ion-color-primary)] hover:text-[var(--ion-color-primary-contrast)]" label="Contraseña:" placeholder="Contraseña" [(ngModel)]="userLoginInput.userPwd" type="password"></ion-input>
       </ion-card-content>
-      <button class="btn" (click)="doLogin(userLoginInput)">Iniciar Sesión</button>
+      <ion-button class="btn-md part(native):w-[300px]" (click)="doLogin(userLoginInput)">Iniciar Sesión</ion-button>
 
       <div *ngIf="showLoginError" class="text-[var(--ion-color-danger)] font-bold">
         Credenciales Incorrectas :(
