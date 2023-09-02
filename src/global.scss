@@ -28,3 +28,22 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css"; */
+
+@font-face {
+    font-family: 'Source Sans Pro';
+    src: url('./assets/fonts/SourceSansPro-Regular.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html, body {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+html.ios {
+    --ion-default-font: 'Source Sans Pro', sans-serif;
+}
+
+html.md {
+    --ion-default-font: 'Source Sans Pro', sans-serif;
+}
