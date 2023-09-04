@@ -1,17 +1,10 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Home</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Home</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div *ngIf="userInfo" class="errorFeedback">
-    Bienvenido {{userInfo.user_name}}! :)
-  </div>
+  <main class="bg-[var(--ion-color-success)] h-full animate-slide-in">
+    <section class="grid justify-items-center gap-6 p-6">
+      <img class="animate-fade-in" src="../../../assets/imgs/logo.png" alt="logo" width="50%" height="50%" />
+      <div class="card bg-white h-20 grid place-content-center text-2xl animate-enter-text">
+        <h1 *ngIf="userInfo" class="overflow-hidden whitespace-nowrap m-[0_auto] tracking-[.02em] animate-typing">Bienvenido {{userInfo.user_name}}! :)</h1>
+      </div>
+    </section>
+  </main>
 </ion-content>

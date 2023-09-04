@@ -36,8 +36,10 @@
     font-style: normal;
 }
 
-html, body {
+html,
+body {
     font-family: 'Source Sans Pro', sans-serif;
+    font-size: 16px;
 }
 
 html.ios {
@@ -46,4 +48,14 @@ html.ios {
 
 html.md {
     --ion-default-font: 'Source Sans Pro', sans-serif;
+}
+
+.input-bottom.sc-ion-input-ios,
+.input-bottom.sc-ion-input-md {
+    border-top: none;
+    padding-bottom: 8px;
+}
+
+.error-text {
+    color: var(--ion-color-danger) !important;
 }
