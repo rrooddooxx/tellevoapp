@@ -1,8 +1,8 @@
 {
   "name": "carsharing_formab",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "@wwiiddeeweb & @ponytakxn",
+  "homepage": "https://sebastiankravetz.dev",
   "scripts": {
     "ng": "ng",
     "config": "ts-node ./scripts/set-env.ts",
@@ -82,5 +82,5 @@
     "typescript": "~5.0.2",
     "yargs": "^17.7.2"
   },
-  "description": "An Ionic project"
+  "description": "Te Llevo APP, por S.Kravetz y J.Valdés"
 }
