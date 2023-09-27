@@ -8,14 +8,16 @@
 
 ## Lista de pendientes
 
-- Encriptar/Desencriptar pass hacia y desde BBDD
-- Desarrollar pantallas
-- Mejorar modelo BBDD
+- Encriptar/Desencriptar pass hacia y desde BBDD (@ponytakxn)
+  - Encriptación: Crypto.js, AES256, Secret: Mínimo 12 chars alfanuméricos
+  - Desencriptación: Interceptor de Angular (desencripta el payload antes de llegar, docs: https://angular.io/api/common/http/HttpInterceptor)
+- Desarrollar pantallas (ambxs)
+- Mejorar modelo BBDD (@wwiiddeeweb)
 - Implementar API Google Maps
 - Obtener permisos GPS del teléfono, mapear en google maps en realtime.
 
 - Arquitectura Pantallas x Nivel Usuario
-  - Passenger
+  - Passenger (@ponytakxn)
     - Login
       - Inicio
         - Formulario corto "Dónde vas?", que filtre los viajes x destino.
@@ -25,7 +27,7 @@
         - Lista de historial de viajes
       - Mi Perfil
       - Ayuda
-  - Driver
+  - Driver (@wwiiddeeweb)
     - Login
       - Dashboard
         - Ej: "hoy tienes 1 viaje x realizar", lista de pasajeros, etc...
@@ -41,6 +43,7 @@
   - Debe poder registrar usuarios passengers y usuarios drivers
   - El state interno de la app debe mostrar pantallas de acuerdo a nivel de autorización.
 - Autorización: la entradas a todas las pantallas privadas deben comprobar la autorización.
+- Implementar un Contexto Global en la aplicación.
 
 ## Dominio
 
