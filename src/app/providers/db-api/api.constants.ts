@@ -1,4 +1,10 @@
 export enum ApiConstants {
-  PATH_USERS = 'https://tsctbsjuktimnuztflau.supabase.co/rest/v1/users',
+  BASE_URL = 'https://tsctbsjuktimnuztflau.supabase.co/rest/v1',
+  PATH_USERS = '/users',
+  PATH_TRIPS = '/trips',
+  PATH_CAREERS = '/careers',
+  PATH_TRIPS_AGREEMENT = '/trips_agreements',
+  PATH_USER_TYPES = '/user_types',
+  PATH_VEHICLE = '/vehicle',
   USERBYEMAIL_QUERY_PARAM = 'user_email',
 }
