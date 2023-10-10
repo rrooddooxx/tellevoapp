@@ -3,7 +3,21 @@
 
 /** Ionic CSS Variables **/
 :root {
-  /** primary **/
+  /** customize **/
+  --ion-color-primary: #141520;
+  --ion-color-primary-shade: #31323e;
+  --ion-color-primary-contrast: #f5f5f5;
+  --ion-background-color: #ffffff;
+  --ion-background-secondary: #878787;
+  --ion-color-secondary: #019fc7;
+  --ion-color-secondary-shade: #006b85;
+  --ion-color-secondary-contrast: #141520;
+  --ion-color-success: #06aed8;
+  --ion-color-danger: #bf2743;
+  --ion-color-warning: #fca446;
+  --ion-color-step-550: #019fc7cb;
+
+  /*
   --ion-color-primary: #a08dfb;
   --ion-color-primary-rgb: 160, 141, 251;
   --ion-color-primary-contrast: #141520;
@@ -12,7 +26,7 @@
   --ion-color-primary-tint: #b4a6fc;
   --background-primary: #b4a6fc;
 
-  /** secondary **/
+  
   --ion-color-secondary: #e88d9d;
   --ion-color-secondary-rgb: 232, 141, 157;
   --ion-color-secondary-contrast: #000000;
@@ -21,7 +35,7 @@
   --ion-color-secondary-tint: #eeaab7;
   --background-secondary: #eeaab7;
 
-  /** tertiary **/
+  
   --ion-color-tertiary: #fca446;
   --ion-color-tertiary-rgb: 252, 164, 70;
   --ion-color-tertiary-contrast: #000000;
@@ -30,7 +44,7 @@
   --ion-color-tertiary-tint: #fdc991;
   --background-tertiary: #fdc991;
 
-  /** success **/
+  
   --ion-color-success: #82b5bf;
   --ion-color-success-rgb: 130, 181, 191;
   --ion-color-success-contrast: #141520;
@@ -38,7 +52,7 @@
   --ion-color-success-shade: #51919e;
   --ion-color-success-tint: #b7d4da;
 
-  /** warning **/
+  
   --ion-color-warning: #ec7c04;
   --ion-color-warning-rgb: 236, 124, 4;
   --ion-color-warning-contrast: #ffffff;
@@ -46,7 +60,7 @@
   --ion-color-warning-shade: #aa5903;
   --ion-color-warning-tint: #fca446;
 
-  /** danger **/
+  
   --ion-color-danger: #de5e75;
   --ion-color-danger-rgb: 222, 94, 117;
   --ion-color-danger-contrast: #ffffff;
@@ -54,7 +68,7 @@
   --ion-color-danger-shade: #bf2743;
   --ion-color-danger-tint: #e88d9d;
 
-  /** dark **/
+  * dark **/
   --ion-color-dark: #141520;
   --ion-color-dark-rgb: 20, 21, 32;
   --ion-color-dark-contrast: #ffffff;
