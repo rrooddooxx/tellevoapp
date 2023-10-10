@@ -11,7 +11,7 @@ import {
 import { NavigationExtras, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ApiService } from '../../providers/db-api/api.service';
-import { EditUserRequest } from '../../providers/db-api/model/api.model';
+import { EditUserRequest } from '../../providers/db-api/domain/users.domain';
 import { validators } from '../../utils/validators';
 import { UserModel } from '../login/model/user.model';
 import { ResetPwdInputForm } from './domain/reset-pwd-input.domain';

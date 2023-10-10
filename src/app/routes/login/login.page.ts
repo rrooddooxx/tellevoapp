@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { ApiService } from '../../providers/db-api/api.service';
+import { DbModule } from '../../providers/db-api/db.module';
+import { UsersRepository } from '../../providers/db-api/repositories/users.repository';
 import { UserLoginInput } from './domain/user-login-input.domain';
 import { UserModel } from './model/user.model';
 
@@ -12,7 +13,7 @@ import { UserModel } from './model/user.model';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [IonicModule, CommonModule, FormsModule, DbModule],
 })
 export class LoginPage implements OnInit {
   public userLoginInput: UserLoginInput = {
@@ -25,7 +26,7 @@ export class LoginPage implements OnInit {
 
   constructor(
     private readonly router: Router,
-    private readonly apiProvider: ApiService
+    private readonly usersRepository: UsersRepository
   ) {
     this.clearLoginCredentials();
   }
@@ -35,7 +36,7 @@ export class LoginPage implements OnInit {
   }
 
   async getUsers() {
-    this.apiProvider.getUsers().subscribe((data) => {
+    this.usersRepository.getUsers().subscribe((data) => {
       this.userDB = data;
     });
   }

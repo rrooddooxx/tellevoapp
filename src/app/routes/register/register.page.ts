@@ -12,7 +12,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ApiService } from 'src/app/providers/db-api/api.service';
 import { validators } from 'src/app/utils/validators';
-import { AddUserRequest } from '../../providers/db-api/model/api.model';
+import { AddUserRequest } from '../../providers/db-api/domain/users.domain';
 
 @Component({
   selector: 'app-register',
