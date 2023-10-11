@@ -66,14 +66,9 @@ module.exports = plugin(function ({ addUtilities }) {
       }
     },
     '.btn-link': {
-      '&::part(native)': {
-        border: 'none',
-        color: '#a08dfb',
-        borderBottom: '1px solid #a08dfb',
-        background: 'none',
-        borderRadius: '0',
-        padding: '0'
-      }
+      color: 'var(--ion-color-secondary)',
+      cursor: 'pointer',
+      textDecoration: 'underline',
     }
   }
   addUtilities(buttonClasses)

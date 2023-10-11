@@ -9,9 +9,49 @@
     <ion-card-content class="grid justify-items-center">
       <form class="card text-black bg-white divide-y-2 divide-black" [formGroup]="form">
         <ion-input class="input-primary rounded-t-xl" label="Nombre" labelPlacement="floating" error-text="Ingrese su nombre" formControlName="name"></ion-input>
+        <ion-input class="input-primary" label="Apellido" labelPlacement="floating" error-text="Ingrese su apellido" formControlName="lastname"></ion-input>
         <ion-input class="input-primary" label="Rut" labelPlacement="floating" helper-text="Ingresar RUT sin puntos ni guión" error-text="Debe ingresar un RUT válido" formControlName="rut"></ion-input>
         <ion-input class="input-primary" label="Email" labelPlacement="floating" error-text="Ingrese un email válido" type="email" formControlName="email" placeholder="email@example.com" pattern={{emailRegex}}></ion-input>
         <ion-input class="input-primary" label="Teléfono" labelPlacement="floating" helper-text="Ingresar teléfono sin +56" error-text="Debe ingresar un número de teléfono válido" formControlName="tel" type="number" min="100000000" max="999999999"></ion-input>
+        
+        <div class="grid py-4 px-2">
+          <label class="font-bold" for="gender">Género</label>
+          <div class="flex gap-8 mt-2">
+            <div class="flex gap-2">
+              <input formControlName="gender" id="F" name="gender" type="radio" value="F" />
+              <label for="F">Femenino</label>
+            </div>
+            <div class="flex gap-2">
+              <input formControlName="gender" id="M" name="gender" type="radio" value="M" />
+              <label for="M">Masculino</label>
+            </div>
+            <div class="flex gap-2">
+              <input formControlName="gender" id="NB" name="gender" type="radio" value="NB" />
+              <label for="NB">No Binario</label>
+            </div>
+            <div class="flex gap-2">
+              <input formControlName="gender" id="NI" name="gender" type="radio" value="NI" />
+              <label for="NI">Prefiero no informar</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid py-4 px-2">
+          <label class="font-bold" for="gender">Tipo de Usuario</label>
+          <div class="flex gap-8 mt-2">
+            <div class="flex gap-2">
+              <input formControlName="type" id="passenger" name="usertype" type="radio" value="2" />
+              <label for="passenger">Pasajero</label>
+            </div>
+            <div class="flex gap-2">
+              <input formControlName="type" id="driver" name="usertype" type="radio" value="3" />
+              <label for="driver">Conductor</label>
+            </div>
+          </div>
+        </div>
+        
+        <ion-input class="input-primary" label="Carrera" labelPlacement="floating"></ion-input>
+
         <ion-input class="input-primary" label="Contraseña" labelPlacement="floating" helper-text="Debe contener 6 caracteres como mínimo" error-text="Ingrese una contraseña válida" formControlName="password" type="password" placeholder="******"></ion-input>
         <ion-input class="input-primary" label="Repita contraseña" labelPlacement="floating" formControlName="repeatPassword" helper-text="Ambas contraseñas deben ser iguales" type="password" placeholder="******"></ion-input>
         <div *ngIf="showPasswordError" class="text-[var(--ion-color-danger)]">Las contraseñas deben coincidir</div>
