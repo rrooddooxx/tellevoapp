@@ -29,7 +29,7 @@ export class RegisterPage implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private readonly userProvider: UsersRepository,
+    private readonly userRepository: UsersRepository,
     private router: Router
   ) {
     this.form = this.formBuilder.group({});
@@ -91,7 +91,7 @@ export class RegisterPage implements OnInit {
       user_phone: this.form.get('tel')?.value,
     };
 
-    this.userProvider.addUser(newUser).subscribe();
+    this.userRepository.addUser(newUser).subscribe();
 
     const userInfoState: NavigationExtras = {
       state: {
