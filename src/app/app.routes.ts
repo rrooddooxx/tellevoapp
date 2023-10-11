@@ -34,20 +34,22 @@ export const routes: Routes = [
         redirectTo: 'home',
       },
       {
-        path: 'map',
+        path: 'find-trip',
         loadComponent: () =>
-          import('./routes/map/map.page').then((m) => m.MapPage),
+          import('./routes/dashboard/find-trip/find-trip.page').then(
+            (m) => m.FindTripPage
+          ),
       },
       {
         path: 'home',
         loadComponent: () =>
-          import('./routes/home/home.page').then((m) => m.HomePage),
+          import('./routes/dashboard/home/home.page').then((m) => m.HomePage),
       },
       {
-        path: 'wallet',
+        path: 'my-profile',
         loadComponent: () =>
-          import('./routes/dashboard/wallet/wallet.page').then(
-            (m) => m.WalletPage
+          import('./routes/dashboard/my-profile/my-profile.page').then(
+            (m) => m.MyProfilePage
           ),
       },
       {
