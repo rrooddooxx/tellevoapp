@@ -10,16 +10,17 @@ import {
 } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { ApiService } from 'src/app/providers/db-api/api.service';
 import { validators } from 'src/app/utils/validators';
 import { AddUserRequest } from '../../providers/db-api/domain/users.domain';
+import { UsersRepository } from 'src/app/providers/db-api/repositories/users.repository';
+import { DbModule } from 'src/app/providers/db-api/db.module';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule, DbModule],
 })
 export class RegisterPage implements OnInit {
   public showPasswordError: boolean = false;
@@ -28,7 +29,7 @@ export class RegisterPage implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private readonly apiProvider: ApiService,
+    private readonly userRepository: UsersRepository,
     private router: Router
   ) {
     this.form = this.formBuilder.group({});
@@ -90,7 +91,7 @@ export class RegisterPage implements OnInit {
       user_phone: this.form.get('tel')?.value,
     };
 
-    this.apiProvider.addUser(newUser).subscribe();
+    this.userRepository.addUser(newUser).subscribe();
 
     const userInfoState: NavigationExtras = {
       state: {

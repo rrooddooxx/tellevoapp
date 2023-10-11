@@ -8,7 +8,7 @@ module.exports = plugin(function ({ addUtilities }) {
         borderColor: '#000',
         border: 'solid',
         boxShadow: '0 0 #0000, 0 0 #0000, 5px 5px #000',
-        background: '#a08dfb',
+        background: 'var(--ion-color-secondary)',
         borderRadius: '0',
         color: '#000',
         height: '44px',
@@ -16,11 +16,6 @@ module.exports = plugin(function ({ addUtilities }) {
         fontWeight: 'bold',
         fontSize: '16px',
         textTransform: 'uppercase',
-        '&:hover': {
-          background: '#836bfa',
-          color: '#fff',
-          borderColor: '#000',
-        },
       }
     },
     '.btn-secondary-md': {
@@ -29,7 +24,7 @@ module.exports = plugin(function ({ addUtilities }) {
         borderColor: '#000',
         border: 'solid',
         boxShadow: '0 0 #0000, 0 0 #0000, 5px 5px #000',
-        background: '#e88d9d',
+        background: 'var(--ion-background-secondary)',
         borderRadius: '0',
         color: '#000',
         height: '44px',
@@ -37,11 +32,6 @@ module.exports = plugin(function ({ addUtilities }) {
         fontWeight: 'bold',
         fontSize: '16px',
         textTransform: 'uppercase',
-        '&:hover': {
-          background: '#de5e75',
-          color: '#fff',
-          borderColor: '#000',
-        },
       }
     },
     '.btn-primary-lg': {
@@ -50,7 +40,7 @@ module.exports = plugin(function ({ addUtilities }) {
         borderColor: '#000',
         border: 'solid',
         boxShadow: '0 0 #0000, 0 0 #0000, 5px 5px #000',
-        background: '#a08dfb',
+        background: 'var(--ion-color-secondary)',
         borderRadius: '0',
         color: '#000',
         height: '44px',
@@ -58,34 +48,33 @@ module.exports = plugin(function ({ addUtilities }) {
         fontWeight: 'bold',
         fontSize: '16px',
         textTransform: 'uppercase',
-        '&:hover': {
-          background: '#836bfa',
-          color: '#fff',
-          borderColor: '#000',
-        },
       }
     },
     '.btn-secondary-lg': {
       '&::part(native)': {
         borderWidth: '2px',
-        borderColor: '#000',
         border: 'solid',
         boxShadow: '0 0 #0000, 0 0 #0000, 5px 5px #000',
-        background: '#e88d9d',
+        background: 'var(--ion-background-secondary)',
         borderRadius: '0',
-        color: '#000',
+        color: 'var(--ion-color-primary)',
         height: '44px',
         width: '230px',
         fontWeight: 'bold',
         fontSize: '16px',
         textTransform: 'uppercase',
-        '&:hover': {
-          background: '#de5e75',
-          color: '#fff',
-          borderColor: '#000',
-        },
       }
     },
+    '.btn-link': {
+      '&::part(native)': {
+        border: 'none',
+        color: '#a08dfb',
+        borderBottom: '1px solid #a08dfb',
+        background: 'none',
+        borderRadius: '0',
+        padding: '0'
+      }
+    }
   }
   addUtilities(buttonClasses)
 })

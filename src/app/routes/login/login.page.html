@@ -19,15 +19,17 @@
 
 
       <ion-card-content class="card divide-y-2 divide-black text-black">
-        <ion-input class="input-primary rounded-t-xl" label="E-Mail:" placeholder="E-mail" [(ngModel)]="userLoginInput.userEmail"></ion-input>
-        <ion-input class="input-primary rounded-b-xl" label="Contraseña:" placeholder="Contraseña" [(ngModel)]="userLoginInput.userPwd" type="password"></ion-input>
+        <ion-input class="input-primary rounded-t-xl" label="E-Mail:" placeholder="correo@mail.com" [(ngModel)]="userLoginInput.userEmail"></ion-input>
+        <ion-input class="input-primary rounded-b-xl" label="Contraseña:" placeholder="******" [(ngModel)]="userLoginInput.userPwd" type="password"></ion-input>
       </ion-card-content>
 
       <div class="flex gap-2">
         <ion-button class="btn-primary-md" (click)="doLogin(userLoginInput)">Iniciar Sesión</ion-button>
         <ion-button class="btn-secondary-md" (click)="goToRegistration()">Registrarme</ion-button>
       </div>
-      <ion-button class="btn-primary-lg" (click)="goToResetPwd()">Olvidé Mi Contraseña</ion-button>
+      <span class="grid place-content-center">
+        ¿No recuerdas tu contraseña? <ion-button class="btn-link flex-1" (click)="goToResetPwd()">Olvidé mi contraseña</ion-button>
+      </span>
 
       <div *ngIf="showLoginError" class="text-[var(--ion-color-danger)] font-bold">
         Credenciales Incorrectas :(
