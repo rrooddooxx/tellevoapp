@@ -10,18 +10,19 @@ import {
 } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { ApiService } from '../../providers/db-api/api.service';
 import { EditUserRequest } from '../../providers/db-api/domain/users.domain';
 import { validators } from '../../utils/validators';
 import { UserModel } from '../login/model/user.model';
 import { ResetPwdInputForm } from './domain/reset-pwd-input.domain';
+import { UsersRepository } from 'src/app/providers/db-api/repositories/users.repository';
+import { DbModule } from 'src/app/providers/db-api/db.module';
 
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.page.html',
   styleUrls: ['./reset-password.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule, DbModule],
 })
 export class ResetPasswordPage implements OnInit {
   public form: FormGroup;
@@ -36,7 +37,7 @@ export class ResetPasswordPage implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private readonly apiProvider: ApiService,
+    private readonly userProvider: UsersRepository,
     private router: Router
   ) {
     this.form = this.formBuilder.group({});
@@ -79,7 +80,7 @@ export class ResetPasswordPage implements OnInit {
       this.form.valid
     ) {
       this.showInputError = false;
-      this.apiProvider
+      this.userProvider
         .getUserByEmail(this.currentUser.userEmail)
         .subscribe((data) => {
           const usersFound = data.find(
@@ -107,7 +108,7 @@ export class ResetPasswordPage implements OnInit {
         user_name: this.dbUser.user_name,
         user_pwd: this.currentUser.userPwd,
       };
-      this.apiProvider.editUser(userToEdit).subscribe((response) => {
+      this.userProvider.editUser(userToEdit).subscribe((response) => {
         this.editResult = response.status === 204;
         this.doShowAlert();
       });
