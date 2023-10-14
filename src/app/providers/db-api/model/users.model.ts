@@ -13,7 +13,7 @@ export class UserModel {
   user_careeer: number;
 }
 
-enum UsrGenders {
+export enum UsrGenders {
   M = 'M',
   F = 'F',
   NB = 'NB',
