@@ -10,5 +10,6 @@
 
     </ion-toolbar>
   </ion-header>
+  <div *ngFor="let item of availableTrips">{{item.driver_id}}</div>
   <app-trip-list-item />
 </ion-content>
