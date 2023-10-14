@@ -9,7 +9,8 @@ export interface AddUserRequest {
   user_lastname: string;
   user_gender: UsrGenders;
   user_type: number;
-  user_careeer: number;
+  user_career: number;
+  user_ranking: number;
 }
 
 export interface EditUserRequest {

@@ -63,10 +63,10 @@ export class RegisterPage implements OnInit {
         Validators.minLength(1),
         Validators.maxLength(2),
       ]),
-      type: new FormControl('', [
+      usertype: new FormControl('', [
         Validators.required,
         Validators.min(1),
-        Validators.max(3),
+        Validators.max(5),
       ]),
       career: new FormControl(''),
       password: new FormControl('', [
@@ -107,8 +107,9 @@ export class RegisterPage implements OnInit {
       user_phone: this.form.get('tel')?.value,
       user_lastname: this.form.get('lastname')?.value,
       user_gender: this.form.get('gender')?.value,
-      user_type: this.form.get('type')?.value,
-      user_careeer: this.form.get('career')?.value,
+      user_type: this.form.get('usertype')?.value,
+      user_career: this.form.get('career')?.value,
+      user_ranking: 0
     };
 
     this.userRepository.addUser(newUser).subscribe();
@@ -119,7 +120,7 @@ export class RegisterPage implements OnInit {
       },
     };
 
-    this.router.navigate(['/home'], userInfoState);
+    this.router.navigate(['/dashboard'], userInfoState);
   }
 
   clearFields() {

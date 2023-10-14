@@ -16,22 +16,26 @@
         
         <div class="grid py-4 px-2">
           <label class="font-bold" for="gender">Género</label>
-          <div class="flex gap-8 mt-2">
-            <div class="flex gap-2">
-              <input formControlName="gender" id="F" name="gender" type="radio" value="F" />
-              <label for="F">Femenino</label>
+          <div class="grid gap-4 mt-2">
+            <div class="flex gap-4">
+              <div class="flex gap-2 flex-1">
+                <input formControlName="gender" id="F" name="gender" type="radio" value="F" />
+                <label for="F">Femenino</label>
+              </div>
+              <div class="flex gap-2 flex-1">
+                <input formControlName="gender" id="M" name="gender" type="radio" value="M" />
+                <label for="M">Masculino</label>
+              </div>
             </div>
-            <div class="flex gap-2">
-              <input formControlName="gender" id="M" name="gender" type="radio" value="M" />
-              <label for="M">Masculino</label>
-            </div>
-            <div class="flex gap-2">
-              <input formControlName="gender" id="NB" name="gender" type="radio" value="NB" />
-              <label for="NB">No Binario</label>
-            </div>
-            <div class="flex gap-2">
-              <input formControlName="gender" id="NI" name="gender" type="radio" value="NI" />
-              <label for="NI">Prefiero no informar</label>
+            <div class="flex gap-4">
+              <div class="flex gap-2 flex-1">
+                <input formControlName="gender" id="NB" name="gender" type="radio" value="NB" />
+                <label for="NB">No Binario</label>
+              </div>
+              <div class="flex gap-2 flex-1">
+                <input formControlName="gender" id="NI" name="gender" type="radio" value="NI" />
+                <label for="NI">No informar</label>
+              </div>
             </div>
           </div>
         </div>
@@ -40,17 +44,22 @@
           <label class="font-bold" for="gender">Tipo de Usuario</label>
           <div class="flex gap-8 mt-2">
             <div class="flex gap-2">
-              <input formControlName="type" id="passenger" name="usertype" type="radio" value="2" />
+              <input formControlName="usertype" id="passenger" name="usertype" type="radio" value="4" />
               <label for="passenger">Pasajero</label>
             </div>
             <div class="flex gap-2">
-              <input formControlName="type" id="driver" name="usertype" type="radio" value="3" />
+              <input formControlName="usertype" id="driver" name="usertype" type="radio" value="5" />
               <label for="driver">Conductor</label>
             </div>
           </div>
         </div>
         
-        <ion-input class="input-primary" label="Carrera" labelPlacement="floating"></ion-input>
+        <div class="grid py-4 px-2 gap-2">
+          <label for="career">Carrera</label>
+          <select class="bg-white" name="career" id="career" formControlName="career">
+            <option value="1">Carrera prueba</option>
+          </select>
+        </div>
 
         <ion-input class="input-primary" label="Contraseña" labelPlacement="floating" helper-text="Debe contener 6 caracteres como mínimo" error-text="Ingrese una contraseña válida" formControlName="password" type="password" placeholder="******"></ion-input>
         <ion-input class="input-primary" label="Repita contraseña" labelPlacement="floating" formControlName="repeatPassword" helper-text="Ambas contraseñas deben ser iguales" type="password" placeholder="******"></ion-input>
