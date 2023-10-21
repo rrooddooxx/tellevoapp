@@ -26,7 +26,9 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     loadComponent: () =>
-      import('./routes/dashboard/dashboard.page').then((m) => m.DashboardPage),
+      import('./routes/passenger/passenger.dashboard.page').then(
+        (m) => m.DashboardPage
+      ),
     children: [
       {
         path: '',
@@ -36,33 +38,33 @@ export const routes: Routes = [
       {
         path: 'find-trip',
         loadComponent: () =>
-          import('./routes/dashboard/find-trip/find-trip.page').then(
+          import('./routes/passenger/find-trip/find-trip.page').then(
             (m) => m.FindTripPage
           ),
       },
       {
         path: 'home',
         loadComponent: () =>
-          import('./routes/dashboard/home/home.page').then((m) => m.HomePage),
+          import('./routes/passenger/home/home.page').then((m) => m.HomePage),
       },
       {
         path: 'my-profile',
         loadComponent: () =>
-          import('./routes/dashboard/my-profile/my-profile.page').then(
+          import('./routes/passenger/my-profile/my-profile.page').then(
             (m) => m.MyProfilePage
           ),
       },
       {
         path: 'trips',
         loadComponent: () =>
-          import('./routes/dashboard/trips/trips.page').then(
+          import('./routes/passenger/trips/trips.page').then(
             (m) => m.TripsPage
           ),
       },
       {
         path: 'help',
         loadComponent: () =>
-          import('./routes/dashboard/help/help.page').then((m) => m.HelpPage),
+          import('./routes/passenger/help/help.page').then((m) => m.HelpPage),
       },
     ],
   },

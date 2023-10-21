@@ -5,9 +5,9 @@ import { IonicModule } from '@ionic/angular';
 import { TabnavComponent } from '../../components/tabnav/tabnav.component';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.page.html',
-  styleUrls: ['./dashboard.page.scss'],
+  selector: 'passenger-app-dashboard',
+  templateUrl: './passenger.dashboard.page.html',
+  styleUrls: ['./passenger.dashboard.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, TabnavComponent],
 })
