@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { IDriverState } from './driver.interfaces';
 
 @Injectable()
-export class DriverService {
+export class DriverStoreService {
   private initialState: IDriverState = {
     driverName: '',
   };

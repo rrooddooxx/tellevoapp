@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { IPassengerState } from './passenger.interfaces';
 
 @Injectable()
-export class PassengerService {
+export class PassengerStoreService {
   private initialState: IPassengerState = {
     currentTripID: '',
   };
