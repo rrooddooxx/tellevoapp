@@ -1,4 +1,4 @@
-import { UsrGenders } from "../model/users.model";
+import { UsrGenders } from '../model/users.model';
 
 export interface AddUserRequest {
   user_name: string;
