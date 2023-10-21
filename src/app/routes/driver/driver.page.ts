@@ -14,9 +14,13 @@ import { UserModel } from '../login/model/user.model';
   imports: [IonicModule, CommonModule, FormsModule, TabnavComponent],
 })
 export class DriverPage implements OnInit {
-  public userInfo: UserModel = {} as UserModel;
+  public openCard: boolean = false;
 
   constructor(private readonly router: Router) {}
+
+  toggleCard() {
+    this.openCard = !this.openCard;
+  }
 
   ngOnInit() {
   }
