@@ -26,7 +26,9 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     loadComponent: () =>
-      import('./routes/dashboard/dashboard.page').then((m) => m.DashboardPage),
+      import('./routes/passenger/passenger.dashboard.page').then(
+        (m) => m.DashboardPage
+      ),
     children: [
       {
         path: '',
@@ -46,30 +48,22 @@ export const routes: Routes = [
       {
         path: 'wallet',
         loadComponent: () =>
-          import('./routes/dashboard/wallet/wallet.page').then(
+          import('./routes/passenger/wallet/wallet.page').then(
             (m) => m.WalletPage
           ),
       },
       {
         path: 'trips',
         loadComponent: () =>
-          import('./routes/dashboard/trips/trips.page').then(
+          import('./routes/passenger/trips/trips.page').then(
             (m) => m.TripsPage
           ),
       },
       {
         path: 'help',
         loadComponent: () =>
-          import('./routes/dashboard/help/help.page').then((m) => m.HelpPage),
+          import('./routes/passenger/help/help.page').then((m) => m.HelpPage),
       },
     ],
-  },
-  {
-    path: 'driver',
-    loadComponent: () =>
-      import('./routes/driver/driver.page').then((m) => m.DriverPage),
-      children: [
-        
-      ]
   },
 ];
