@@ -46,6 +46,11 @@ export class RegisterPage implements OnInit {
         Validators.minLength(1),
         Validators.maxLength(30),
       ]),
+      lastname: new FormControl('', [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(30),
+      ]),
       rut: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
@@ -53,6 +58,17 @@ export class RegisterPage implements OnInit {
       ]),
       email: new FormControl('', [Validators.required]),
       tel: new FormControl('', [Validators.required]),
+      gender: new FormControl('', [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(2),
+      ]),
+      usertype: new FormControl('', [
+        Validators.required,
+        Validators.min(1),
+        Validators.max(5),
+      ]),
+      career: new FormControl(''),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(6),
@@ -85,10 +101,15 @@ export class RegisterPage implements OnInit {
   doRegister() {
     const newUser: AddUserRequest = {
       user_name: this.form.get('name')?.value,
-      rut: this.form.get('rut')?.value,
+      user_rut: this.form.get('rut')?.value,
       user_pwd: this.form.get('password')?.value,
       user_email: this.form.get('email')?.value,
       user_phone: this.form.get('tel')?.value,
+      user_lastname: this.form.get('lastname')?.value,
+      user_gender: this.form.get('gender')?.value,
+      user_type: this.form.get('usertype')?.value,
+      user_career: this.form.get('career')?.value,
+      user_ranking: 0
     };
 
     this.userRepository.addUser(newUser).subscribe();
@@ -99,7 +120,7 @@ export class RegisterPage implements OnInit {
       },
     };
 
-    this.router.navigate(['/home'], userInfoState);
+    this.router.navigate(['/dashboard'], userInfoState);
   }
 
   clearFields() {
