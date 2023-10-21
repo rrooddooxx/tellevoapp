@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { TabnavComponent } from '../../components/tabnav/tabnav.component';
 import { UserModel } from '../login/model/user.model';
 import { ITripCardType } from 'src/app/shared/enums/trip-card.enum';
-import { ITripCardState } from 'src/app/components/trip-card/trip-card.interfaces';
+import { ITripCardState, ITripStatus } from 'src/app/components/trip-card/trip-card.interfaces';
 import { TripCardComponent } from 'src/app/components/trip-card/trip-card.component';
 
 @Component({
@@ -26,18 +26,18 @@ export class DriverPage implements OnInit {
       stops: ['xxx', 'yyy'],
       tripDate: '21/10',
       tripTime: '16:35',
-      tripSeatsStatus: 'Lleno',
+      tripSeatsStatus: ITripStatus.CLOSED,
     },
     {
       passengers: ['Nicolás Pino'],
       stops: ['xxx', 'yyy'],
       tripDate: '24/10',
       tripTime: '21:35',
-      tripSeatsStatus: 'Abierto',
+      tripSeatsStatus: ITripStatus.OPEN,
     }
   ]
 
-  constructor(private readonly router: Router) {}
+  constructor(private readonly router: Router) { }
 
   toggleCard() {
     this.openCard = !this.openCard;
