@@ -64,4 +64,12 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'driver',
+    loadComponent: () =>
+      import('./routes/driver/driver.page').then((m) => m.DriverPage),
+      children: [
+        
+      ]
+  },
 ];
