@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TripCardComponent } from '../../../components/trip-card/trip-card.component';
+import { ITripCardState } from '../../../components/trip-card/trip-card.interfaces';
 import { TripListItemComponent } from '../../../components/trip-list-item/trip-list-item.component';
 import { ITripCardType } from '../../../shared/enums/trip-card.enum';
 
@@ -21,6 +22,13 @@ import { ITripCardType } from '../../../shared/enums/trip-card.enum';
 })
 export class FindTripPage implements OnInit {
   tripCardType = ITripCardType;
+
+  tripInfo: ITripCardState = {
+    passengers: ['Ponyta', 'Seba'],
+    stops: ['xxx', 'yyy'],
+    tripDate: '21/10',
+    tripTime: '16:35',
+  };
   constructor() {}
 
   ngOnInit() {}
