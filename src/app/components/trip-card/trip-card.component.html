@@ -4,23 +4,40 @@
     <ion-card-content class="flex flex-col items-center">
       <ion-card class="card-secondary">
         <ion-card-content>
+
           <ion-card-title>{{ tripInfo?.tripDate || '' }} | {{ tripInfo?.tripTime || '' }}</ion-card-title>
-          <ion-card-subtitle class="flex gap-2">
-            <ion-icon class="h-[22px] text-black" name="people-outline"></ion-icon>
-            <ion-label class="text-black">Pasajeros:</ion-label>
-            <li class="list-none">
-              <ul *ngFor="let passenger of tripInfo?.passengers">{{passenger}}</ul>
-            </li>
-          </ion-card-subtitle>
-          <ion-card-subtitle>
+
+          <ion-card-subtitle class="flex gap-2 items-center">
             <div class="flex gap-2 items-center text-black">
-              <ion-icon name="location-outline"></ion-icon>
-              <ion-label>Paradas:</ion-label>
+              <ion-icon name="alert-circle-outline"></ion-icon>
+              <ion-label>Estado: <span class="text-[var(--ion-color-success)] ml-2">{{tripInfo?.tripSeatsStatus}}</span></ion-label>
             </div>
-            <ion-card>
-              <img class="object-cover" src="/assets/imgs/map_1.png" alt="mapa" />
-            </ion-card>
           </ion-card-subtitle>
+
+          <div *ngIf="isOpenCard" class="transition-all duration-300 ease-in-out">
+            <ion-card-subtitle class="flex gap-2">
+              <ion-icon class="h-[22px] text-black" name="people-outline"></ion-icon>
+              <ion-label class="text-black">Pasajeros:</ion-label>
+              <li class="list-none">
+                <ul *ngFor="let passenger of tripInfo?.passengers">{{passenger}}</ul>
+              </li>
+            </ion-card-subtitle>
+            <ion-card-subtitle>
+              <div class="flex gap-2 items-center text-black">
+                <ion-icon name="location-outline"></ion-icon>
+                <ion-label>Paradas:</ion-label>
+              </div>
+              <ion-card>
+                <img class="object-cover" src="/assets/imgs/map_1.png" alt="mapa" />
+              </ion-card>
+            </ion-card-subtitle>
+          </div>
+          <div class="block" (click)="this.toggleCard()" >
+            <ion-icon *ngIf="!isOpenCard" name="chevron-down-outline" class="text-black text-xl mx-[50%]"></ion-icon>
+          </div>
+          <div class="block" (click)="this.toggleCard()">
+            <ion-icon *ngIf="isOpenCard" name="chevron-up-outline" class="text-black text-xl mx-[50%]"></ion-icon>
+          </div>
         </ion-card-content>
       </ion-card>
     </ion-card-content>

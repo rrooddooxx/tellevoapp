@@ -3,4 +3,5 @@ export interface ITripCardState {
   stops: string[];
   tripDate: string;
   tripTime: string;
+  tripSeatsStatus: string;
 }

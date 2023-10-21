@@ -28,6 +28,7 @@ export class FindTripPage implements OnInit {
     stops: ['xxx', 'yyy'],
     tripDate: '21/10',
     tripTime: '16:35',
+    tripSeatsStatus: 'Abierto',
   };
   constructor() {}
 

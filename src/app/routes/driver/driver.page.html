@@ -17,7 +17,11 @@
         <ion-card-subtitle class="text-black">Hoy tienes X viajes por realizar</ion-card-subtitle>
       </ion-card-header>
 
-      <ion-card class="card-secondary">
+      <div *ngFor="let trip of trips">
+        <app-trip-card [type]="tripCardType.DRIVER" [tripInfo]="trip"></app-trip-card>
+      </div>
+
+      <!-- <ion-card class="card-secondary">
         <ion-card-content class="grid gap-2">
           <ion-card-title>21/10 14:00</ion-card-title>
 
@@ -87,7 +91,7 @@
           <ion-icon *ngIf="!openCard" (click)="this.toggleCard()" name="chevron-down-outline" class="justify-self-center text-black text-xl"></ion-icon>
           <ion-icon *ngIf="openCard" (click)="this.toggleCard()" name="chevron-up-outline" class="justify-self-center text-black text-xl"></ion-icon>
         </ion-card-content>
-      </ion-card>
+      </ion-card> -->
 
       <ion-button class="btn-primary-lg my-8">
         Agendar nuevo viaje
