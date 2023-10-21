@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { TabnavComponent } from '../../components/tabnav/tabnav.component';
-import { UserModel } from '../login/model/user.model';
+import { TabnavComponent } from '../../../components/tabnav/tabnav.component';
+import { UserModel } from '../../login/model/user.model';
 
 @Component({
   selector: 'app-home',

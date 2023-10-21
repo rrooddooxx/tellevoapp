@@ -47,14 +47,25 @@
 
 ## Dominio
 
-- Viaje
-  - inicio, destino, nro cupos, género, valoración
-- Pasajero
-  - valoración, género, nombre, apellido, carrera, rut, email, teléfono, contraseña
-- Driver
-  - valoración, género, nombre, apellido, carrera, rut, email, teléfono, contraseña
+- Viajes (trips)
+
+  - pickup_ref (varchar), pickup_coords (varchar), dropoff_ref (varchar), dropoff_coords (varchar), seats_offered,
+  - vehicle_id (int8), driver_id, trip_seats_status ('OPEN','CLOSED'), trip_final_status ('COMPLETED','NOT_COMPLETED','CANCELLED')
+
+- Viaje Acordado x Estudiante (trips_agreements)
+
+  - trip_id, student_id, dropoff_ref (varchar), dropoff_coords (varchar), status (ACCEPTED, REJECTED)
+
 - Vehículo
-  - cupos, patente, modelo, marca, año.
+
+  - vehicle_id, driver_id, vehicle_seats, vehicle_patent, vehicle_model, vehicle_brand, vehicle_year.
+
+- Usuarios
+
+  - id, user_name, user_rut, user_pwd, user_email, user_phone, user_genre, user_type, user_ranking, user_career, created_at
+
+- Tipo de Usuarios
+  - id, type_name
 
 ## Spikes
 
