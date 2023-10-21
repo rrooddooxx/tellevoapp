@@ -4,13 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
-  selector: 'app-map',
-  templateUrl: './map.page.html',
-  styleUrls: ['./map.page.scss'],
+  selector: 'app-my-profile',
+  templateUrl: './my-profile.page.html',
+  styleUrls: ['./my-profile.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule]
 })
-export class MapPage implements OnInit {
+export class MyProfilePage implements OnInit {
 
   constructor() { }
 

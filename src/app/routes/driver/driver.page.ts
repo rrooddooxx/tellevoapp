@@ -7,9 +7,9 @@ import { TabnavComponent } from '../../components/tabnav/tabnav.component';
 import { UserModel } from '../login/model/user.model';
 
 @Component({
-  selector: 'app-driver',
-  templateUrl: './driver.page.html',
-  styleUrls: ['./driver.page.scss'],
+  selector: 'passenger-app-dashboard',
+  templateUrl: './passenger.dashboard.page.html',
+  styleUrls: ['./passenger.dashboard.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, TabnavComponent],
 })

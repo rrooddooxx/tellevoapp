@@ -36,20 +36,22 @@ export const routes: Routes = [
         redirectTo: 'home',
       },
       {
-        path: 'map',
+        path: 'find-trip',
         loadComponent: () =>
-          import('./routes/map/map.page').then((m) => m.MapPage),
+          import('./routes/passenger/find-trip/find-trip.page').then(
+            (m) => m.FindTripPage
+          ),
       },
       {
         path: 'home',
         loadComponent: () =>
-          import('./routes/home/home.page').then((m) => m.HomePage),
+          import('./routes/passenger/home/home.page').then((m) => m.HomePage),
       },
       {
-        path: 'wallet',
+        path: 'my-profile',
         loadComponent: () =>
-          import('./routes/passenger/wallet/wallet.page').then(
-            (m) => m.WalletPage
+          import('./routes/passenger/my-profile/my-profile.page').then(
+            (m) => m.MyProfilePage
           ),
       },
       {
