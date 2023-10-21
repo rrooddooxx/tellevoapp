@@ -11,7 +11,7 @@ import { TabnavComponent } from '../../components/tabnav/tabnav.component';
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, TabnavComponent],
 })
-export class DashboardPage implements OnInit {
+export class PassengerDashboardPage implements OnInit {
   constructor() {}
 
   ngOnInit() {}

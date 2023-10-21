@@ -27,7 +27,7 @@ export const routes: Routes = [
     path: 'dashboard',
     loadComponent: () =>
       import('./routes/passenger/passenger.dashboard.page').then(
-        (m) => m.DashboardPage
+        (m) => m.PassengerDashboardPage
       ),
     children: [
       {
