@@ -3,4 +3,10 @@ export interface ITripCardState {
   stops: string[];
   tripDate: string;
   tripTime: string;
+  tripSeatsStatus: ITripStatus;
+}
+
+export enum ITripStatus {
+  OPEN = 'Abierto',
+  CLOSED = 'Lleno',
 }
