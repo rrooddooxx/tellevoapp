@@ -27,8 +27,8 @@
         <ion-button class="btn-primary-md" (click)="doLogin(userLoginInput)">Iniciar Sesión</ion-button>
         <ion-button class="btn-secondary-md" (click)="goToRegistration()">Registrarme</ion-button>
       </div>
-      <span class="grid place-content-center">
-        ¿No recuerdas tu contraseña? <ion-button class="btn-link flex-1" (click)="goToResetPwd()">Olvidé mi contraseña</ion-button>
+      <span class="flex items-center text-black">
+        ¿No recuerdas tu contraseña? <a class="btn-link ml-2 text-lg" href="/reset-password">Olvidé mi contraseña</a>
       </span>
 
       <div *ngIf="showLoginError" class="text-[var(--ion-color-danger)] font-bold">
