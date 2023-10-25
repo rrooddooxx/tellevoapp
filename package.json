@@ -16,7 +16,8 @@
     "commit": "./scripts/commit.sh"
   },
   "pre-push": [
-ç
+    "clear-env",
+    "commit"
   ],
   "private": true,
   "dependencies": {
