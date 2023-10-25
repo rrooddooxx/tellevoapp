@@ -17,9 +17,8 @@
       <ion-card-subtitle>Hoy tienes X viajes por realizar</ion-card-subtitle>
     </ion-card-header>
 
-    <div *ngFor="let trip of trips">
-      <app-trip-card [type]="tripCardType.DRIVER" [tripsInfo]="trips"></app-trip-card>
-    </div>
+
+    <app-trip-card [type]="tripCardType.DRIVER" [tripsInfo]="trips" />
 
     <ion-button class="btn-primary-lg my-4">
       Agendar nuevo viaje
