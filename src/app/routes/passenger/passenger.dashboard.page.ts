@@ -30,7 +30,6 @@ export class PassengerDashboardPage implements OnInit, OnDestroy {
     this.passengerStore.updateState({
       currentTripID: 'holiwi',
     });
-    console.log(this.currentState);
   }
 
   ngOnDestroy(): void {

@@ -1,9 +1,14 @@
 export interface ITripCardState {
-  passengers: string[];
-  stops: string[];
+  passengers?: string[];
+  stops?: string[];
   tripDate: string;
   tripTime: string;
-  tripSeatsStatus: ITripStatus;
+  tripSeatsStatus: string;
+  driverName?: string;
+  driverLastName?: string;
+  tripVehicleBrand?: string;
+  tripVehicleModel?: string;
+  tripVehicleID?: string;
 }
 
 export enum ITripStatus {

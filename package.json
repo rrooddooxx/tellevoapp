@@ -13,11 +13,11 @@
     "lint": "ng lint",
     "clear-env": "npm run config -- --env=clear",
     "dev-env": "npm run config -- --env=dev",
-    "commit": "./scripts/commit.sh"
+    "commit": "./scripts/commit.sh",
+    "clearcommit": "./scripts/clearcommit.sh"
   },
   "pre-push": [
-    "clear-env",
-    "commit"
+    "clearcommit"
   ],
   "private": true,
   "dependencies": {
@@ -35,8 +35,11 @@
     "@capacitor/keyboard": "5.0.6",
     "@capacitor/status-bar": "5.0.6",
     "@ionic/angular": "^7.0.0",
+    "@types/luxon": "^3.3.3",
     "@types/yargs": "^17.0.24",
+    "builder-pattern": "^2.2.0",
     "ionicons": "^7.0.0",
+    "luxon": "^3.4.3",
     "pre-push": "^0.1.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
