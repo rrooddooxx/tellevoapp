@@ -13,11 +13,11 @@
     "lint": "ng lint",
     "clear-env": "npm run config -- --env=clear",
     "dev-env": "npm run config -- --env=dev",
-    "commit": "./scripts/commit.sh"
+    "commit": "./scripts/commit.sh",
+    "clearcommit": "./scripts/clearcommit.sh"
   },
   "pre-push": [
-    "clear-env",
-    "commit"
+    "clearcommit"
   ],
   "private": true,
   "dependencies": {
