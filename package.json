@@ -15,10 +15,7 @@
     "dev-env": "npm run config -- --env=dev",
     "commit": "./scripts/commit.sh"
   },
-  "pre-push": [
-    "clear-env",
-    "commit"
-  ],
+  "pre-push": [],
   "private": true,
   "dependencies": {
     "@angular/animations": "^16.0.0",
