@@ -1,4 +1,3 @@
-
 export const environment = {
-   ENV: ''
+  ENV: '',
 };
