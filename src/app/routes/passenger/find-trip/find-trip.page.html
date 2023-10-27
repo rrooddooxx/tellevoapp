@@ -1,14 +1,14 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>find-trip</ion-title>
+    <ion-title>Encuentra un viaje!</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-
-    </ion-toolbar>
-  </ion-header>
-  <app-trip-card [type]="tripCardType.DRIVER" [tripInfo]="tripInfo" />
+  <ion-header />
+  <ion-card-header>
+    <ion-card-subtitle>Encuentra tu mejor opción!</ion-card-subtitle>
+    <ion-card-title>Viajes Disponibles</ion-card-title>
+  </ion-card-header>
+  <app-trip-card [type]="tripCardType.DRIVER" [tripsInfo]="tripsList" />
 </ion-content>

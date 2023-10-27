@@ -1,5 +1,5 @@
 <div *ngIf="type === tripCardType.DRIVER">
-  <ion-card class="card-secondary">
+  <ion-card class="card-secondary" *ngFor="let tripInfo of tripsInfo">
     <ion-card-content class="pb-1">
       <ion-card-title class="mb-2">{{ tripInfo?.tripDate || '' }} | {{ tripInfo?.tripTime || '' }}</ion-card-title>
 
@@ -28,7 +28,7 @@
           </ion-card>
         </ion-card-subtitle>
       </div>
-      <div  *ngIf="!isOpenCard" class="block" (click)="this.toggleCard()" >
+      <div *ngIf="!isOpenCard" class="block" (click)="this.toggleCard()">
         <ion-icon name="chevron-down-outline" class="text-black text-xl mx-[50%]"></ion-icon>
       </div>
       <div *ngIf="isOpenCard" class="block" (click)="this.toggleCard()">

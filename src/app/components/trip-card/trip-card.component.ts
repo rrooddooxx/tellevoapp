@@ -15,7 +15,9 @@ export class TripCardComponent implements OnInit {
   @Input() type: ITripCardType;
   tripCardType = ITripCardType;
 
-  @Input() tripInfo: ITripCardState;
+  @Input() tripsInfo: ITripCardState[];
+
+  public isOpenCard: boolean = false;
 
   public isOpenCard: boolean = false;
 
