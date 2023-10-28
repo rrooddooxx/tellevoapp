@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { IDriverState } from './driver.interfaces';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class DriverStoreService {
   private initialState: IDriverState = {
     driverName: '',

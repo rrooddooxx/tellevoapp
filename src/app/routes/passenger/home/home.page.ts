@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { TabnavComponent } from '../../../components/tabnav/tabnav.component';
+import { IPassengerState } from '../../../stores/passenger/passenger.interfaces';
+import { PassengerStoreService } from '../../../stores/passenger/passenger.service';
 import { UserModel } from '../../login/model/user.model';
 
 @Component({
@@ -15,14 +17,15 @@ import { UserModel } from '../../login/model/user.model';
 })
 export class HomePage implements OnInit {
   public userInfo: UserModel = {} as UserModel;
+  public currentState: IPassengerState;
 
-  constructor(private readonly router: Router) {}
+  constructor(
+    private readonly router: Router,
+    private readonly passengerStore: PassengerStoreService
+  ) {}
 
   ngOnInit() {
-    console.log();
-    if (this.router.getCurrentNavigation()?.extras?.state?.['user']) {
-      this.userInfo =
-        this.router.getCurrentNavigation()?.extras?.state?.['user'];
-    }
+    this.currentState = this.passengerStore.getState();
+    console.log(this.currentState);
   }
 }

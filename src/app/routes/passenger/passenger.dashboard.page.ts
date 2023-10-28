@@ -13,7 +13,6 @@ import { PassengerStoreService } from '../../stores/passenger/passenger.service'
   styleUrls: ['./passenger.dashboard.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, TabnavComponent],
-  providers: [PassengerStoreService],
 })
 export class PassengerDashboardPage implements OnInit, OnDestroy {
   public currentState: IPassengerState;
@@ -22,9 +21,10 @@ export class PassengerDashboardPage implements OnInit, OnDestroy {
   constructor(private passengerStore: PassengerStoreService) {}
 
   ngOnInit() {
-    this.storeSuscription = this.passengerStore.state$.subscribe(
-      (state) => (this.currentState = state)
-    );
+    this.storeSuscription = this.passengerStore.state$.subscribe((state) => {
+      this.currentState = state;
+      console.log('state passenger: ' + JSON.stringify(state));
+    });
   }
 
   ngOnDestroy(): void {

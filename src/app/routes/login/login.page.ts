@@ -1,11 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { Preferences } from '@capacitor/preferences';
 import { IonicModule } from '@ionic/angular';
 import { AuthModule } from '../../modules/auth/auth.module';
 import { AuthService } from '../../modules/auth/auth.service';
+import { ILoginLocalStorage } from '../../modules/domain/login-local-storage.domain';
 import { DbModule } from '../../providers/db-api/db.module';
+import { UserTypes } from '../../shared/domain/user-types.domain';
 import { UserLoginInput } from './domain/user-login-input.domain';
 import { UserModel } from './model/user.model';
 
@@ -32,20 +35,32 @@ export class LoginPage implements OnInit {
     this.clearLoginCredentials();
   }
 
-  ngOnInit() {}
+  async ngOnInit() {
+    const isLogged = await Preferences.get({
+      key: 'isLogged',
+    });
+    if (isLogged?.value) {
+      const loggedUser: ILoginLocalStorage = JSON.parse(
+        isLogged.value?.toString?.()
+      );
+      loggedUser && loggedUser.status && this.doAuthorize(loggedUser.userType);
+    }
+  }
 
   clearLoginCredentials() {
     this.userLoginInput.userEmail = '';
     this.userLoginInput.userPwd = '';
   }
 
-  doLogin(loginCredentials: UserLoginInput): UserModel | void {
+  public async doLogin(
+    loginCredentials: UserLoginInput
+  ): Promise<UserModel | void> {
     if (!loginCredentials?.userEmail || !loginCredentials?.userPwd) {
       this.showInputError = true;
       this.showLoginError = true;
     }
 
-    const loginResult = this.authService.logIn(
+    const loginResult = await this.authService.logIn(
       loginCredentials.userEmail,
       loginCredentials.userPwd
     );
@@ -54,16 +69,25 @@ export class LoginPage implements OnInit {
       this.showLoginError = true;
       return;
     }
+
+    loginResult &&
+      loginResult?.status &&
+      this.doAuthorize(loginResult.userType);
   }
 
-  doAuthorize(userInfo: UserModel): void {
-    const userInfoState: NavigationExtras = {
-      state: {
-        user: userInfo,
-      },
-    };
+  doAuthorize(userInfo: UserTypes) {
+    try {
+      const dictionary = {
+        [UserTypes.STUDENT]: () => this.router.navigate(['/passenger']),
+        [UserTypes.DRIVER]: () => this.router.navigate(['/driver']),
+        [UserTypes.ADMIN]: () => this.router.navigate(['/dashboard']),
+      };
 
-    this.router.navigate(['/dashboard'], userInfoState);
+      return dictionary[userInfo.valueOf()]();
+    } catch (error) {
+      console.error('ERROR REDIRECTING TO USER ROUTING, REASON: ' + error);
+      return this.router.navigate(['/error']);
+    }
   }
 
   goToRegistration() {
