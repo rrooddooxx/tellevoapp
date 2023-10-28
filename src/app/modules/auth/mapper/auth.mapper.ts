@@ -4,7 +4,7 @@ import { UserProfile } from '../../../providers/db-api/model/users.model';
 import { UserTypes } from '../../../shared/domain/user-types.domain';
 import { UserProfileDomain } from '../../../stores/shared/domain/user-profile.domain';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class AuthServiceMapper {
   private mapUserType(type: string): UserTypes {
     return UserTypes[type as keyof typeof UserTypes];

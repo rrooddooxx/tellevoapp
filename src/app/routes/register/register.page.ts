@@ -8,28 +8,44 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { validators } from 'src/app/utils/validators';
-import { AddUserRequest } from '../../providers/db-api/domain/users.domain';
-import { UsersRepository } from 'src/app/providers/db-api/repositories/users.repository';
 import { DbModule } from 'src/app/providers/db-api/db.module';
+import { UsersRepository } from 'src/app/providers/db-api/repositories/users.repository';
+import { validators } from 'src/app/utils/validators';
+import { AuthService } from '../../modules/auth/auth.service';
+import { INewUser } from '../../modules/domain/new-user.domain';
+import { CareerRepository } from '../../providers/db-api/repositories/careers.repository';
+import { ICareers } from './domain/careers.domain';
+import { UserTypeRegistration } from './domain/user-register-form.domain';
+import { RegisterMappers } from './mappers/register.mapper';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule, DbModule],
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DbModule,
+  ],
 })
 export class RegisterPage implements OnInit {
   public showPasswordError: boolean = false;
   public emailRegex: string = validators.emailRegex;
   public form: FormGroup;
+  public UserTypeRegistration = UserTypeRegistration;
+  public careerList: ICareers[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
+    private readonly authService: AuthService,
     private readonly userRepository: UsersRepository,
+    private careerRepository: CareerRepository,
+    private mapper: RegisterMappers,
     private router: Router
   ) {
     this.form = this.formBuilder.group({});
@@ -37,6 +53,13 @@ export class RegisterPage implements OnInit {
 
   ngOnInit() {
     this.createForm();
+    this.getCareers();
+  }
+
+  getCareers() {
+    this.careerRepository.getCareers().subscribe((careers) => {
+      this.careerList = this.mapper.mapCareerModelToDomain(careers);
+    });
   }
 
   createForm() {
@@ -56,18 +79,17 @@ export class RegisterPage implements OnInit {
         Validators.minLength(8),
         Validators.maxLength(9),
       ]),
-      email: new FormControl('', [Validators.required]),
+      email: new FormControl('', [
+        Validators.required,
+        Validators.pattern(this.emailRegex),
+      ]),
       tel: new FormControl('', [Validators.required]),
       gender: new FormControl('', [
         Validators.required,
         Validators.minLength(1),
         Validators.maxLength(2),
       ]),
-      usertype: new FormControl('', [
-        Validators.required,
-        Validators.min(1),
-        Validators.max(5),
-      ]),
+      usertype: new FormControl(UserTypeRegistration, [Validators.required]),
       career: new FormControl(''),
       password: new FormControl('', [
         Validators.required,
@@ -98,8 +120,8 @@ export class RegisterPage implements OnInit {
     }
   }
 
-  doRegister() {
-    const newUser: AddUserRequest = {
+  async doRegister() {
+    const newUser: INewUser = {
       user_name: this.form.get('name')?.value,
       user_rut: this.form.get('rut')?.value,
       user_pwd: this.form.get('password')?.value,
@@ -107,20 +129,18 @@ export class RegisterPage implements OnInit {
       user_phone: this.form.get('tel')?.value,
       user_lastname: this.form.get('lastname')?.value,
       user_gender: this.form.get('gender')?.value,
-      user_type: this.form.get('usertype')?.value,
+      user_type: this.mapper.mapUserTypeValueToDomain(
+        this.form.get('usertype')?.value
+      ),
       user_career: this.form.get('career')?.value,
-      user_ranking: 0
+      user_ranking: 0,
     };
 
-    this.userRepository.addUser(newUser).subscribe();
+    await this.authService.registerNewUser(newUser);
 
-    const userInfoState: NavigationExtras = {
-      state: {
-        user: newUser,
-      },
-    };
-
-    this.router.navigate(['/dashboard'], userInfoState);
+    this.authService.authorizedLoggedRoutes(
+      this.mapper.mapUserTypeValueToDomain(this.form.get('usertype')?.value)
+    );
   }
 
   clearFields() {

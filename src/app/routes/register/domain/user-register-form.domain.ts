@@ -5,3 +5,8 @@ export interface UserRegisterForm {
   user_email: string;
   rut: string;
 }
+
+export enum UserTypeRegistration {
+  DRIVER = 'DRIVER',
+  STUDENT = 'STUDENT',
+}

@@ -3,9 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { UserProfileDomain } from '../shared/domain/user-profile.domain';
 import { IPassengerState } from './passenger.interfaces';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class PassengerStoreService {
   private initialState: IPassengerState = {
     currentTripID: '',
