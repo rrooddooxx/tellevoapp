@@ -3,8 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { AuthModule } from '../../modules/auth/auth.module';
+import { AuthService } from '../../modules/auth/auth.service';
 import { DbModule } from '../../providers/db-api/db.module';
-import { UsersRepository } from '../../providers/db-api/repositories/users.repository';
 import { UserLoginInput } from './domain/user-login-input.domain';
 import { UserModel } from './model/user.model';
 
@@ -13,7 +14,7 @@ import { UserModel } from './model/user.model';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, DbModule],
+  imports: [IonicModule, CommonModule, FormsModule, DbModule, AuthModule],
 })
 export class LoginPage implements OnInit {
   public userLoginInput: UserLoginInput = {
@@ -26,20 +27,12 @@ export class LoginPage implements OnInit {
 
   constructor(
     private readonly router: Router,
-    private readonly usersRepository: UsersRepository
+    private readonly authService: AuthService
   ) {
     this.clearLoginCredentials();
   }
 
-  ngOnInit() {
-    this.getUsers();
-  }
-
-  async getUsers() {
-    this.usersRepository.getUsers().subscribe((data) => {
-      this.userDB = data;
-    });
-  }
+  ngOnInit() {}
 
   clearLoginCredentials() {
     this.userLoginInput.userEmail = '';
@@ -52,17 +45,15 @@ export class LoginPage implements OnInit {
       this.showLoginError = true;
     }
 
-    const loginResult: UserModel | undefined = this.userDB.find(
-      (user) =>
-        user.user_email === loginCredentials.userEmail &&
-        user.user_pwd === loginCredentials.userPwd
+    const loginResult = this.authService.logIn(
+      loginCredentials.userEmail,
+      loginCredentials.userPwd
     );
+
     if (!loginResult) {
       this.showLoginError = true;
       return;
     }
-
-    this.doAuthorize(loginResult);
   }
 
   doAuthorize(userInfo: UserModel): void {

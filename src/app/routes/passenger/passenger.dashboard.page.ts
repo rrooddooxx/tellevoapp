@@ -25,12 +25,6 @@ export class PassengerDashboardPage implements OnInit, OnDestroy {
     this.storeSuscription = this.passengerStore.state$.subscribe(
       (state) => (this.currentState = state)
     );
-
-    console.log(this.currentState);
-    this.passengerStore.updateState({
-      currentTripID: 'holiwi',
-    });
-    console.log(this.currentState);
   }
 
   ngOnDestroy(): void {
