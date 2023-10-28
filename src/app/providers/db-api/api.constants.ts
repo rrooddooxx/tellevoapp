@@ -8,4 +8,5 @@ export enum ApiConstants {
   PATH_VEHICLE = '/vehicle',
   USERBYEMAIL_QUERY_PARAM = 'user_email',
   PATH_RPC_ACTIVE_TRIPS = '/rpc/get_active_trips',
+  PATH_RPC_USER_PROFILE = '/rpc/user_profile',
 }

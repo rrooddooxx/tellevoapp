@@ -11,9 +11,9 @@
         <ion-input class="input-primary rounded-t-xl" label="Nombre" labelPlacement="floating" error-text="Ingrese su nombre" formControlName="name"></ion-input>
         <ion-input class="input-primary" label="Apellido" labelPlacement="floating" error-text="Ingrese su apellido" formControlName="lastname"></ion-input>
         <ion-input class="input-primary" label="Rut" labelPlacement="floating" helper-text="Ingresar RUT sin puntos ni guión" error-text="Debe ingresar un RUT válido" formControlName="rut"></ion-input>
-        <ion-input class="input-primary" label="Email" labelPlacement="floating" error-text="Ingrese un email válido" type="email" formControlName="email" placeholder="email@example.com" pattern={{emailRegex}}></ion-input>
+        <ion-input class="input-primary" label="Email" labelPlacement="floating" error-text="Ingrese un email válido" type="email" formControlName="email" placeholder="email@example.com"></ion-input>
         <ion-input class="input-primary" label="Teléfono" labelPlacement="floating" helper-text="Ingresar teléfono sin +56" error-text="Debe ingresar un número de teléfono válido" formControlName="tel" type="number" min="100000000" max="999999999"></ion-input>
-        
+
         <div class="grid py-4 px-2">
           <label class="font-bold" for="gender">Género</label>
           <div class="grid gap-4 mt-2">
@@ -44,20 +44,20 @@
           <label class="font-bold" for="gender">Tipo de Usuario</label>
           <div class="flex gap-8 mt-2">
             <div class="flex gap-2">
-              <input formControlName="usertype" id="passenger" name="usertype" type="radio" value="4" />
+              <input formControlName="usertype" id="passenger" name="usertype" type="radio" [value]="UserTypeRegistration.STUDENT.toString()" />
               <label for="passenger">Pasajero</label>
             </div>
             <div class="flex gap-2">
-              <input formControlName="usertype" id="driver" name="usertype" type="radio" value="5" />
+              <input formControlName="usertype" id="driver" name="usertype" type="radio" [value]="UserTypeRegistration.DRIVER.toString()" />
               <label for="driver">Conductor</label>
             </div>
           </div>
         </div>
-        
+
         <div class="grid py-4 px-2 gap-2">
           <label for="career">Carrera</label>
           <select class="bg-white" name="career" id="career" formControlName="career">
-            <option value="1">Carrera prueba</option>
+            <option value="{{career.careerId}}" *ngFor="let career of careerList">{{career.careerName}}</option>
           </select>
         </div>
 

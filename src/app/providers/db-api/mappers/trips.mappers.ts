@@ -1,8 +1,10 @@
+import { Injectable } from '@angular/core';
 import { Builder } from 'builder-pattern';
 import { DateTime } from 'luxon';
 import { ITripCardState } from '../../../components/trip-card/trip-card.interfaces';
 import { UserTripInfoRPCModel } from '../model/active-trips.model';
 
+@Injectable({ providedIn: 'root' })
 export class TripMappers {
   private mapEachActiveTripToDomain(
     trip: UserTripInfoRPCModel

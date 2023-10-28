@@ -1,10 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { Preferences } from '@capacitor/preferences';
 import { IonicModule } from '@ionic/angular';
+import { AuthModule } from '../../modules/auth/auth.module';
+import { AuthService } from '../../modules/auth/auth.service';
+import { ILoginLocalStorage } from '../../modules/domain/login-local-storage.domain';
 import { DbModule } from '../../providers/db-api/db.module';
-import { UsersRepository } from '../../providers/db-api/repositories/users.repository';
 import { UserLoginInput } from './domain/user-login-input.domain';
 import { UserModel } from './model/user.model';
 
@@ -13,7 +16,7 @@ import { UserModel } from './model/user.model';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, DbModule],
+  imports: [IonicModule, CommonModule, FormsModule, DbModule, AuthModule],
 })
 export class LoginPage implements OnInit {
   public userLoginInput: UserLoginInput = {
@@ -26,19 +29,23 @@ export class LoginPage implements OnInit {
 
   constructor(
     private readonly router: Router,
-    private readonly usersRepository: UsersRepository
+    private readonly authService: AuthService
   ) {
     this.clearLoginCredentials();
   }
 
-  ngOnInit() {
-    this.getUsers();
-  }
-
-  async getUsers() {
-    this.usersRepository.getUsers().subscribe((data) => {
-      this.userDB = data;
+  async ngOnInit() {
+    const isLogged = await Preferences.get({
+      key: 'isLogged',
     });
+    if (isLogged?.value) {
+      const loggedUser: ILoginLocalStorage = JSON.parse(
+        isLogged.value?.toString?.()
+      );
+      loggedUser &&
+        loggedUser.status &&
+        this.authService.authorizedLoggedRoutes(loggedUser.userType);
+    }
   }
 
   clearLoginCredentials() {
@@ -46,33 +53,27 @@ export class LoginPage implements OnInit {
     this.userLoginInput.userPwd = '';
   }
 
-  doLogin(loginCredentials: UserLoginInput): UserModel | void {
+  public async doLogin(
+    loginCredentials: UserLoginInput
+  ): Promise<UserModel | void> {
     if (!loginCredentials?.userEmail || !loginCredentials?.userPwd) {
       this.showInputError = true;
       this.showLoginError = true;
     }
 
-    const loginResult: UserModel | undefined = this.userDB.find(
-      (user) =>
-        user.user_email === loginCredentials.userEmail &&
-        user.user_pwd === loginCredentials.userPwd
+    const loginResult = await this.authService.logIn(
+      loginCredentials.userEmail,
+      loginCredentials.userPwd
     );
+
     if (!loginResult) {
       this.showLoginError = true;
       return;
     }
 
-    this.doAuthorize(loginResult);
-  }
-
-  doAuthorize(userInfo: UserModel): void {
-    const userInfoState: NavigationExtras = {
-      state: {
-        user: userInfo,
-      },
-    };
-
-    this.router.navigate(['/dashboard'], userInfoState);
+    loginResult &&
+      loginResult?.status &&
+      this.authService.authorizedLoggedRoutes(loginResult.userType);
   }
 
   goToRegistration() {

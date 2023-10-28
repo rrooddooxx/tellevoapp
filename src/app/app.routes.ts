@@ -24,7 +24,7 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'dashboard',
+    path: 'passenger',
     loadComponent: () =>
       import('./routes/passenger/passenger.dashboard.page').then(
         (m) => m.PassengerDashboardPage
@@ -72,8 +72,11 @@ export const routes: Routes = [
     path: 'driver',
     loadComponent: () =>
       import('./routes/driver/driver.page').then((m) => m.DriverPage),
-      children: [
-        
-      ]
+    children: [],
+  },
+  {
+    path: 'error',
+    loadComponent: () =>
+      import('./routes/error/error.page').then((m) => m.ErrorPage),
   },
 ];
