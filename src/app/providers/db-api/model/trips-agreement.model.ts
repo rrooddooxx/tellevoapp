@@ -7,7 +7,7 @@ export class TripAgreementModel {
   trip_agreement_status: TypeAgreementStatus;
 }
 
-enum TypeAgreementStatus {
+export enum TypeAgreementStatus {
   ACCEPTED = 'ACCEPTED',
   REJECTED = 'REJECTED',
   WAITING_FOR_APPROVAL = 'WAITING_FOR_APPROVAL',

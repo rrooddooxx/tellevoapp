@@ -10,19 +10,25 @@ import {
 } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { DbModule } from 'src/app/providers/db-api/db.module';
+import { UsersRepository } from 'src/app/providers/db-api/repositories/users.repository';
 import { EditUserRequest } from '../../providers/db-api/domain/users.domain';
 import { validators } from '../../utils/validators';
 import { UserModel } from '../login/model/user.model';
 import { ResetPwdInputForm } from './domain/reset-pwd-input.domain';
-import { UsersRepository } from 'src/app/providers/db-api/repositories/users.repository';
-import { DbModule } from 'src/app/providers/db-api/db.module';
 
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.page.html',
   styleUrls: ['./reset-password.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule, DbModule],
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DbModule,
+  ],
 })
 export class ResetPasswordPage implements OnInit {
   public form: FormGroup;
