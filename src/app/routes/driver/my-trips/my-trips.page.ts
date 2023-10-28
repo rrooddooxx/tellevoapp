@@ -3,20 +3,19 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { TabnavComponent } from '../../components/tabnav/tabnav.component';
-import { UserModel } from '../login/model/user.model';
+import { TabnavComponent } from '../../../components/tabnav/tabnav.component';
 import { ITripCardType } from 'src/app/shared/enums/trip-card.enum';
 import { ITripCardState, ITripStatus } from 'src/app/components/trip-card/trip-card.interfaces';
 import { TripCardComponent } from 'src/app/components/trip-card/trip-card.component';
 
 @Component({
-  selector: 'driver-app-dashboard',
-  templateUrl: './driver.page.html',
-  styleUrls: ['./driver.page.scss'],
+  selector: 'my-trips-app',
+  templateUrl: './my-trips.page.html',
+  styleUrls: ['./my-trips.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, TabnavComponent, TripCardComponent],
 })
-export class DriverPage implements OnInit {
+export class DriverTripsPage implements OnInit {
   public openCard: boolean = false;
   tripCardType = ITripCardType;
 

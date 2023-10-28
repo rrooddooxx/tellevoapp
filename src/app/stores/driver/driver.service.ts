@@ -5,12 +5,14 @@ import { IDriverState } from './driver.interfaces';
 @Injectable()
 export class DriverStoreService {
   private initialState: IDriverState = {
-    driverName: '',
+    driverID: 0,
+    currentTripID: 0,
+    vehicleID: 0
   };
   private state = new BehaviorSubject<IDriverState>(this.initialState);
   public state$ = this.state.asObservable();
 
-  constructor() {}
+  constructor() { }
 
   updateState(newState: IDriverState): void {
     return this.state.next({
