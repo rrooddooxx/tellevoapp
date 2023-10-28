@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ApiService } from './providers/db-api/api.service';
+import { TripMappers } from './providers/db-api/mappers/trips.mappers';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ import { ApiService } from './providers/db-api/api.service';
   styleUrls: ['app.component.scss'],
   standalone: true,
   imports: [IonicModule, ReactiveFormsModule, HttpClientModule],
-  providers: [ApiService],
+  providers: [ApiService, TripMappers],
 })
 export class AppComponent {
   constructor() {}

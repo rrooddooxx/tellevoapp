@@ -11,12 +11,12 @@ export class TripModel {
   trip_final_status: TripFinalStatus;
 }
 
-enum TripStatus {
+export enum TripStatus {
   OPEN = 'OPEN',
   CLOSED = 'CLOSED',
 }
 
-enum TripFinalStatus {
+export enum TripFinalStatus {
   COMPLETED = 'COMPLETED',
   NOT_COMPLETED = 'NOT_COMPLETED',
   CANCELLED = 'CANCELLED',

@@ -15,9 +15,15 @@ export class TripCardComponent implements OnInit {
   @Input() type: ITripCardType;
   tripCardType = ITripCardType;
 
-  @Input() tripInfo: ITripCardState;
+  @Input() tripsInfo: ITripCardState[];
+
+  public isOpenCard: boolean = false;
 
   constructor() {}
 
   ngOnInit() {}
+
+  toggleCard() {
+    this.isOpenCard = !this.isOpenCard;
+  }
 }

@@ -75,3 +75,6 @@ Thumbs.db
 # lock files
 package-lock.json
 yarn.lock
+
+# cred
+/src/environments/environment.ts
