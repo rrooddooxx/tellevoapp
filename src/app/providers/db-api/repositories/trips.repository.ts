@@ -12,7 +12,7 @@ export class TripsRepository {
     private readonly httpClient: HttpClient,
     private readonly repositoryConfig: TripsRepositoryConfig,
     private readonly config: ApiDatabaseConfig
-  ) {}
+  ) { }
 
   getTrips(): Observable<TripModel[]> {
     return this.httpClient.get<TripModel[]>(
@@ -26,5 +26,12 @@ export class TripsRepository {
       this.repositoryConfig.getActiveTripsRPCUrl(),
       this.config.getHeadersBody()
     );
+  }
+
+  getTripsByDriverIdRPC(driverId: string): Observable<UserTripInfoRPCModel[]> {
+    return this.httpClient.get<UserTripInfoRPCModel[]>(
+      this.repositoryConfig.getTripsByDriverIdRPCUrl(driverId),
+      this.config.getHeadersBody()
+    )
   }
 }

@@ -1,5 +1,6 @@
+import { UserProfileDomain } from "../shared/domain/user-profile.domain";
+
 export interface IDriverState {
-  driverID: number;
   currentTripID: number;
-  vehicleID: number;
+  userProfile: UserProfileDomain;
 }
