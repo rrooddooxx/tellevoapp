@@ -4,7 +4,7 @@ import { ApiConstants } from '../api.constants';
 export class TripsRepositoryConfig {
   private baseUrl: string = `${ApiConstants.BASE_URL}`;
 
-  constructor() {}
+  constructor() { }
 
   getTripsUrl(): string {
     return `${this.baseUrl}${ApiConstants.PATH_TRIPS}`;
@@ -16,5 +16,9 @@ export class TripsRepositoryConfig {
 
   getTakenTripsByUserID(userID: string, userType: UserTypes): string {
     return `${this.baseUrl}${ApiConstants.PATH_RPC_ACTIVE_TRIPS}`;
+  }
+
+  getTripsByDriverIdRPCUrl(driverID: number): string {
+    return `${this.baseUrl}${ApiConstants.PATH_RPC_ACTIVE_TRIPS}?user_id=eq.${driverID}`;
   }
 }

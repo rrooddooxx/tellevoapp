@@ -1,0 +1,79 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Driver Dashboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" overflow-scroll="false">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Driver Dashboard</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <main class="flex flex-col items-center">
+    <ion-card-header class="text-center">
+      <ion-card-title class="text-black">Tus viajes</ion-card-title>
+      <ion-card-subtitle>Tienes {{trips.length}} viajes por realizar</ion-card-subtitle>
+    </ion-card-header>
+
+
+    <app-trip-card [type]="tripCardType.DRIVER" [tripsInfo]="trips" />
+
+    <ion-button class="btn-primary-lg my-4" id="open-modal" expand="block">
+      Agendar nuevo viaje
+    </ion-button>
+
+    <ion-modal trigger="open-modal">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-buttons slot="start">
+              <ion-button (click)="cancel()">Cancel</ion-button>
+            </ion-buttons>
+            <ion-title>Nuevo viaje</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <div class="grid justify-items-center gap-4">
+            <ion-card class="card text-black bg-white divide-y-2 divide-black mt-8" [(ngModel)]="createTripInput">
+              <ion-item>
+                <ion-input
+                  label="Inicio del viaje"
+                  labelPlacement="stacked"
+                  type="text"
+                  placeholder="DuocUC Viña"
+                  [(ngModel)]="createTripInput.pickup_ref"
+                ></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input
+                  label="Destino del viaje"
+                  labelPlacement="stacked"
+                  type="text"
+                  placeholder="Plaza Viña"
+                  [(ngModel)]="createTripInput.dropoff_ref"
+                ></ion-input>
+              </ion-item>
+              <ion-item>
+                <label for="datetime" class="mr-2">Horario salida:</label>
+                <ion-datetime-button datetime="datetime"></ion-datetime-button>
+              </ion-item>
+  
+              <ion-modal [keepContentsMounted]="true">
+                <ng-template>
+                  <ion-datetime id="datetime" presentation="date-time" [preferWheel]="true" [(ngModel)]="createTripInput.trip_datetime"
+                  (ionChange)="showDate()"></ion-datetime>
+                </ng-template>
+              </ion-modal>
+            </ion-card>
+  
+            <ion-button class="btn-primary-md" (click)="createTrip()">CREAR VIAJE</ion-button>
+          </div>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+
+  </main>
+</ion-content>
+<!-- <app-tabnav></app-tabnav> -->
