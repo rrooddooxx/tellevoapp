@@ -25,6 +25,8 @@
           </div>
           <ion-card>
             <img class="object-cover" src="/assets/imgs/map_1.png" alt="mapa" />
+          </ion-card> <ion-card>
+            <app-action-sheet [tripID]="tripInfo.id" [actionHeader]=" actionHeader" [userID]="userID" />
           </ion-card>
           <div *ngIf="showActionButtons" class="flex justify-center">
             <app-action-sheet [tripID]="tripInfo.id" [actionHeader]=" actionHeader" [userID]="userID" />
