@@ -20,6 +20,10 @@ export class TripsRepositoryConfig {
     return `${this.baseUrl}${ApiConstants.PATH_RPC_ACTIVE_TRIPS}`;
   }
 
+  getOpenActiveTripsRPCUrl(): string {
+    return `${this.baseUrl}${ApiConstants.PATH_RPC_OPEN_ACTIVE_TRIPS}`;
+  }
+
   getTakenTripsByUserID(userID: string, userType: UserTypes): string {
     return `${this.baseUrl}${ApiConstants.PATH_RPC_ACTIVE_TRIPS}`;
   }

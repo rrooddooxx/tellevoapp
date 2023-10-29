@@ -29,6 +29,13 @@ export class TripsRepository {
     );
   }
 
+  getOpenActiveTripsRPC(): Observable<UserTripInfoRPCModel[]> {
+    return this.httpClient.get<UserTripInfoRPCModel[]>(
+      this.repositoryConfig.getOpenActiveTripsRPCUrl(),
+      this.config.getHeadersBody()
+    );
+  }
+
   getTripsByDriverIdRPC(driverId: number): Observable<UserTripInfoRPCModel[]> {
     return this.httpClient.get<UserTripInfoRPCModel[]>(
       this.repositoryConfig.getTripsByDriverIdRPCUrl(driverId),
