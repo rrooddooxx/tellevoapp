@@ -4,9 +4,17 @@ if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
   exit 1
 fi
 
-git rm ./src/environments/environment.ts
-git rm ./src/environments/environment.prod.ts
-git rm ./src/environments/environment.hmr.ts
+file1="./src/environments/environment.ts"
+file2="./src/environments/environment.prod.ts"
+file3="./src/environments/environment.hmr.ts"
+
+if [ -f "$file1" ] && [ -f "$file2" ] && [ -f "$file3" ]; then
+  echo "Environment files exist. Deleting them now before commit..."
+  git rm "$file1" "$file2" "$file3"
+  echo "Files deleted."
+else
+  echo "One or more files do not exist. Aborting."
+fi
 # If the above git rm commands are successful, then commit
 if git commit -m "clear commit"; then
   echo "CLEAN!!"
