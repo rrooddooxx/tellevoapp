@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Preferences } from '@capacitor/preferences';
 import { IonicModule } from '@ionic/angular';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ITabElements } from '../../components/domain/tabnav-elements.interface';
 import { TabnavComponent } from '../../components/tabnav/tabnav.component';
 import { AuthService } from '../../modules/auth/auth.service';
@@ -22,12 +22,10 @@ import { passengerTabs } from './passenger.tabnav.domain';
 export class PassengerDashboardPage implements OnInit {
   public passengerTabNavList: ITabElements[] = passengerTabs;
   public currentState$: Observable<IPassengerState>;
-  private storeSuscription: Subscription;
 
   constructor(
     private passengerStore: PassengerStoreService,
-    private authService: AuthService,
-    private changeDetectorRef: ChangeDetectorRef
+    private authService: AuthService
   ) {}
 
   async getUserIDfromSessionStorage() {
