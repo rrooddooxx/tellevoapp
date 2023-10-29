@@ -18,7 +18,7 @@ export class TripsRepositoryConfig {
     return `${this.baseUrl}${ApiConstants.PATH_RPC_ACTIVE_TRIPS}`;
   }
 
-  getTripsByDriverIdRPCUrl(driverID: string): string {
+  getTripsByDriverIdRPCUrl(driverID: number): string {
     return `${this.baseUrl}${ApiConstants.PATH_RPC_ACTIVE_TRIPS}?user_id=eq.${driverID}`;
   }
 }
