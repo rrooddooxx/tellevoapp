@@ -58,7 +58,7 @@ export class FindTripPage implements OnInit {
   }
 
   getActiveTrips() {
-    return this.tripsRepository.getActiveTripsRPC().subscribe((trips) => {
+    return this.tripsRepository.getOpenActiveTripsRPC().subscribe((trips) => {
       this.tripsList = this.mapper.mapActiveTripsToDomain(trips);
     });
   }
