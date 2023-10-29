@@ -1,4 +1,5 @@
 export interface ITripCardState {
+  id?: string;
   passengers?: string[];
   stops?: string[];
   tripDate: string;
@@ -14,4 +15,12 @@ export interface ITripCardState {
 export enum ITripStatus {
   OPEN = 'Abierto',
   CLOSED = 'Lleno',
+}
+
+export interface IActionButton {
+  text?: string;
+  role?: string;
+  data?: {
+    action?: string;
+  };
 }

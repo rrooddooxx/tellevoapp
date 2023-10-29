@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 mkdir ./src/environments/
 touch ./src/environments/environment.ts

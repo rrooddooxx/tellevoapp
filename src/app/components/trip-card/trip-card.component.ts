@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { ActionSheetButton, IonicModule } from '@ionic/angular';
 import { ITripCardType } from '../../shared/enums/trip-card.enum';
+import { ActionSheetComponent } from '../action-sheet/action-sheet.component';
 import { ITripCardState } from './trip-card.interfaces';
 
 @Component({
@@ -9,13 +10,17 @@ import { ITripCardState } from './trip-card.interfaces';
   selector: 'app-trip-card',
   templateUrl: './trip-card.component.html',
   styleUrls: ['./trip-card.component.scss'],
-  imports: [CommonModule, IonicModule],
+  imports: [CommonModule, IonicModule, ActionSheetComponent],
 })
 export class TripCardComponent implements OnInit {
   @Input() type: ITripCardType;
   tripCardType = ITripCardType;
 
+  @Input() actionButtons: ActionSheetButton[];
+  @Input() actionHeader: string;
+
   @Input() tripsInfo: ITripCardState[];
+  @Input() userID: string;
 
   public isOpenCard: boolean = false;
 

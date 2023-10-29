@@ -4,11 +4,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" *ngIf="currentState$ | async as currentState">
   <ion-header />
   <ion-card-header>
     <ion-card-subtitle>Encuentra tu mejor opción!</ion-card-subtitle>
     <ion-card-title>Viajes Disponibles</ion-card-title>
   </ion-card-header>
-  <app-trip-card [type]="tripCardType.DRIVER" [tripsInfo]="tripsList" />
+  <app-trip-card [type]="tripCardType.DRIVER" [tripsInfo]="tripsList" [actionButtons]="actionSheetButtons" [actionHeader]="actionHeader" [userID]="userID" />
 </ion-content>

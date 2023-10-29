@@ -10,5 +10,7 @@
     <ion-card-subtitle>Encuentra tu mejor opción!</ion-card-subtitle>
     <ion-card-title>Viajes Disponibles</ion-card-title>
   </ion-card-header>
+  <p>Hola, {{storeState.userProfile.user_lastname}}!</p>
+
   <app-trip-card [type]="tripCardType.DRIVER" [tripsInfo]="tripsList" />
 </ion-content>
