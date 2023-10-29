@@ -16,7 +16,9 @@ export class TripsAgreementRepository {
     private readonly config: ApiDatabaseConfig
   ) {}
 
-  private baseUrl: string = `${ApiConstants.BASE_URL}${ApiConstants.PATH_TRIPS_AGREEMENT}`;
+  private baseUrl: string = `${this.config.getBaseUrl()}${
+    ApiConstants.PATH_TRIPS_AGREEMENT
+  }`;
   private bookingAgreementResult: boolean = false;
 
   getTripAgreements(): Observable<TripAgreementModel[]> {
@@ -26,9 +28,29 @@ export class TripsAgreementRepository {
     );
   }
 
-  getTripsTakenByStudentID(studentId: number): Observable<TakenTripModel> {
-    return this.httpClient.get<TakenTripModel>(
-      `${this.config.getBaseUrl()}?student_id=$eq.${studentId.toString()}$trip_agreement_status=eq.${TypeAgreementStatus.ACCEPTED.toString()}`,
+  getWaitingTripsByStudentID(studentId: string): Observable<TakenTripModel[]> {
+    return this.httpClient.get<TakenTripModel[]>(
+      `${
+        this.baseUrl
+      }?student_id=eq.${studentId.toString()}&trip_agreement_status=eq.${TypeAgreementStatus.WAITING_FOR_APPROVAL.toString()}`,
+      this.config.getHeadersBody()
+    );
+  }
+
+  getRejectedTripsByStudentID(studentId: string): Observable<TakenTripModel[]> {
+    return this.httpClient.get<TakenTripModel[]>(
+      `${
+        this.baseUrl
+      }?student_id=eq.${studentId.toString()}&trip_agreement_status=eq.${TypeAgreementStatus.REJECTED.toString()}`,
+      this.config.getHeadersBody()
+    );
+  }
+
+  getAcceptedTripsByStudentID(studentId: string): Observable<TakenTripModel[]> {
+    return this.httpClient.get<TakenTripModel[]>(
+      `${
+        this.baseUrl
+      }?student_id=eq.${studentId.toString()}&trip_agreement_status=eq.${TypeAgreementStatus.ACCEPTED.toString()}`,
       this.config.getHeadersBody()
     );
   }

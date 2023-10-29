@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { Builder } from 'builder-pattern';
 import { DateTime } from 'luxon';
 import { ITripCardState } from '../../../components/trip-card/trip-card.interfaces';
+import { IAcceptedTrips } from '../../../routes/passenger/trips/domain/trip-lists.domain';
 import { UserTripInfoRPCModel } from '../model/active-trips.model';
+import { TakenTripModel } from '../model/trips.model';
 
 @Injectable({ providedIn: 'root' })
 export class TripMappers {
@@ -27,5 +29,27 @@ export class TripMappers {
     trips: UserTripInfoRPCModel[]
   ): ITripCardState[] {
     return trips.map((trip) => this.mapEachActiveTripToDomain(trip));
+  }
+
+  private mapEachAcceptedTripToDomain(
+    tripAgreement: TakenTripModel
+  ): IAcceptedTrips {
+    return Builder<IAcceptedTrips>()
+      .tripID(tripAgreement.trip_id)
+      .tripAgreementID(tripAgreement.id)
+      .build();
+  }
+
+  /*  mapAcceptedTripsToDomain(tripAgreements: TakenTripModel[]): IAcceptedTrips[] {
+    return tripAgreements.map((agreement) =>
+      this.mapEachAcceptedTripToDomain(agreement)
+    );
+  } */
+
+  mapTripsToIDList(tripAgreements: TakenTripModel[]) {
+    return tripAgreements.reduce<number[]>((acc, agreement) => {
+      acc.push(agreement.trip_id);
+      return acc;
+    }, []);
   }
 }

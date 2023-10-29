@@ -4,10 +4,16 @@ import { ApiConstants } from '../api.constants';
 export class TripsRepositoryConfig {
   private baseUrl: string = `${ApiConstants.BASE_URL}`;
 
-  constructor() { }
+  constructor() {}
 
   getTripsUrl(): string {
     return `${this.baseUrl}${ApiConstants.PATH_TRIPS}`;
+  }
+
+  getActiveTripsByTripIDsRPCUrl(ids: number[] = []): string {
+    return `${this.baseUrl}${
+      ApiConstants.PATH_RPC_ACTIVE_TRIPS
+    }?trip_id=in.(${ids.join(',')})`;
   }
 
   getActiveTripsRPCUrl(): string {
