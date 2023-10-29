@@ -10,6 +10,3 @@ git commit -c "clear commit"
 
 
 echo "CLEAN!!"
-
-
-
