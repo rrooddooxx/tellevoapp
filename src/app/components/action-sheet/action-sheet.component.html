@@ -1,7 +1,7 @@
-<p>
+<div>
   <ion-button [id]="tripID">Reservar</ion-button>
   <ion-button (click)="updateForceActiveTripsReload()">Refrescar</ion-button>
   <ion-action-sheet trigger={{tripID}} [header]="actionHeader" [buttons]="actionButtons"></ion-action-sheet>
 
   <ion-alert [isOpen]="isAlertOpen" (didDismiss)="setOpen(false)" />
-</p>
+</div>
