@@ -10,7 +10,9 @@ file3="./src/environments/environment.hmr.ts"
 
 if [ -f "$file1" ] && [ -f "$file2" ] && [ -f "$file3" ]; then
   echo "Environment files exist. Deleting them now before commit..."
-  git rm "$file1" "$file2" "$file3"
+  git rm "$file1"
+  git rm "$file2"
+  git rm "$file3"
   echo "Files deleted."
 else
   echo "One or more files do not exist. Aborting."
