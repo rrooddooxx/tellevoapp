@@ -17,7 +17,7 @@ if [ -f "$file1" ]; then
 else
   echo "File do not exist. Aborting."
 fi
-if [ -f "$file1" ]; then
+if [ -f "$file2" ]; then
   echo "PROD Environment file exists. Deleting it before commit..."
   rm "$file2"
   echo "File deleted."
