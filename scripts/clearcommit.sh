@@ -7,16 +7,19 @@ fi
 file1="/src/environments/environment.ts"
 file2="/src/environments/environment.prod.ts"
 
-if [ -f "$file1" ] || [ -f "$file2" ]; then
-  echo "Environment files exist. Deleting them now before commit..."
+if [ -f "$file1" ]; then
+  echo "DEV Environment file exists. Deleting it before commit..."
   git rm "$file1"
-  git rm "$file2"
-  git rm "$file3"
-  echo "Files deleted."
+  echo "File deleted."
 else
-  pwd
-  echo "$file1" "$file2"
-  echo "One or more files do not exist. Aborting."
+  echo "File do not exist. Aborting."
+fi
+if [ -f "$file1" ]; then
+  echo "PROD Environment file exists. Deleting it before commit..."
+  git rm "$file2"
+  echo "File deleted."
+else
+  echo "File do not exist. Aborting."
 fi
 # If the above git rm commands are successful, then commit
 if git commit -m "clear commit"; then
