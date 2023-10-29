@@ -1,11 +1,13 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Preferences } from '@capacitor/preferences';
+import { Builder } from 'builder-pattern';
 import { Subscription, lastValueFrom } from 'rxjs';
 import { UsersRepositoryMappers } from '../../providers/db-api/mappers/users.mappers';
 import { UserProfile } from '../../providers/db-api/model/users.model';
 import { UsersRepository } from '../../providers/db-api/repositories/users.repository';
 import { UserTypes } from '../../shared/domain/user-types.domain';
+import { DriverStoreService } from '../../stores/driver/driver.service';
 import { IPassengerState } from '../../stores/passenger/passenger.interfaces';
 import { PassengerStoreService } from '../../stores/passenger/passenger.service';
 import { ILoginLocalStorage } from '../domain/login-local-storage.domain';
@@ -25,6 +27,7 @@ export class AuthService implements OnInit {
     private readonly usersRepository: UsersRepository,
     private readonly mapper: AuthServiceMapper,
     private passengerStore: PassengerStoreService,
+    private driverStore: DriverStoreService,
     private userRepository: UsersRepository,
     private usersRepositoryMapper: UsersRepositoryMappers,
     private router: Router
@@ -36,9 +39,30 @@ export class AuthService implements OnInit {
     );
   }
 
+  public async getUserProfile(userId: number): Promise<ILoginLocalStorage> {
+    try {
+      const userProfiles = await lastValueFrom(
+        this.usersRepository.getUserProfileById(userId)
+      );
+      const userType = this.setUserProfile(userProfiles[0]);
+      return Builder<ILoginLocalStorage>()
+        .status(true)
+        .userType(userType)
+        .userID(userProfiles[0].user_id)
+        .build();
+    } catch (error) {
+      return Promise.reject('could not find user profile, error: ' + error);
+    }
+  }
+
   private setUserProfile(userProfile: UserProfile): UserTypes {
     const profile = this.mapper.mapUserTypeIntoStore(userProfile);
-    this.passengerStore.setUserProfile(profile);
+
+    if (profile.type_name === UserTypes.STUDENT)
+      this.passengerStore.setUserProfile(profile);
+    if (profile.type_name === UserTypes.DRIVER)
+      this.driverStore.setUserProfile(profile);
+
     return profile.type_name;
   }
 
@@ -56,23 +80,27 @@ export class AuthService implements OnInit {
         status: false,
       };
 
-    const userProfiles = await lastValueFrom(
-      this.usersRepository.getUserProfileById(loginResult.id)
+    const userProfileToSessionContext = await this.getUserProfile(
+      loginResult.id
     );
-    if (!userProfiles) throw Error('Could not find user profile');
-    const userType = this.setUserProfile(userProfiles[0]);
+    if (!userProfileToSessionContext)
+      return Promise.resolve({
+        status: false,
+      } as LoginResponse);
+
     await Preferences.set({
       key: 'isLogged',
       value: JSON.stringify({
         status: true,
-        userType,
-        userID: userProfiles[0].user_id,
+        userType: userProfileToSessionContext.userType,
+        userID: userProfileToSessionContext.userID,
       } as ILoginLocalStorage),
     });
-    return {
+
+    return Promise.resolve({
       status: true,
-      userType,
-    };
+      userType: userProfileToSessionContext.userType,
+    } as LoginResponse);
   }
 
   authorizedLoggedRoutes(userInfo: UserTypes) {

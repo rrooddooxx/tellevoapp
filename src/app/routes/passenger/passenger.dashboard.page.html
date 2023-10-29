@@ -1,1 +1,1 @@
-<app-tabnav [tabList]="passengerTabNavList"></app-tabnav>
+<app-tabnav [tabList]="passengerTabNavList" *ngIf="currentState$ | async as currentState"></app-tabnav>

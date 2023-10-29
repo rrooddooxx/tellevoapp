@@ -1,10 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Preferences } from '@capacitor/preferences';
 import { IonicModule } from '@ionic/angular';
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ITabElements } from '../../components/domain/tabnav-elements.interface';
 import { TabnavComponent } from '../../components/tabnav/tabnav.component';
+import { AuthService } from '../../modules/auth/auth.service';
+import { ILoginLocalStorage } from '../../modules/domain/login-local-storage.domain';
 import { IPassengerState } from '../../stores/passenger/passenger.interfaces';
 import { PassengerStoreService } from '../../stores/passenger/passenger.service';
 import { passengerTabs } from './passenger.tabnav.domain';
@@ -16,21 +19,25 @@ import { passengerTabs } from './passenger.tabnav.domain';
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, TabnavComponent],
 })
-export class PassengerDashboardPage implements OnInit, OnDestroy {
+export class PassengerDashboardPage implements OnInit {
   public passengerTabNavList: ITabElements[] = passengerTabs;
-  public currentState: IPassengerState;
-  private storeSuscription: Subscription;
+  public currentState$: Observable<IPassengerState>;
 
-  constructor(private passengerStore: PassengerStoreService) {}
+  constructor(
+    private passengerStore: PassengerStoreService,
+    private authService: AuthService
+  ) {}
 
-  ngOnInit() {
-    this.storeSuscription = this.passengerStore.state$.subscribe((state) => {
-      this.currentState = state;
-      console.log('state passenger: ' + JSON.stringify(state));
-    });
+  async getUserIDfromSessionStorage() {
+    const userLoggedSession = await Preferences.get({ key: 'isLogged' });
+    const userInfo = JSON.parse(userLoggedSession.value) as ILoginLocalStorage;
+    return userInfo.userID;
   }
 
-  ngOnDestroy(): void {
-    this.storeSuscription && this.storeSuscription.unsubscribe();
+  async ngOnInit() {
+    await this.authService.getUserProfile(
+      await this.getUserIDfromSessionStorage()
+    );
+    this.currentState$ = this.passengerStore.state$;
   }
 }
