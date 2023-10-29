@@ -8,7 +8,7 @@ file1="../src/environments/environment.ts"
 file2="../src/environments/environment.prod.ts"
 file3="../src/environments/environment.hmr.ts"
 
-if [ -f "$file1" ] && [ -f "$file2" ] && [ -f "$file3" ]; then
+if [ -f "$file1" ] || [ -f "$file2" ] || [ -f "$file3" ]; then
   echo "Environment files exist. Deleting them now before commit..."
   git rm "$file1"
   git rm "$file2"
