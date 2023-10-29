@@ -7,6 +7,7 @@ import { UsersRepositoryMappers } from '../../providers/db-api/mappers/users.map
 import { UserProfile } from '../../providers/db-api/model/users.model';
 import { UsersRepository } from '../../providers/db-api/repositories/users.repository';
 import { UserTypes } from '../../shared/domain/user-types.domain';
+import { DriverStoreService } from '../../stores/driver/driver.service';
 import { IPassengerState } from '../../stores/passenger/passenger.interfaces';
 import { PassengerStoreService } from '../../stores/passenger/passenger.service';
 import { ILoginLocalStorage } from '../domain/login-local-storage.domain';
@@ -26,6 +27,7 @@ export class AuthService implements OnInit {
     private readonly usersRepository: UsersRepository,
     private readonly mapper: AuthServiceMapper,
     private passengerStore: PassengerStoreService,
+    private driverStore: DriverStoreService,
     private userRepository: UsersRepository,
     private usersRepositoryMapper: UsersRepositoryMappers,
     private router: Router
@@ -55,7 +57,12 @@ export class AuthService implements OnInit {
 
   private setUserProfile(userProfile: UserProfile): UserTypes {
     const profile = this.mapper.mapUserTypeIntoStore(userProfile);
-    this.passengerStore.setUserProfile(profile);
+
+    if (profile.type_name === UserTypes.STUDENT)
+      this.passengerStore.setUserProfile(profile);
+    if (profile.type_name === UserTypes.DRIVER)
+      this.driverStore.setUserProfile(profile);
+
     return profile.type_name;
   }
 
