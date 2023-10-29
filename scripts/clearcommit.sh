@@ -8,7 +8,7 @@ fi
 git rm ./src/environments/environment.ts
 git rm ./src/environments/environment.prod.ts
 git rm ./src/environments/environment.hmr.ts
-git commit -b "clear commit"
+git commit -c "clear commit"
 
 
 echo "CLEAN!!"
