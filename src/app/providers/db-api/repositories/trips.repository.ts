@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiDatabaseConfig } from '../api.config';
 import { TripsRepositoryConfig } from '../config/trips.config';
+import { CreateTripRequest } from '../domain/trips.domain';
 import { UserTripInfoRPCModel } from '../model/active-trips.model';
 import { TripModel } from '../model/trips.model';
-import { CreateTripRequest } from '../domain/trips.domain';
 
 @Injectable()
 export class TripsRepository {
@@ -13,7 +13,7 @@ export class TripsRepository {
     private readonly httpClient: HttpClient,
     private readonly repositoryConfig: TripsRepositoryConfig,
     private readonly config: ApiDatabaseConfig
-  ) { }
+  ) {}
 
   getTrips(): Observable<TripModel[]> {
     return this.httpClient.get<TripModel[]>(
@@ -33,7 +33,16 @@ export class TripsRepository {
     return this.httpClient.get<UserTripInfoRPCModel[]>(
       this.repositoryConfig.getTripsByDriverIdRPCUrl(driverId),
       this.config.getHeadersBody()
-    )
+    );
+  }
+
+  getActiveTripsByTripIDsRPC(
+    ids: number[]
+  ): Observable<UserTripInfoRPCModel[]> {
+    return this.httpClient.get<UserTripInfoRPCModel[]>(
+      this.repositoryConfig.getActiveTripsByTripIDsRPCUrl(ids),
+      this.config.getHeadersBody()
+    );
   }
 
   createNewTrip(trip: CreateTripRequest): Observable<CreateTripRequest> {
@@ -41,6 +50,6 @@ export class TripsRepository {
       this.repositoryConfig.getTripsUrl(),
       trip,
       this.config.getHeadersBody()
-    )
+    );
   }
 }
