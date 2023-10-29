@@ -115,7 +115,7 @@ export class ResetPasswordPage implements OnInit {
         user_pwd: this.currentUser.userPwd,
       };
       this.userProvider.editUser(userToEdit).subscribe((response) => {
-        this.editResult = response.status === 204;
+        //this.editResult = response.status === 204;
         this.doShowAlert();
       });
     } else {

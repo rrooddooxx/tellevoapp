@@ -8,6 +8,9 @@ export class PassengerStoreService {
   private initialState: IPassengerState = {
     currentTripID: '',
     userProfile: {} as UserProfileDomain,
+    toggles: {
+      forceActiveTripsReload: false,
+    },
   };
   private state = new BehaviorSubject<IPassengerState>(this.initialState);
   public currentState: IPassengerState;
@@ -19,6 +22,16 @@ export class PassengerStoreService {
     this.state.next({
       ...this.state.value,
       ...newState,
+    });
+  }
+
+  updateForceActiveTripsReload(force: boolean): void {
+    this.state.next({
+      ...this.state.value,
+      toggles: {
+        ...this.state.value.toggles,
+        forceActiveTripsReload: force,
+      },
     });
   }
 

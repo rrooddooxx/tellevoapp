@@ -19,11 +19,12 @@ export type IApiHeadersResponse = {
   params?: HttpParams;
   reportProgress?: boolean;
   responseType?: 'json';
+  observe?: string;
 };
 
 @Injectable()
 export class ApiDatabaseConfig {
-  private supabaseHeaders: HttpHeaders = new HttpHeaders()
+  static supabaseHeaders: HttpHeaders = new HttpHeaders()
     .set('Authorization', `Bearer ${environment.SUPABASE_API_JWT}`)
     .set('apikey', `${environment.SUPABASE_API_JWT}`);
 
@@ -31,16 +32,17 @@ export class ApiDatabaseConfig {
     return `${ApiConstants.BASE_URL}`;
   }
 
-  public getHeadersResponse = (): IApiHeadersResponse => {
+  public getHeadersResponse = () => {
     return {
-      headers: this.supabaseHeaders,
+      headers: ApiDatabaseConfig.supabaseHeaders,
+      observe: 'response',
       responseType: 'json',
     };
   };
 
   public getHeadersBody = (): IApiHeaders => {
     return {
-      headers: this.supabaseHeaders,
+      headers: ApiDatabaseConfig.supabaseHeaders,
       observe: 'body',
       responseType: 'json',
     };

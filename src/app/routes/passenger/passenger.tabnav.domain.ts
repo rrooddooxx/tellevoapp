@@ -20,9 +20,4 @@ export const passengerTabs: ITabElements[] = [
     slug: 'my-profile',
     text: 'Mi Perfil',
   },
-  {
-    icon: 'help-circle-outline',
-    slug: 'help',
-    text: 'Ayuda',
-  },
 ];

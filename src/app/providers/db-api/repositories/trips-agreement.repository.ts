@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiDatabaseConfig } from '../api.config';
@@ -17,6 +17,7 @@ export class TripsAgreementRepository {
   ) {}
 
   private baseUrl: string = `${ApiConstants.BASE_URL}${ApiConstants.PATH_TRIPS_AGREEMENT}`;
+  private bookingAgreementResult: boolean = false;
 
   getTripAgreements(): Observable<TripAgreementModel[]> {
     return this.httpClient.get<TripAgreementModel[]>(
@@ -29,6 +30,23 @@ export class TripsAgreementRepository {
     return this.httpClient.get<TakenTripModel>(
       `${this.config.getBaseUrl()}?student_id=$eq.${studentId.toString()}$trip_agreement_status=eq.${TypeAgreementStatus.ACCEPTED.toString()}`,
       this.config.getHeadersBody()
+    );
+  }
+
+  makeAgreement(tripID: string, userID: string): Observable<HttpResponse<any>> {
+    return this.httpClient.post<any>(
+      `${this.baseUrl}?trip_id=eq.${tripID}`,
+      {
+        trip_id: tripID,
+        student_id: userID,
+        dropoff_ref: 'prueba',
+        dropoff_coords: '',
+      },
+      {
+        headers: ApiDatabaseConfig.supabaseHeaders,
+        observe: 'response',
+        responseType: 'json',
+      }
     );
   }
 }

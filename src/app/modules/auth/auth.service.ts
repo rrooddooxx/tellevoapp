@@ -39,6 +39,12 @@ export class AuthService implements OnInit {
     );
   }
 
+  public async getUserIDfromSessionStorage() {
+    const userLoggedSession = await Preferences.get({ key: 'isLogged' });
+    const userInfo = JSON.parse(userLoggedSession.value) as ILoginLocalStorage;
+    return userInfo.userID;
+  }
+
   public async getUserProfile(userId: number): Promise<ILoginLocalStorage> {
     try {
       const userProfiles = await lastValueFrom(

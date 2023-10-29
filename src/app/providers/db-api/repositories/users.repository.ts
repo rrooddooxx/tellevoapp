@@ -43,7 +43,11 @@ export class UsersRepository {
     return this.httpClient.put<HttpResponseBase>(
       `${this.baseUrl}?id=eq.${userID}`,
       payload,
-      this.apiConfig.getHeadersResponse()
+      {
+        headers: ApiDatabaseConfig.supabaseHeaders,
+        observe: 'response',
+        responseType: 'json',
+      }
     );
   }
 

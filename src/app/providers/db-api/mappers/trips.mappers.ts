@@ -10,6 +10,7 @@ export class TripMappers {
     trip: UserTripInfoRPCModel
   ): ITripCardState {
     return Builder<ITripCardState>()
+      .id(trip.trip_id.toString())
       .passengers(trip.passengers)
       .stops(trip.stops)
       .tripDate(DateTime.fromISO(trip.trip_datetime).toFormat('dd/MM/yyyy'))
