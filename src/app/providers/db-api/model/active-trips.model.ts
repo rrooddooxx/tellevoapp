@@ -18,4 +18,5 @@ export interface UserTripInfoRPCModel {
   driver_career: string;
   passengers: string[];
   stops: string[];
+  trip_datetime: string;
 }

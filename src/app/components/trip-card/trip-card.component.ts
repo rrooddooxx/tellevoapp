@@ -24,9 +24,9 @@ export class TripCardComponent implements OnInit {
 
   public isOpenCard: boolean = false;
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   toggleCard() {
     this.isOpenCard = !this.isOpenCard;

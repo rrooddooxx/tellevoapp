@@ -71,12 +71,38 @@ export const routes: Routes = [
   {
     path: 'driver',
     loadComponent: () =>
-      import('./routes/driver/driver.page').then((m) => m.DriverPage),
-    children: [],
-  },
-  {
-    path: 'error',
-    loadComponent: () =>
-      import('./routes/error/error.page').then((m) => m.ErrorPage),
+      import('./routes/driver/driver.dashboard.page').then((m) => m.DriverDashboardPage),
+    children: [
+      /* {
+        path: 'home',
+        loadComponent: () =>
+          import('./routes/driver/home/home.page').then((m) => m.DriverHomePage),
+      },
+      {
+        path: 'history',
+        loadComponent: () =>
+          import('./routes/driver/history/history.page').then((m) => m.DriverHistoryPage),
+      },
+      {
+        path: 'active-trip',
+        loadComponent: () =>
+          import('./routes/driver/active-trip/active-trip.page').then((m) => m.DriverActiveTripPage),
+      }, */
+      {
+        path: 'my-trips',
+        loadComponent: () =>
+          import('./routes/driver/my-trips/my-trips.page').then((m) => m.DriverTripsPage),
+      },
+      /* {
+        path: 'my-profile',
+        loadComponent: () =>
+          import('./routes/driver/my-profile/my-profile.page').then((m) => m.DriverProfilePage),
+      }, */
+      {
+        path: 'error',
+        loadComponent: () =>
+          import('./routes/error/error.page').then((m) => m.ErrorPage),
+      }
+    ]
   },
 ];
