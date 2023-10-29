@@ -17,7 +17,7 @@ else
 fi
 # If the above git rm commands are successful, then commit
 if git commit -m "clear commit"; then
-  echo "CLEAN!!"
+  echo "CLEAN!!!"
 else
   echo "Commit failed"
 fi
