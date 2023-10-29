@@ -39,7 +39,6 @@ export class TripsPage implements OnInit {
   ngOnInit() {
     this.passengerStoreSub = this.passengerStore.state$.subscribe((state) => {
       this.storeState = state;
-      console.log(this.passengerStore.getState());
     });
   }
 
