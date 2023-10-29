@@ -16,6 +16,7 @@ if [ -f "$file1" ] || [ -f "$file2" ] || [ -f "$file3" ]; then
   echo "Files deleted."
 else
   pwd
+  echo "$file1" "$file2"
   echo "One or more files do not exist. Aborting."
 fi
 # If the above git rm commands are successful, then commit
