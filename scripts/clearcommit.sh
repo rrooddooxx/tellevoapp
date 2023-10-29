@@ -4,9 +4,9 @@ if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
   exit 1
 fi
 
-file1="./src/environments/environment.ts"
-file2="./src/environments/environment.prod.ts"
-file3="./src/environments/environment.hmr.ts"
+file1="../src/environments/environment.ts"
+file2="../src/environments/environment.prod.ts"
+file3="../src/environments/environment.hmr.ts"
 
 if [ -f "$file1" ] && [ -f "$file2" ] && [ -f "$file3" ]; then
   echo "Environment files exist. Deleting them now before commit..."
