@@ -20,7 +20,6 @@ export class PassengerStoreService {
       ...this.state.value,
       ...newState,
     });
-    console.log('update: ' + this.state.value);
   }
 
   getState() {

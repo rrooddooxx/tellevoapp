@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "config": "ts-node ./scripts/set-env.ts",
-    "start": "npm run config -- --env=dev && ng serve --hmr true --live-reload false",
+    "start": "npm run config -- --env=dev && ng serve --hmr --no-live-reload",
     "build": "npm run config -- --env=prod && ng serve",
     "watch": "npm run config -- --env=dev && ng build --watch --configuration development",
     "test": "ng test",

@@ -1,6 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Preferences } from '@capacitor/preferences';
+import { Builder } from 'builder-pattern';
 import { Subscription, lastValueFrom } from 'rxjs';
 import { UsersRepositoryMappers } from '../../providers/db-api/mappers/users.mappers';
 import { UserProfile } from '../../providers/db-api/model/users.model';
@@ -36,6 +37,22 @@ export class AuthService implements OnInit {
     );
   }
 
+  public async getUserProfile(userId: number): Promise<ILoginLocalStorage> {
+    try {
+      const userProfiles = await lastValueFrom(
+        this.usersRepository.getUserProfileById(userId)
+      );
+      const userType = this.setUserProfile(userProfiles[0]);
+      return Builder<ILoginLocalStorage>()
+        .status(true)
+        .userType(userType)
+        .userID(userProfiles[0].user_id)
+        .build();
+    } catch (error) {
+      return Promise.reject('could not find user profile, error: ' + error);
+    }
+  }
+
   private setUserProfile(userProfile: UserProfile): UserTypes {
     const profile = this.mapper.mapUserTypeIntoStore(userProfile);
     this.passengerStore.setUserProfile(profile);
@@ -56,23 +73,27 @@ export class AuthService implements OnInit {
         status: false,
       };
 
-    const userProfiles = await lastValueFrom(
-      this.usersRepository.getUserProfileById(loginResult.id)
+    const userProfileToSessionContext = await this.getUserProfile(
+      loginResult.id
     );
-    if (!userProfiles) throw Error('Could not find user profile');
-    const userType = this.setUserProfile(userProfiles[0]);
+    if (!userProfileToSessionContext)
+      return Promise.resolve({
+        status: false,
+      } as LoginResponse);
+
     await Preferences.set({
       key: 'isLogged',
       value: JSON.stringify({
         status: true,
-        userType,
-        userID: userProfiles[0].user_id,
+        userType: userProfileToSessionContext.userType,
+        userID: userProfileToSessionContext.userID,
       } as ILoginLocalStorage),
     });
-    return {
+
+    return Promise.resolve({
       status: true,
-      userType,
-    };
+      userType: userProfileToSessionContext.userType,
+    } as LoginResponse);
   }
 
   authorizedLoggedRoutes(userInfo: UserTypes) {

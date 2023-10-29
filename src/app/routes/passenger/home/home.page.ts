@@ -26,6 +26,5 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.currentState = this.passengerStore.getState();
-    console.log(this.currentState);
   }
 }
