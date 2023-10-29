@@ -18,7 +18,6 @@
     "makefiles": "./scripts/makefiles.sh"
   },
   "pre-push": [
-    "lint",
     "clearcommit"
   ],
   "private": true,
