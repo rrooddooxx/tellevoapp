@@ -39,6 +39,8 @@ export class TripsPage implements OnInit {
   public waitingTripsIDs: number[] = [];
   private passengerStoreSub: Subscription;
   public storeState: IPassengerState;
+  public isCancelAlertOpen: boolean = false;
+  public cancelAlertButtons = ['OK'];
 
   constructor(
     private readonly tripsAgreementRepository: TripsAgreementRepository,
@@ -47,6 +49,10 @@ export class TripsPage implements OnInit {
     private readonly tripsMapper: TripMappers
   ) {
     this.cancelBooking = this.cancelBooking.bind(this);
+  }
+
+  setCancelAlertOpen(isOpen: boolean) {
+    this.isCancelAlertOpen = isOpen;
   }
 
   async ngOnInit() {
@@ -59,6 +65,8 @@ export class TripsPage implements OnInit {
 
   cancelBooking(tripID: string) {
     this.tripsAgreementRepository.rejectTripRequest(Number(tripID)).subscribe();
+    this.setCancelAlertOpen(true);
+    this.getAllTrips();
   }
 
   async getAllTrips() {
