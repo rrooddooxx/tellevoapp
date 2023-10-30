@@ -15,7 +15,7 @@
     <ion-card-header>
       <ion-card-subtitle>Viajes Esperando Confirmación:</ion-card-subtitle>
     </ion-card-header>
-    <app-trip-card [type]="tripCardType.PASSENGER" [tripsInfo]="waitingTripsList" [userID]="userID" />
+    <app-trip-card [type]="tripCardType.PASSENGER" [tripsInfo]="waitingTripsList" [userID]="userID" [showConfirmationButtons]="true" [showActionButtons]="false" [cancelAction]="cancelBooking" />
   </div>
 
   <div>

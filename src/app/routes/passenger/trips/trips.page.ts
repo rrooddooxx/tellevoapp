@@ -39,12 +39,15 @@ export class TripsPage implements OnInit {
   public waitingTripsIDs: number[] = [];
   private passengerStoreSub: Subscription;
   public storeState: IPassengerState;
+
   constructor(
     private readonly tripsAgreementRepository: TripsAgreementRepository,
     private readonly tripsRepository: TripsRepository,
     private readonly passengerStore: PassengerStoreService,
     private readonly tripsMapper: TripMappers
-  ) {}
+  ) {
+    this.cancelBooking = this.cancelBooking.bind(this);
+  }
 
   async ngOnInit() {
     this.passengerStoreSub = this.passengerStore.state$.subscribe((state) => {
@@ -52,6 +55,10 @@ export class TripsPage implements OnInit {
       this.userID = state.userProfile.user_id.toString();
     });
     await this.getAllTrips();
+  }
+
+  cancelBooking(tripID: string) {
+    this.tripsAgreementRepository.rejectTripRequest(Number(tripID)).subscribe();
   }
 
   async getAllTrips() {

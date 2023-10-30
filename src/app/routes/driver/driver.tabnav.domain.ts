@@ -21,4 +21,9 @@ export const driverTabs: ITabElements[] = [
     slug: 'my-profile',
     text: 'Mi Perfil',
   },
+  {
+    icon: 'log-out-outline',
+    slug: 'logout',
+    text: 'Cerrar Sesión',
+  },
 ];

@@ -67,9 +67,9 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'help',
-        loadComponent: () =>
-          import('./routes/passenger/help/help.page').then((m) => m.HelpPage),
+        path: 'logout',
+        redirectTo: '/logout',
+        pathMatch: 'full',
       },
     ],
   },
@@ -80,6 +80,11 @@ export const routes: Routes = [
         (m) => m.DriverDashboardPage
       ),
     children: [
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full',
+      },
       {
         path: 'home',
         loadComponent: () =>
@@ -109,6 +114,16 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./routes/driver/my-profile/my-profile.page').then((m) => m.DriverProfilePage),
       }, */
+      {
+        path: 'logout',
+        redirectTo: '/logout',
+        pathMatch: 'full',
+      },
     ],
+  },
+  {
+    path: 'logout',
+    loadComponent: () =>
+      import('./routes/logout/log-out.page').then((m) => m.LogOutPage),
   },
 ];

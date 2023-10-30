@@ -124,7 +124,9 @@ export class AuthService implements OnInit {
     }
   }
 
-  public logOut() {}
+  public async logOut() {
+    await Preferences.remove({ key: 'isLogged' });
+  }
 
   public async registerNewUser(newUser: INewUser): Promise<void> {
     console.log(

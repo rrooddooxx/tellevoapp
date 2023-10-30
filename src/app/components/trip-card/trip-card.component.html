@@ -25,7 +25,7 @@
           </div>
           <ion-card>
             <img class="object-cover" src="/assets/imgs/map_1.png" alt="mapa" />
-          </ion-card> 
+          </ion-card>
         </ion-card-subtitle>
 
         <div class="flex justify-center my-2 gap-2">
@@ -74,6 +74,9 @@
 
           <div *ngIf="showActionButtons" class="flex justify-center">
             <app-action-sheet [tripID]="tripInfo.id" [actionHeader]=" actionHeader" [userID]="userID" />
+          </div>
+          <div *ngIf="showConfirmationButtons" class="flex justify-center">
+            <ion-button [id]="tripInfo.id" class="btn-primary-md px-2" (click)="cancelAction(tripInfo.id)">Cancelar Reserva</ion-button>
           </div>
         </ion-card-subtitle>
       </div>
