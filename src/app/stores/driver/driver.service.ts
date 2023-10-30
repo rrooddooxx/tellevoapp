@@ -7,20 +7,19 @@ import { IDriverState } from './driver.interfaces';
 export class DriverStoreService {
   private initialState: IDriverState = {
     currentTripID: 0,
-    userProfile: {} as UserProfileDomain
+    userProfile: {} as UserProfileDomain,
   };
   private state = new BehaviorSubject<IDriverState>(this.initialState);
   public state$ = this.state.asObservable();
   public currentState: IDriverState;
 
-  constructor() { }
+  constructor() {}
 
   updateState(newState: IDriverState): void {
     this.state.next({
       ...this.state.value,
       ...newState,
     });
-    console.log('update: ' + this.state.value);
   }
 
   getState() {

@@ -24,6 +24,11 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'error',
+    loadComponent: () =>
+      import('./routes/error/error.page').then((m) => m.ErrorPage),
+  },
+  {
     path: 'passenger',
     loadComponent: () =>
       import('./routes/passenger/passenger.dashboard.page').then(
@@ -62,47 +67,65 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'help',
-        loadComponent: () =>
-          import('./routes/passenger/help/help.page').then((m) => m.HelpPage),
+        path: 'logout',
+        redirectTo: '/logout',
+        pathMatch: 'full',
       },
     ],
   },
   {
     path: 'driver',
     loadComponent: () =>
-      import('./routes/driver/driver.dashboard.page').then((m) => m.DriverDashboardPage),
+      import('./routes/driver/driver.dashboard.page').then(
+        (m) => m.DriverDashboardPage
+      ),
     children: [
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full',
+      },
       {
         path: 'home',
         loadComponent: () =>
-          import('./routes/driver/home/driver.home.page').then((m) => m.DriverHomePage),
+          import('./routes/driver/home/driver.home.page').then(
+            (m) => m.DriverHomePage
+          ),
       },
-      /* {
+      {
         path: 'history',
-        loadComponent: () =>
-          import('./routes/driver/history/history.page').then((m) => m.DriverHistoryPage),
+        redirectTo: '',
+        pathMatch: 'full',
       },
       {
         path: 'active-trip',
-        loadComponent: () =>
-          import('./routes/driver/active-trip/active-trip.page').then((m) => m.DriverActiveTripPage),
-      }, */
+        redirectTo: '',
+        pathMatch: 'full',
+      },
       {
         path: 'my-trips',
         loadComponent: () =>
-          import('./routes/driver/my-trips/my-trips.page').then((m) => m.DriverTripsPage),
+          import('./routes/driver/my-trips/my-trips.page').then(
+            (m) => m.DriverTripsPage
+          ),
       },
-      /* {
+      {
         path: 'my-profile',
         loadComponent: () =>
-          import('./routes/driver/my-profile/my-profile.page').then((m) => m.DriverProfilePage),
-      }, */
+          import('./routes/driver/my-profile/my-profile.page').then(
+            (m) => m.DriverProfilePage
+          ),
+      },
       {
-        path: 'error',
-        loadComponent: () =>
-          import('./routes/error/error.page').then((m) => m.ErrorPage),
-      }
-    ]
+        path: 'logout',
+        redirectTo: '/logout',
+        pathMatch: 'full',
+      },
+    ],
+  },
+  {
+    path: 'logout',
+    loadComponent: () =>
+      import('./routes/logout/log-out.page').then((m) => m.LogOutPage),
   },
 ];

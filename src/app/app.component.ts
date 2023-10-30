@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { AuthModule } from './modules/auth/auth.module';
 import { BookTripModule } from './modules/book-trip/book-trip.module';
+import { DbModule } from './providers/db-api/db.module';
 import { ActionSheetFactory } from './routes/passenger/find-trip/factories/action-sheet-buttons.factory';
 import { RegisterMappers } from './routes/register/mappers/register.mapper';
 import { StoresModule } from './stores/stores.module';
@@ -20,6 +21,7 @@ import { StoresModule } from './stores/stores.module';
     StoresModule,
     AuthModule,
     BookTripModule,
+    DbModule,
   ],
   providers: [RegisterMappers, ActionSheetFactory],
 })

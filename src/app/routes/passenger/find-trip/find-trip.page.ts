@@ -57,6 +57,10 @@ export class FindTripPage implements OnInit {
     });
   }
 
+  ionViewDidEnter() {
+    this.getActiveTrips();
+  }
+
   getActiveTrips() {
     return this.tripsRepository.getOpenActiveTripsRPC().subscribe((trips) => {
       this.tripsList = this.mapper.mapActiveTripsToDomain(trips);

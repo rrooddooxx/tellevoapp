@@ -13,12 +13,17 @@ export const driverTabs: ITabElements[] = [
   },
   {
     icon: 'map-outline',
-    slug: 'find-trip',
+    slug: 'history',
     text: 'Historial',
   },
   {
     icon: 'person-circle-outline',
     slug: 'my-profile',
     text: 'Mi Perfil',
+  },
+  {
+    icon: 'log-out-outline',
+    slug: 'logout',
+    text: 'Cerrar Sesión',
   },
 ];

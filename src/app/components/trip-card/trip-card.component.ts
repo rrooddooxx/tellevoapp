@@ -19,6 +19,8 @@ export class TripCardComponent implements OnInit {
   @Input() actionButtons: ActionSheetButton[];
   @Input() actionHeader: string;
   @Input() showActionButtons: boolean = true;
+  @Input() showConfirmationButtons: boolean = false;
+  @Input() cancelAction: (tripID: string) => void;
 
   @Input() tripsInfo: ITripCardState[];
   @Input() userID: string;
