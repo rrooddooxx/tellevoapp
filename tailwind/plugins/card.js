@@ -28,9 +28,12 @@ module.exports = plugin(function ({ addUtilities }) {
       padding: "0 !important",
     },
     ".card-tertiary": {
-      borderRadius: "0.75rem",
-      boxShadow: "0 0 5px 2.5px var(--ion-color-secondary-shade)",
-      width: "100%",
+      borderWidth: "2px",
+      borderColor: "#000",
+      borderRadius: "0",
+      boxShadow: "0 0 #0000, 0 0 #0000, 5px 5px #000",
+      width: "90vw",
+      padding: "0 !important",
     },
   };
   addUtilities(cardClasses);

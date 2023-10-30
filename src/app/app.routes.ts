@@ -73,12 +73,12 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./routes/driver/driver.dashboard.page').then((m) => m.DriverDashboardPage),
     children: [
-      /* {
+      {
         path: 'home',
         loadComponent: () =>
-          import('./routes/driver/home/home.page').then((m) => m.DriverHomePage),
+          import('./routes/driver/home/driver.home.page').then((m) => m.DriverHomePage),
       },
-      {
+      /* {
         path: 'history',
         loadComponent: () =>
           import('./routes/driver/history/history.page').then((m) => m.DriverHistoryPage),

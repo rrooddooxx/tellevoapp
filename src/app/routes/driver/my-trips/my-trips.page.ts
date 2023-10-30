@@ -11,7 +11,6 @@ import { DbModule } from 'src/app/providers/db-api/db.module';
 import { DriverStoreService } from 'src/app/stores/driver/driver.service';
 import { IDriverState } from 'src/app/stores/driver/driver.interfaces';
 import { CreateTripInput } from './domain/create-trip-input.domain';
-import { DateTime } from 'luxon';
 import { CreateTripRequest } from 'src/app/providers/db-api/domain/trips.domain';
 import { TripFinalStatus, TripStatus } from 'src/app/providers/db-api/model/trips.model';
 
@@ -43,12 +42,12 @@ export class DriverTripsPage implements OnInit {
     private readonly driverStore: DriverStoreService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.currentState = this.driverStore.getState();
     this.getTrips()
   }
 
-  getTrips() {
+  async getTrips() {
     return this.tripsRepository.getTripsByDriverIdRPC(this.currentState.userProfile.user_id).subscribe((trips) => {
       this.trips = this.mapper.mapActiveTripsToDomain(trips)
     })

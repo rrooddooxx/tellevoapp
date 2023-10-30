@@ -8,7 +8,7 @@ export const driverTabs: ITabElements[] = [
   },
   {
     icon: 'car-sport-outline',
-    slug: 'trips',
+    slug: 'my-trips',
     text: 'Mis Viajes',
   },
   {

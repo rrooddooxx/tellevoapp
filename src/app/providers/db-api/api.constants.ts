@@ -12,4 +12,5 @@ export enum ApiConstants {
   PATH_RPC_ACTIVE_TRIPS = '/rpc/get_active_trips',
   PATH_RPC_OPEN_ACTIVE_TRIPS = `/rpc/get_active_trips?trip_seats_status=eq.${TripStatus.OPEN}`,
   PATH_RPC_USER_PROFILE = '/rpc/user_profile',
+  PATH_RPC_ACTIVE_AGREEMENTS = '/rpc/get_active_agreements',
 }

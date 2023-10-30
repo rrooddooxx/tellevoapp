@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Inicio</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" overflow-scroll="false">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Inicio</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <main class="flex flex-col items-center mb-8">
+    <div class="text-center m-8">
+      <ion-card-title class="text-black text-wrap-balance">Bienvenido {{currentState.userProfile.user_name}} {{currentState.userProfile.user_lastname}}</ion-card-title>
+      <div *ngIf="todayTrip[0]" class="mt-4">
+        <ion-card-subtitle class="text-lg">Tu viaje de hoy: </ion-card-subtitle>
+        <app-trip-card [type]="tripCardType.DRIVER" [tripsInfo]="todayTrip" />
+      </div>
+    </div>
+
+    <div>
+      <ion-card-subtitle class="text-lg">Solicitudes de viaje: </ion-card-subtitle>
+      <app-request-card [tripRequests]="tripRequests"/>
+    </div>
+  </main>
+</ion-content>

@@ -1,0 +1,39 @@
+<ion-card class="card-tertiary" *ngFor="let requestInfo of tripRequests; let i = index">
+  <ion-card-content class="text-black flex flex-col gap-1 pb-1">
+    <ion-card-title class="text-center">{{requestInfo?.trip_date}} | {{requestInfo?.trip_time}}</ion-card-title>
+    <ion-card-subtitle class="text-lg ml-6">ID del viaje: {{requestInfo?.trip_id}}</ion-card-subtitle>
+
+    <div class="flex items-center gap-2">
+      <ion-icon name="location-outline"></ion-icon>
+      <ion-label>Destino: <span>{{requestInfo?.dropoff_ref}}</span></ion-label>
+    </div>
+
+    <div *ngIf="isOpenCard[i]" class="transition-all duration-300 ease-in-out">
+
+      <div class="flex items-center gap-2">
+        <ion-icon name="people-outline"></ion-icon>
+        <ion-label>Información del Pasajero:</ion-label>
+      </div>
+
+      <li class="list-none ml-6">
+        <ul>Nombre: <span class="text-[var(--ion-color-secondary)]">{{requestInfo?.student_name}} {{requestInfo?.student_lastname}}</span></ul>
+        <ul>Carrera: <span class="text-[var(--ion-color-secondary)]">{{requestInfo?.student_career}}</span></ul>
+        <ul>Género: <span class="text-[var(--ion-color-secondary)]">{{requestInfo?.student_gender}}</span></ul>
+        <ul>Ranking: <span class="text-[var(--ion-color-secondary)]">{{requestInfo?.student_ranking}}</span></ul>
+      </li>
+
+      <div class="flex justify-center mt-2 gap-2">
+        <ion-button class="btn-primary-md" (click)="acceptTrip(requestInfo.trip_id)">ACEPTAR</ion-button>
+        <ion-button class="btn-secondary-md" (click)="rejectTrip(requestInfo.trip_id)">RECHAZAR</ion-button>
+      </div>
+
+    </div>
+
+    <div *ngIf="!isOpenCard[i]" class="block" (click)="this.toggleCard(i)">
+      <ion-icon name="chevron-down-outline" class="text-black text-xl mx-[45%]"></ion-icon>
+    </div>
+    <div *ngIf="isOpenCard[i]" class="block" (click)="this.toggleCard(i)">
+      <ion-icon name="chevron-up-outline" class="text-black text-xl mx-[45%]"></ion-icon>
+    </div>
+  </ion-card-content>
+</ion-card>

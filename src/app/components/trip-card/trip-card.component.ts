@@ -23,13 +23,15 @@ export class TripCardComponent implements OnInit {
   @Input() tripsInfo: ITripCardState[];
   @Input() userID: string;
 
-  public isOpenCard: boolean = false;
+  public isOpenCard: boolean[] = [];
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.isOpenCard = new Array(this.tripsInfo.length).fill(false);
+  }
 
-  toggleCard() {
-    this.isOpenCard = !this.isOpenCard;
+  toggleCard(index: number) {
+    this.isOpenCard[index] = !this.isOpenCard[index];
   }
 }
