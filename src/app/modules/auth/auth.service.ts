@@ -66,8 +66,7 @@ export class AuthService implements OnInit {
 
     if (profile.type_name === UserTypes.STUDENT)
       this.passengerStore.setUserProfile(profile);
-    if (profile.type_name === UserTypes.DRIVER)
-      this.driverStore.setUserProfile(profile);
+    this.driverStore.setUserProfile(profile);
 
     return profile.type_name;
   }

@@ -109,11 +109,13 @@ export const routes: Routes = [
             (m) => m.DriverTripsPage
           ),
       },
-      /* {
+      {
         path: 'my-profile',
         loadComponent: () =>
-          import('./routes/driver/my-profile/my-profile.page').then((m) => m.DriverProfilePage),
-      }, */
+          import('./routes/driver/my-profile/my-profile.page').then(
+            (m) => m.DriverProfilePage
+          ),
+      },
       {
         path: 'logout',
         redirectTo: '/logout',

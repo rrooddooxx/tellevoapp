@@ -13,7 +13,7 @@ export const driverTabs: ITabElements[] = [
   },
   {
     icon: 'map-outline',
-    slug: 'find-trip',
+    slug: 'history',
     text: 'Historial',
   },
   {
