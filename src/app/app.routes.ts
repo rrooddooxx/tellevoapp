@@ -92,16 +92,16 @@ export const routes: Routes = [
             (m) => m.DriverHomePage
           ),
       },
-      /* {
+      {
         path: 'history',
-        loadComponent: () =>
-          import('./routes/driver/history/history.page').then((m) => m.DriverHistoryPage),
+        redirectTo: '',
+        pathMatch: 'full',
       },
       {
         path: 'active-trip',
-        loadComponent: () =>
-          import('./routes/driver/active-trip/active-trip.page').then((m) => m.DriverActiveTripPage),
-      }, */
+        redirectTo: '',
+        pathMatch: 'full',
+      },
       {
         path: 'my-trips',
         loadComponent: () =>
