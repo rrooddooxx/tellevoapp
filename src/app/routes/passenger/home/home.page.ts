@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import { TabnavComponent } from '../../../components/tabnav/tabnav.component';
 import { IPassengerState } from '../../../stores/passenger/passenger.interfaces';
 import { PassengerStoreService } from '../../../stores/passenger/passenger.service';
@@ -21,10 +21,15 @@ export class HomePage implements OnInit {
 
   constructor(
     private readonly router: Router,
-    private readonly passengerStore: PassengerStoreService
+    private readonly passengerStore: PassengerStoreService,
+    private readonly navCtrl: NavController
   ) {}
 
   ngOnInit() {
     this.currentState = this.passengerStore.getState();
+  }
+
+  goToAvailableTrips() {
+    this.navCtrl.navigateForward(['/passenger/find-trip']);
   }
 }
