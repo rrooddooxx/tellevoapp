@@ -109,4 +109,12 @@ export class TripsAgreementRepository {
       }
     );
   }
+
+  deleteTripRequest(tripId: number) {
+    return this.httpClient.delete(`${this.baseUrl}?trip_id=eq.${tripId}`, {
+      headers: ApiDatabaseConfig.supabaseHeaders,
+      observe: 'response',
+      responseType: 'json',
+    });
+  }
 }

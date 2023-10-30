@@ -13,22 +13,22 @@
 
   <div>
     <ion-card-header>
-      <ion-card-subtitle>Viajes Esperando Confirmación:</ion-card-subtitle>
+      <ion-card-subtitle>Reservas Esperando Confirmación:</ion-card-subtitle>
     </ion-card-header>
     <app-trip-card [type]="tripCardType.PASSENGER" [tripsInfo]="waitingTripsList" [userID]="userID" [showConfirmationButtons]="true" [showActionButtons]="false" [cancelAction]="cancelBooking" />
   </div>
-  <ion-alert [isOpen]="isCancelAlertOpen" header="Cancelar Reserva" subHeader="Viaje Cancelado" message="La reserva ha sido cancelada exitosamente!" [buttons]="cancelAlertButtons" (didDismiss)="setCancelAlertOpen(false)"></ion-alert>
+  <ion-alert [isOpen]="isCancelAlertOpen" header="Cancelar Reserva" subHeader={{cancerAlertSubheader}} message={{cancerAlertMessage}} [buttons]="cancelAlertButtons" (didDismiss)="setCancelAlertOpen(false)"></ion-alert>
 
   <div>
     <ion-card-header>
-      <ion-card-subtitle>Viajes Aceptados:</ion-card-subtitle>
+      <ion-card-subtitle>Reservas Aceptadas:</ion-card-subtitle>
     </ion-card-header>
     <app-trip-card [type]="tripCardType.PASSENGER" [tripsInfo]="acceptedTripsList" [userID]="userID" [showActionButtons]="false" />
   </div>
 
   <div>
     <ion-card-header>
-      <ion-card-subtitle>Viajes Cancelados:</ion-card-subtitle>
+      <ion-card-subtitle>Reservas Rechazadas por el Conductor:</ion-card-subtitle>
     </ion-card-header>
     <app-trip-card [type]="tripCardType.PASSENGER_CANCELED" [tripsInfo]="rejectedTripsList" [userID]="userID" />
   </div>
