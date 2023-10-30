@@ -20,4 +20,9 @@ export const passengerTabs: ITabElements[] = [
     slug: 'my-profile',
     text: 'Mi Perfil',
   },
+  {
+    icon: 'log-out-outline',
+    slug: 'my-profile',
+    text: 'Cerrar Sesión',
+  },
 ];

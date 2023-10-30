@@ -24,6 +24,11 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'error',
+    loadComponent: () =>
+      import('./routes/error/error.page').then((m) => m.ErrorPage),
+  },
+  {
     path: 'passenger',
     loadComponent: () =>
       import('./routes/passenger/passenger.dashboard.page').then(
@@ -71,12 +76,16 @@ export const routes: Routes = [
   {
     path: 'driver',
     loadComponent: () =>
-      import('./routes/driver/driver.dashboard.page').then((m) => m.DriverDashboardPage),
+      import('./routes/driver/driver.dashboard.page').then(
+        (m) => m.DriverDashboardPage
+      ),
     children: [
       {
         path: 'home',
         loadComponent: () =>
-          import('./routes/driver/home/driver.home.page').then((m) => m.DriverHomePage),
+          import('./routes/driver/home/driver.home.page').then(
+            (m) => m.DriverHomePage
+          ),
       },
       /* {
         path: 'history',
@@ -91,18 +100,15 @@ export const routes: Routes = [
       {
         path: 'my-trips',
         loadComponent: () =>
-          import('./routes/driver/my-trips/my-trips.page').then((m) => m.DriverTripsPage),
+          import('./routes/driver/my-trips/my-trips.page').then(
+            (m) => m.DriverTripsPage
+          ),
       },
       /* {
         path: 'my-profile',
         loadComponent: () =>
           import('./routes/driver/my-profile/my-profile.page').then((m) => m.DriverProfilePage),
       }, */
-      {
-        path: 'error',
-        loadComponent: () =>
-          import('./routes/error/error.page').then((m) => m.ErrorPage),
-      }
-    ]
+    ],
   },
 ];
