@@ -3,6 +3,7 @@
 const buttonClasses = require('./tailwind/plugins/button');
 const cardClasses = require('./tailwind/plugins/card');
 const inputClasses = require('./tailwind/plugins/input');
+const utilsClasses = require('./tailwind/plugins/utils');
 
 module.exports = {
   content: ['./src/**/*.{html,ts,js}'],
@@ -45,5 +46,6 @@ module.exports = {
     buttonClasses,
     cardClasses,
     inputClasses,
+    utilsClasses
   ],
 };
