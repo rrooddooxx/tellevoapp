@@ -1,8 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { IRequestTripCard } from './domain/request-trip-card.interfaces';
-import { BookTripService } from 'src/app/modules/book-trip/book-trip.service';
+import { TripsAgreementRepository } from 'src/app/providers/db-api/repositories/trips-agreement.repository';
+import { UserGenders } from '../../shared/domain/user-types.domain';
+import {
+  IPassengerGenderFormat,
+  IRequestTripCard,
+} from './domain/request-trip-card.interfaces';
 
 @Component({
   standalone: true,
@@ -17,7 +21,7 @@ export class RequestTripCardComponent implements OnInit {
   public isOpenCard: boolean[];
 
   constructor(
-    private readonly bookTripService: BookTripService
+    private readonly tripAgreementRepository: TripsAgreementRepository
   ) {}
 
   ngOnInit() {
@@ -28,13 +32,31 @@ export class RequestTripCardComponent implements OnInit {
     this.isOpenCard[index] = !this.isOpenCard[index];
   }
 
-  async acceptTrip(tripId: number) {
-    const status = await this.bookTripService.acceptTripBooking(tripId);
-    console.log(status)
+  acceptTrip(trip_id: number) {
+    this.tripAgreementRepository.acceptTripRequest(trip_id).subscribe();
   }
 
-  async rejectTrip(tripId: number) {
-    const status = await this.bookTripService.rejectTripBooking(tripId);
-    console.log(status)
+  rejectTrip(trip_id: number) {
+    this.tripAgreementRepository.rejectTripRequest(trip_id).subscribe();
+  }
+
+  mapPassengerGenderFormatting(gender: string) {
+    const dictionary: { [key: string]: IPassengerGenderFormat } = {
+      [UserGenders.NON_BINARY]: {
+        name: 'No binario',
+      },
+      [UserGenders.NOT_INFORMED]: {
+        name: 'No informado',
+      },
+      [UserGenders.FEMALE]: {
+        name: 'Femenino',
+      },
+      [UserGenders.MALE]: {
+        name: 'Masculino',
+      },
+    };
+    return (
+      dictionary[gender as UserGenders] || dictionary[UserGenders.NOT_INFORMED]
+    );
   }
 }
