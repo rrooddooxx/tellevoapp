@@ -35,7 +35,8 @@ export class DriverHomePage implements OnInit {
   tripCardType = ITripCardType;
   dateNow = new Date().toISOString()
   trips: ITripCardState[] = [];
-  todayTrip: ITripCardState[] | undefined = undefined;
+  todayTrip: ITripCardState[] = [];
+  showTodayTrip: boolean = false;
   public tripRequests: IRequestTripCard[] = [];
 
   constructor(
@@ -65,6 +66,8 @@ export class DriverHomePage implements OnInit {
       todayTripExists ? allTrips.push(todayTripExists) : null
         
       this.todayTrip = allTrips;
+
+      this.todayTrip.length > 0 ? this.showTodayTrip = true : this.showTodayTrip = false;
     })
   }
 
