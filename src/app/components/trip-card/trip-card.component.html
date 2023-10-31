@@ -79,7 +79,7 @@
           </ion-card>
 
           <div *ngIf="showActionButtons" class="flex justify-center">
-            <app-action-sheet [tripID]="tripInfo.id" [actionHeader]=" actionHeader" [userID]="userID" />
+            <app-action-sheet [tripID]="tripInfo.id" [actionHeader]="actionHeader" [userID]="userID" [getActiveTripsReload]="getActiveTripsReload" />
           </div>
           <div *ngIf="showConfirmationButtons" class="flex justify-center">
             <ion-button [id]="tripInfo.id" class="btn-primary-md px-2" (click)="cancelAction(tripInfo.id)">Cancelar Reserva</ion-button>

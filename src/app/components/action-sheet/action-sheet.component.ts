@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   ActionSheetButton,
   AlertController,
   IonicModule,
+  NavController,
 } from '@ionic/angular';
 import { PassengerStoreService } from '../../stores/passenger/passenger.service';
 import { BookTripService } from './../../modules/book-trip/book-trip.service';
@@ -21,10 +23,13 @@ export class ActionSheetComponent implements OnInit {
   @Input() userID: string;
   @Input() tripID: string;
   @Input() actionHeader: string;
+  @Input() getActiveTripsReload: () => Promise<void>;
   constructor(
     private readonly bookTripService: BookTripService,
     private alertController: AlertController,
-    private passengerStore: PassengerStoreService
+    private passengerStore: PassengerStoreService,
+    private navCtrl: NavController,
+    private router: Router
   ) {}
 
   async ngOnInit() {
@@ -35,8 +40,16 @@ export class ActionSheetComponent implements OnInit {
     this.isAlertOpen = isOpen;
   }
 
-  updateForceActiveTripsReload() {
-    this.passengerStore.updateForceActiveTripsReload(true);
+  reloadPage(): void {
+    this.router
+      .navigateByUrl('/passenger/find-trip', { skipLocationChange: true })
+      .then(() => {
+        this.router.navigate([this.router.url]);
+      });
+  }
+
+  async updateForceActiveTripsReload() {
+    await this.getActiveTripsReload();
   }
 
   public async getActionSheet(
@@ -58,6 +71,8 @@ export class ActionSheetComponent implements OnInit {
             buttons: ['OK'],
           });
           alert1.present();
+          await this.updateForceActiveTripsReload();
+          this.reloadPage();
           break;
         case 1:
           console.log('Trip already booked');
@@ -68,7 +83,8 @@ export class ActionSheetComponent implements OnInit {
             buttons: ['OK'],
           });
           alert2.present();
-          this.passengerStore.updateForceActiveTripsReload(true);
+          await this.updateForceActiveTripsReload();
+          this.reloadPage();
           break;
         case 2:
           console.log('ERROR: Trip booking failed');
@@ -79,6 +95,8 @@ export class ActionSheetComponent implements OnInit {
             buttons: ['OK'],
           });
           alert3.present();
+          await this.updateForceActiveTripsReload();
+          this.reloadPage();
           break;
       }
     };
