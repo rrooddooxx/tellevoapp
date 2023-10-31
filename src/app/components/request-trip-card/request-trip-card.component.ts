@@ -2,9 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { IRequestTripCard } from './domain/request-trip-card.interfaces';
-import { TripsAgreementRepository } from 'src/app/providers/db-api/repositories/trips-agreement.repository';
 import { BookTripService } from 'src/app/modules/book-trip/book-trip.service';
-import { log } from 'console';
 
 @Component({
   standalone: true,
