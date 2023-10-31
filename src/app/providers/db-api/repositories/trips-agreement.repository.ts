@@ -62,8 +62,8 @@ export class TripsAgreementRepository {
       {
         trip_id: tripID,
         student_id: userID,
-        dropoff_ref: 'prueba',
-        dropoff_coords: '',
+        dropoff_ref: 'prueba ref',
+        dropoff_coords: 'prueba coords',
       },
       {
         headers: ApiDatabaseConfig.supabaseHeaders,
@@ -78,6 +78,17 @@ export class TripsAgreementRepository {
       `${this.config.getBaseUrl()}${
         ApiConstants.PATH_RPC_ACTIVE_AGREEMENTS
       }?driver_id=eq.${driverId}`,
+      this.config.getHeadersBody()
+    );
+  }
+
+  getTripAgreementsByStudentId(
+    studentID: number
+  ): Observable<TripAgreementModel[]> {
+    return this.httpClient.get<TripAgreementModel[]>(
+      `${this.config.getBaseUrl()}${
+        ApiConstants.PATH_TRIPS_AGREEMENT
+      }?student_id=eq.${studentID}`,
       this.config.getHeadersBody()
     );
   }

@@ -1,3 +1,5 @@
+import { TypeAgreementStatus } from '../../providers/db-api/model/trips-agreement.model';
+
 export interface ITripCardState {
   id?: string;
   passengers?: string[];
@@ -10,6 +12,7 @@ export interface ITripCardState {
   tripVehicleBrand?: string;
   tripVehicleModel?: string;
   tripVehicleID?: string;
+  tripAgreementStatusForPassenger?: TypeAgreementStatus;
 }
 
 export enum ITripStatus {
@@ -23,4 +26,14 @@ export interface IActionButton {
   data?: {
     action?: string;
   };
+}
+
+export interface ITripStatusField {
+  name: string;
+  color: string;
+}
+
+export interface ITripAgreementStatusField {
+  name: string;
+  color: string;
 }

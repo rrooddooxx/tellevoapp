@@ -51,7 +51,13 @@
       <ion-card-subtitle class="flex gap-2 items-center">
         <div class="flex gap-2 items-center text-black">
           <ion-icon name="alert-circle-outline"></ion-icon>
-          <ion-label>Estado: <span class="text-[var(--ion-color-success)] ml-2">{{tripInfo?.tripSeatsStatus || ''}}</span></ion-label>
+          <ion-label>Estado Viaje: <span class="text-[var(--ion-color-success)] ml-2">{{mapTripStatus(tripInfo?.tripSeatsStatus).name || ''}}</span></ion-label>
+        </div>
+      </ion-card-subtitle>
+      <ion-card-subtitle class="flex gap-2 items-center">
+        <div class="flex gap-2 items-center text-black">
+          <ion-icon name="alert-circle-outline"></ion-icon>
+          <ion-label>Estado Reserva: <span class="{{mapBookingStatus(tripInfo?.tripAgreementStatusForPassenger).color}} ml-2">{{mapBookingStatus(tripInfo?.tripAgreementStatusForPassenger).name || ''}}</span></ion-label>
         </div>
       </ion-card-subtitle>
 
