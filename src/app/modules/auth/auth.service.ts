@@ -138,6 +138,13 @@ export class AuthService implements OnInit {
       )
     );
 
+    const loginResponse = await this.logIn(
+      newUser.user_email,
+      newUser.user_pwd
+    );
+
+    this.authorizedLoggedRoutes(loginResponse.userType);
+
     return Promise.resolve();
   }
 
