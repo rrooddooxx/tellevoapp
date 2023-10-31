@@ -18,7 +18,7 @@
       <li class="list-none ml-6">
         <ul>Nombre: <span class="text-[var(--ion-color-secondary)]">{{requestInfo?.student_name}} {{requestInfo?.student_lastname}}</span></ul>
         <ul>Carrera: <span class="text-[var(--ion-color-secondary)]">{{requestInfo?.student_career}}</span></ul>
-        <ul>Género: <span class="text-[var(--ion-color-secondary)]">{{requestInfo?.student_gender}}</span></ul>
+        <ul>Género: <span class="text-[var(--ion-color-secondary)]">{{mapPassengerGenderFormatting(requestInfo?.student_gender).name}}</span></ul>
         <ul>Ranking: <span class="text-[var(--ion-color-secondary)]">{{requestInfo?.student_ranking}}</span></ul>
       </li>
 
