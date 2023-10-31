@@ -53,7 +53,6 @@ export class TripMappers {
             ta.trip_id === Number(trip.id) && ta.student_id === Number(userID)
         ).trip_agreement_status;
       }
-
       return trip;
     });
   }
