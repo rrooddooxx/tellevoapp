@@ -10,3 +10,10 @@ export enum UserTypesIDs {
   DRIVER = 5,
   NOT_FOUND = -1,
 }
+
+export enum UserGenders {
+  MALE = 'M',
+  FEMALE = 'F',
+  NON_BINARY = 'NB',
+  NOT_INFORMED = 'NI',
+}

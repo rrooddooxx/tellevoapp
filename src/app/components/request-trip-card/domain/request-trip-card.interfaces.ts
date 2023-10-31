@@ -12,3 +12,7 @@ export interface IRequestTripCard {
   student_gender: string;
   student_ranking: number;
 }
+
+export interface IPassengerGenderFormat {
+  name: string;
+}
