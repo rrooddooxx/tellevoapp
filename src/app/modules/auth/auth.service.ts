@@ -66,8 +66,7 @@ export class AuthService implements OnInit {
 
     if (profile.type_name === UserTypes.STUDENT)
       this.passengerStore.setUserProfile(profile);
-    if (profile.type_name === UserTypes.DRIVER)
-      this.driverStore.setUserProfile(profile);
+    this.driverStore.setUserProfile(profile);
 
     return profile.type_name;
   }
@@ -124,7 +123,9 @@ export class AuthService implements OnInit {
     }
   }
 
-  public logOut() {}
+  public async logOut() {
+    await Preferences.remove({ key: 'isLogged' });
+  }
 
   public async registerNewUser(newUser: INewUser): Promise<void> {
     console.log(

@@ -2,12 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActionSheetButton, IonicModule } from '@ionic/angular';
-import { Observable } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 import { TripCardComponent } from '../../../components/trip-card/trip-card.component';
 import { ITripCardState } from '../../../components/trip-card/trip-card.interfaces';
 import { TripListItemComponent } from '../../../components/trip-list-item/trip-list-item.component';
 import { DbModule } from '../../../providers/db-api/db.module';
 import { TripMappers } from '../../../providers/db-api/mappers/trips.mappers';
+import { TripsAgreementRepository } from '../../../providers/db-api/repositories/trips-agreement.repository';
 import { TripsRepository } from '../../../providers/db-api/repositories/trips.repository';
 import { ITripCardType } from '../../../shared/enums/trip-card.enum';
 import { IPassengerState } from '../../../stores/passenger/passenger.interfaces';
@@ -39,6 +40,7 @@ export class FindTripPage implements OnInit {
 
   constructor(
     private readonly tripsRepository: TripsRepository,
+    private readonly tripsAgreementRepository: TripsAgreementRepository,
     private readonly mapper: TripMappers,
     private readonly actionSheetFactory: ActionSheetFactory,
     private passengerStore: PassengerStoreService
@@ -57,9 +59,29 @@ export class FindTripPage implements OnInit {
     });
   }
 
-  getActiveTrips() {
-    return this.tripsRepository.getOpenActiveTripsRPC().subscribe((trips) => {
-      this.tripsList = this.mapper.mapActiveTripsToDomain(trips);
-    });
+  ionViewDidEnter() {
+    this.getActiveTrips();
+  }
+
+  async getActiveTrips() {
+    const openActiveTrips = await lastValueFrom(
+      this.tripsRepository.getOpenActiveTripsRPC()
+    );
+    const activeTrips = this.mapper.mapActiveTripsToDomain(openActiveTrips);
+    this.getTripAgreementStatusByStudent(activeTrips);
+  }
+
+  async getTripAgreementStatusByStudent(activeTrips: ITripCardState[]) {
+    const statuses = await lastValueFrom(
+      this.tripsAgreementRepository.getTripAgreementsByStudentId(
+        Number(this.userID)
+      )
+    );
+
+    this.tripsList = this.mapper.mapTripAgreementStatusToTripList(
+      activeTrips,
+      statuses,
+      this.userID
+    );
   }
 }

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { HttpStatusCode } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Subscription, lastValueFrom } from 'rxjs';
@@ -28,7 +29,7 @@ import { TripsAgreementRepository } from './../../../providers/db-api/repositori
     DbModule,
   ],
 })
-export class TripsPage implements OnInit {
+export class TripsPage implements OnInit, OnDestroy {
   public tripCardType = ITripCardType;
   public rejectedTripsList: ITripCardState[] = [];
   public waitingTripsList: ITripCardState[] = [];
@@ -39,12 +40,23 @@ export class TripsPage implements OnInit {
   public waitingTripsIDs: number[] = [];
   private passengerStoreSub: Subscription;
   public storeState: IPassengerState;
+  public isCancelAlertOpen: boolean = false;
+  public cancelAlertButtons = ['OK'];
+  public cancerAlertSubheader = '';
+  public cancerAlertMessage = '';
+
   constructor(
     private readonly tripsAgreementRepository: TripsAgreementRepository,
     private readonly tripsRepository: TripsRepository,
     private readonly passengerStore: PassengerStoreService,
     private readonly tripsMapper: TripMappers
-  ) {}
+  ) {
+    this.cancelBooking = this.cancelBooking.bind(this);
+  }
+
+  setCancelAlertOpen(isOpen: boolean) {
+    this.isCancelAlertOpen = isOpen;
+  }
 
   async ngOnInit() {
     this.passengerStoreSub = this.passengerStore.state$.subscribe((state) => {
@@ -52,6 +64,29 @@ export class TripsPage implements OnInit {
       this.userID = state.userProfile.user_id.toString();
     });
     await this.getAllTrips();
+  }
+
+  async cancelBooking(tripID: string) {
+    const wasDeleted = await lastValueFrom(
+      this.tripsAgreementRepository.deleteTripRequest(Number(tripID))
+    );
+
+    this.cancerAlertSubheader = 'Viaje Cancelado';
+    this.cancerAlertMessage = 'La reserva ha sido cancelada exitosamente!';
+
+    this.setCancelAlertOpen(true);
+
+    if (wasDeleted.status !== HttpStatusCode.NoContent) {
+      this.cancerAlertSubheader = 'Error al cancelar viaje';
+      this.cancerAlertMessage =
+        'Ha ocurrido un error inesperado al cancelar la reserva!';
+    }
+
+    this.getAllTrips();
+  }
+
+  ionViewDidEnter() {
+    this.getAllTrips();
   }
 
   async getAllTrips() {
