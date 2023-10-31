@@ -56,6 +56,7 @@ export class FindTripPage implements OnInit {
       );
       this.actionSheetButtons = actionSheet;
       this.getActiveTrips();
+      this.getActiveTrips = this.getActiveTrips.bind(this);
     });
   }
 

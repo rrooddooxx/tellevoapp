@@ -21,11 +21,14 @@ export class TripCardComponent implements OnInit {
   @Input() type: ITripCardType;
   tripCardType = ITripCardType;
 
+  @Input() getActiveTripsReload: () => Promise<void>;
+
   @Input() actionButtons: ActionSheetButton[];
   @Input() actionHeader: string;
   @Input() showActionButtons: boolean = true;
   @Input() showConfirmationButtons: boolean = false;
   @Input() cancelAction: (tripID: string) => void;
+  @Input() showAgreementStatus: boolean = true;
 
   @Input() tripsInfo: ITripCardState[];
   @Input() userID: string;

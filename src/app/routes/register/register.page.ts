@@ -137,10 +137,6 @@ export class RegisterPage implements OnInit {
     };
 
     await this.authService.registerNewUser(newUser);
-
-    this.authService.authorizedLoggedRoutes(
-      this.mapper.mapUserTypeValueToDomain(this.form.get('usertype')?.value)
-    );
   }
 
   clearFields() {
