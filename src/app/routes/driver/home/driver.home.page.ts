@@ -51,6 +51,12 @@ export class DriverHomePage implements OnInit {
     this.currentState = this.driverStore.getState();
     this.getTodayTrip();
     this.getTripRequests();
+    this.getTripRequests = this.getTripRequests.bind(this);
+  }
+
+  ionViewDidEnter() {
+    this.getTodayTrip();
+    this.getTripRequests();
   }
 
   getTodayTrip() {

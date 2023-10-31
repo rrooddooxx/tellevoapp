@@ -1,9 +1,6 @@
-export enum IAcceptTripStatus {
-  ACCEPTED = 'ACCEPTED',
-  FAILED = 'FAILED',
-}
-
-export enum IRejectTripStatus {
-  REJECTED = 'REJECTED',
-  FAILED = 'FAILED',
+export enum IRequestTripStatus {
+  OK_ACCEPTED = 'OK_ACCEPTED',
+  OK_REJECTED = 'OK_REJECTED',
+  FAIL_ACCEPTED = 'FAIL_ACCEPTED',
+  FAIL_REJECTED = 'FAIL_REJECTED',
 }

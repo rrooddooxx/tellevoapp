@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { BookAgreementStatus } from '../../shared/domain/book-agreement-status.domain';
 import { TripsAgreementRepository } from './../../providers/db-api/repositories/trips-agreement.repository';
-import { IAcceptTripStatus, IRejectTripStatus } from './domain/book-trip.domain';
+import { IRequestTripStatus } from './domain/book-trip.domain';
 
 @Injectable({
   providedIn: 'root',
@@ -38,41 +38,41 @@ export class BookTripService {
     }
   }
 
-  async acceptTripBooking(tripId: number): Promise<IAcceptTripStatus> {
+  async acceptTripBooking(tripId: number): Promise<IRequestTripStatus> {
     try {
       const tripRequestStatus = await lastValueFrom(this.tripsAgreementRepository.acceptTripRequest(tripId))
       
       const dictionary = {
         [HttpStatusCode.NoContent]: {
-          response: IAcceptTripStatus.ACCEPTED,
+          response: IRequestTripStatus.OK_ACCEPTED,
         },
         [HttpStatusCode.BadRequest]: {
-          response: IAcceptTripStatus.FAILED,
+          response: IRequestTripStatus.FAIL_ACCEPTED,
         },
       }
   
       return dictionary[tripRequestStatus.status].response || dictionary[HttpStatusCode.BadRequest].response
     } catch (error) {
-      return Promise.resolve(IAcceptTripStatus.FAILED)
+      return Promise.resolve(IRequestTripStatus.FAIL_ACCEPTED)
     }
   }
 
-  async rejectTripBooking(tripId: number): Promise<IRejectTripStatus> {
+  async rejectTripBooking(tripId: number): Promise<IRequestTripStatus> {
     try {
       const tripRequestStatus = await lastValueFrom(this.tripsAgreementRepository.rejectTripRequest(tripId))
       
       const dictionary = {
         [HttpStatusCode.NoContent]: {
-          response: IRejectTripStatus.REJECTED,
+          response: IRequestTripStatus.OK_REJECTED,
         },
         [HttpStatusCode.BadRequest]: {
-          response: IRejectTripStatus.FAILED,
+          response: IRequestTripStatus.FAIL_REJECTED,
         },
       }
   
       return dictionary[tripRequestStatus.status].response || dictionary[HttpStatusCode.BadRequest].response
     } catch (error) {
-      return Promise.resolve(IRejectTripStatus.FAILED)
+      return Promise.resolve(IRequestTripStatus.FAIL_REJECTED)
     }
   }
 }

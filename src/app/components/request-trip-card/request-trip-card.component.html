@@ -1,3 +1,4 @@
+<div *ngIf="currentState$ | async as currentState">
 <ion-card class="card-tertiary" *ngFor="let requestInfo of tripRequests; let i = index">
   <ion-card-content class="text-black flex flex-col gap-1 pb-1">
     <ion-card-title class="text-center">{{requestInfo?.trip_date}} | {{requestInfo?.trip_time}}</ion-card-title>
@@ -22,9 +23,15 @@
         <ul>Ranking: <span class="text-[var(--ion-color-secondary)]">{{requestInfo?.student_ranking}}</span></ul>
       </li>
 
-      <div class="flex justify-center mt-2 gap-2">
+      <!-- <div class="flex justify-center mt-2 gap-2">
         <ion-button class="btn-primary-md" (click)="acceptTrip(requestInfo.trip_id)">ACEPTAR</ion-button>
         <ion-button class="btn-secondary-md" (click)="rejectTrip(requestInfo.trip_id)">RECHAZAR</ion-button>
+      </div> -->
+      <div class="flex justify-center mt-2 gap-2">
+        <ion-button id="open-action-sheet-accept" class="btn-primary-md px-2" (click)="acceptTrip(requestInfo.trip_id)">Aceptar</ion-button>
+        <ion-button id="open-action-sheet-reject" class="btn-secondary-md px-2" (click)="rejectTrip(requestInfo.trip_id)">Rechazar</ion-button>
+        <ion-action-sheet trigger={{currentState.actionSheetTrigger}} header={{currentState.actionSheetHeader}} [buttons]="actionButtons"></ion-action-sheet>
+        <ion-alert [isOpen]="isAlertOpen" (didDismiss)="setOpen(false)" />
       </div>
 
     </div>
@@ -37,3 +44,4 @@
     </div>
   </ion-card-content>
 </ion-card>
+</div>
