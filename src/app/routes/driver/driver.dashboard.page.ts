@@ -28,7 +28,14 @@ export class DriverDashboardPage implements OnInit, OnDestroy {
     private driverStore: DriverStoreService,
     private authService: AuthService
     ) { }
-
+    
+  async ngOnInit() {
+    await this.authService.getUserProfile(
+      await this.getUserIDfromSessionStorage()
+    );
+    this.currentState$ = this.driverStore.state$;
+  }
+    
   ngOnDestroy(): void {
     this.storeSuscription && this.storeSuscription.unsubscribe();
   }
@@ -39,10 +46,4 @@ export class DriverDashboardPage implements OnInit, OnDestroy {
     return userInfo.userID;
   }
 
-  async ngOnInit() {
-    await this.authService.getUserProfile(
-      await this.getUserIDfromSessionStorage()
-    );
-    this.currentState$ = this.driverStore.state$;
-  }
 }
