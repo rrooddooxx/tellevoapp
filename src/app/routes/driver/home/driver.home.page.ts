@@ -15,6 +15,7 @@ import { TripsRepository } from 'src/app/providers/db-api/repositories/trips.rep
 import { ITripCardType } from 'src/app/shared/enums/trip-card.enum';
 import { IDriverState } from 'src/app/stores/driver/driver.interfaces';
 import { DriverStoreService } from 'src/app/stores/driver/driver.service';
+import { Geolocation } from '@capacitor/geolocation';
 
 @Component({
   selector: 'driver-app-homepage',
@@ -52,6 +53,7 @@ export class DriverHomePage implements OnInit {
     this.getTodayTrip();
     this.getTripRequests();
     this.getTripRequests = this.getTripRequests.bind(this);
+    this.getCurrentPosition()
   }
 
   ionViewDidEnter() {
@@ -81,5 +83,10 @@ export class DriverHomePage implements OnInit {
     return this.tripsAgreementRepository.getActiveRequestsByDriverId(this.currentState.userProfile.user_id).subscribe((trips) => {
       this.tripRequests = this.requestTripMapper.mapActiveRequestTripsToDomain(trips)
     })
+  }
+
+  async getCurrentPosition() {
+    const { coords } = await Geolocation.getCurrentPosition();
+    console.log('Current', coords.latitude, coords.longitude);
   }
 }
