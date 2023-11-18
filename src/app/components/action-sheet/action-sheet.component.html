@@ -1,6 +1,24 @@
 <div>
-  <ion-button [id]="tripID" class="btn-primary-md px-2">Reservar</ion-button>
+  <ion-button id="open-as" class="btn-primary-md px-2" expand="block">Reservar</ion-button>
   <ion-button (click)="updateForceActiveTripsReload()" class="btn-secondary-md px-2">Refrescar</ion-button>
-  <ion-action-sheet trigger={{tripID}} [header]="actionHeader" [buttons]="actionButtons"></ion-action-sheet>
+  <ion-action-sheet trigger="open-as" [header]="actionHeader" [buttons]="actionButtons"></ion-action-sheet>
+  <ion-modal (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()">Cancel</ion-button>
+          </ion-buttons>
+          <ion-title>Enter destination</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="confirm(userID, tripID)" [strong]="true">Confirm</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-input class="input-primary rounded-t-xl" label="Destination" placeholder="Caldera 451" [(ngModel)]="destinationInput"></ion-input>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
   <ion-alert [isOpen]="isAlertOpen" (didDismiss)="setOpen(false)" />
 </div>
