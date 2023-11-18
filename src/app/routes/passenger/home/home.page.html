@@ -13,6 +13,14 @@
 
     <div class="flex justify-center mt-6">
       <ion-button class="btn-primary-md px-2" (click)="goToAvailableTrips()">Ver Ofertas de Viaje</ion-button>
+      <ion-button class="btn-primary-md px-2" (click)="createMap()">Ver Mapa</ion-button>
+
+
+    </div>
+
+    <div>
+      <capacitor-google-map #map></capacitor-google-map>
+
     </div>
   </main>
 
