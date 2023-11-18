@@ -8,10 +8,14 @@
         "project": ["tsconfig.json"],
         "createDefaultProgram": true
       },
+      "plugins": ["@typescript-eslint"],
       "extends": [
         "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates"
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended"
       ],
+      "parser": "@typescript-eslint/parser",
       "rules": {
         "@angular-eslint/component-class-suffix": [
           "error",
@@ -34,9 +38,12 @@
             "prefix": "app",
             "style": "camelCase"
           }
-        ]
+        ],
+        "@typescript-eslint/no-unused-vars": "warn",
+        "no-unused-vars": "off"
       }
     },
+
     {
       "files": ["*.html"],
       "extends": ["plugin:@angular-eslint/template/recommended"],
