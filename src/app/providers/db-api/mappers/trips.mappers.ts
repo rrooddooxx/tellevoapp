@@ -27,6 +27,10 @@ export class TripMappers {
       .tripVehicleBrand(trip.vehicle_brand)
       .tripVehicleModel(trip.vehicle_model)
       .tripVehicleID(trip.vehicle_patent)
+      .pickupCoords(trip.pickup_coords)
+      .pickupRef(trip.pickup_ref)
+      .dropoffCoords(trip.dropoff_coords)
+      .dropoffRef(trip.dropoff_ref)
       .build();
   }
   public mapActiveTripsToDomain(

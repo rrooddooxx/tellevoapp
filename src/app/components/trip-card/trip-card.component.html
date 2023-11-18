@@ -74,9 +74,8 @@
             <ion-icon name="location-outline"></ion-icon>
             <ion-label>Paradas:</ion-label>
           </div>
-          <ion-card>
-            <img class="object-cover" src="/assets/imgs/map_1.png" alt="mapa" />
-          </ion-card>
+
+          <app-map-card-view [startCoordinate]="tripInfo.pickupCoords" [endCoordinate]="tripInfo.dropoffCoords" [stops]="tripInfo.stops" />
 
           <div *ngIf="showActionButtons" class="flex justify-center">
             <app-action-sheet [tripID]="tripInfo.id" [actionHeader]="actionHeader" [userID]="userID" [getActiveTripsReload]="getActiveTripsReload" />

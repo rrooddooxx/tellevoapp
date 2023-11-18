@@ -4,6 +4,7 @@ import { ActionSheetButton, IonicModule } from '@ionic/angular';
 import { TypeAgreementStatus } from '../../providers/db-api/model/trips-agreement.model';
 import { ITripCardType } from '../../shared/enums/trip-card.enum';
 import { ActionSheetComponent } from '../action-sheet/action-sheet.component';
+import { MapCardViewComponent } from '../map-card-view/map-card-view.component';
 import {
   ITripAgreementStatusField,
   ITripCardState,
@@ -15,7 +16,12 @@ import {
   selector: 'app-trip-card',
   templateUrl: './trip-card.component.html',
   styleUrls: ['./trip-card.component.scss'],
-  imports: [CommonModule, IonicModule, ActionSheetComponent],
+  imports: [
+    CommonModule,
+    IonicModule,
+    ActionSheetComponent,
+    MapCardViewComponent,
+  ],
 })
 export class TripCardComponent implements OnInit {
   @Input() type: ITripCardType;

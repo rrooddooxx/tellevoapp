@@ -13,6 +13,10 @@ export interface ITripCardState {
   tripVehicleModel?: string;
   tripVehicleID?: string;
   tripAgreementStatusForPassenger?: TypeAgreementStatus;
+  pickupCoords?: string;
+  pickupRef?: string;
+  dropoffCoords?: string;
+  dropoffRef?: string;
 }
 
 export enum ITripStatus {

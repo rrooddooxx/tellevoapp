@@ -19,4 +19,8 @@ export interface UserTripInfoRPCModel {
   passengers: string[];
   stops: string[];
   trip_datetime: string;
+  pickup_coords: string;
+  pickup_ref: string;
+  dropoff_coords: string;
+  dropoff_ref: string;
 }
