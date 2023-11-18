@@ -1,25 +1,32 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   ActionSheetButton,
   AlertController,
+  IonModal,
   IonicModule,
   NavController,
 } from '@ionic/angular';
 import { PassengerStoreService } from '../../stores/passenger/passenger.service';
 import { BookTripService } from './../../modules/book-trip/book-trip.service';
+import { OverlayEventDetail } from '@ionic/core/components';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   standalone: true,
   selector: 'app-action-sheet',
-  imports: [CommonModule, IonicModule],
+  imports: [CommonModule, IonicModule, FormsModule],
   templateUrl: './action-sheet.component.html',
   styleUrls: ['./action-sheet.component.scss'],
 })
 export class ActionSheetComponent implements OnInit {
+  @ViewChild(IonModal) modal: IonModal;
+
   public actionButtons: ActionSheetButton[] = [];
   public isAlertOpen = false;
+  public destinationInput: string = '';
+
   @Input() userID: string;
   @Input() tripID: string;
   @Input() actionHeader: string;
@@ -33,7 +40,7 @@ export class ActionSheetComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.actionButtons = await this.getActionSheet(this.userID, this.tripID);
+    this.actionButtons = await this.getActionSheet();
   }
 
   setOpen(isOpen: boolean) {
@@ -52,10 +59,36 @@ export class ActionSheetComponent implements OnInit {
     await this.getActiveTripsReload();
   }
 
-  public async getActionSheet(
+  public async getActionSheet(): Promise<ActionSheetButton[]> {
+    const showModal = () => {
+      this.modal.present();
+    }
+    return [
+      {
+        text: 'Reservar',
+        data: {
+          action: 'book-trip',
+        },
+        handler: showModal,
+      },
+      {
+        text: 'Cancelar',
+        role: 'cancel',
+        data: {
+          action: 'cancel',
+        },
+      },
+    ];
+  }
+
+  cancel() {
+    this.modal.dismiss(null, 'cancel');
+  }
+
+  confirm(
     userID: string,
     tripID: string
-  ): Promise<ActionSheetButton[]> {
+  ) {
     const bookTrip = async () => {
       const bookingStatus = await this.bookTripService.makeTripBooking(
         tripID,
@@ -100,21 +133,15 @@ export class ActionSheetComponent implements OnInit {
           break;
       }
     };
-    return [
-      {
-        text: 'Reservar',
-        data: {
-          action: 'book-trip',
-        },
-        handler: bookTrip,
-      },
-      {
-        text: 'Cancelar',
-        role: 'cancel',
-        data: {
-          action: 'cancel',
-        },
-      },
-    ];
+    bookTrip();
+    console.log('Destino: ', this.destinationInput)
+    this.modal.dismiss(null, 'confirm');
+  }
+
+  onWillDismiss(event: Event) {
+    const ev = event as CustomEvent<OverlayEventDetail<string>>
+    if (ev.detail.role === 'confirm') {
+      console.log('confirmado')
+    }
   }
 }
