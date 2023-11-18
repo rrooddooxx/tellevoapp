@@ -23,11 +23,6 @@ export class MapCardViewComponent implements OnInit {
   ngOnInit() {}
 
   async ngAfterViewInit() {
-    console.log(this.startCoordinate);
-    console.log(this.endCoordinate);
-    console.log(this.mapView.nativeElement);
-    console.log(this.stops);
-
     this.googleMapsService.createTripMap(
       this.startCoordinate,
       this.endCoordinate,

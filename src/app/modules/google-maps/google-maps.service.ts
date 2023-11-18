@@ -1,5 +1,6 @@
 import { ElementRef, Injectable } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
+import { v4 as uuidv4 } from 'uuid';
 import { GoogleMapsMappers } from './mappers/google-map.mappers';
 
 @Injectable()
@@ -58,7 +59,7 @@ export class GoogleMapsService {
     const mapOptions: google.maps.MapOptions = {
       center: this.mapper.mapToLatLng(endPosition),
       zoom: 18,
-      mapId: 'HOME_MAP_ID',
+      mapId: uuidv4(),
     };
 
     const map = new Map(domElement.nativeElement, mapOptions);
