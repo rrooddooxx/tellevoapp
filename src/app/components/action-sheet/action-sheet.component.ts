@@ -1,5 +1,7 @@
+/* eslint-disable no-case-declarations */
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   ActionSheetButton,
@@ -8,10 +10,10 @@ import {
   IonicModule,
   NavController,
 } from '@ionic/angular';
+import { OverlayEventDetail } from '@ionic/core/components';
+import { GoogleMapsService } from '../../modules/google-maps/google-maps.service';
 import { PassengerStoreService } from '../../stores/passenger/passenger.service';
 import { BookTripService } from './../../modules/book-trip/book-trip.service';
-import { OverlayEventDetail } from '@ionic/core/components';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   standalone: true,
@@ -22,6 +24,8 @@ import { FormsModule } from '@angular/forms';
 })
 export class ActionSheetComponent implements OnInit {
   @ViewChild(IonModal) modal: IonModal;
+  @ViewChild('destinationInput') destinationInputElement: ElementRef;
+  @ViewChild('mapSearchView') mapSearchViewElement: ElementRef;
 
   public actionButtons: ActionSheetButton[] = [];
   public isAlertOpen = false;
@@ -36,7 +40,8 @@ export class ActionSheetComponent implements OnInit {
     private alertController: AlertController,
     private passengerStore: PassengerStoreService,
     private navCtrl: NavController,
-    private router: Router
+    private router: Router,
+    private googleMapsService: GoogleMapsService
   ) {}
 
   async ngOnInit() {
@@ -45,6 +50,16 @@ export class ActionSheetComponent implements OnInit {
 
   setOpen(isOpen: boolean) {
     this.isAlertOpen = isOpen;
+  }
+
+  destinationInputOnChangeHandler(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    this.googleMapsService.autoCompletePlace(inputElement);
+  }
+
+  clickTest(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    this.googleMapsService.convertPlaceToCoordinates(inputElement.value);
   }
 
   reloadPage(): void {
@@ -62,7 +77,7 @@ export class ActionSheetComponent implements OnInit {
   public async getActionSheet(): Promise<ActionSheetButton[]> {
     const showModal = () => {
       this.modal.present();
-    }
+    };
     return [
       {
         text: 'Reservar',
@@ -85,10 +100,7 @@ export class ActionSheetComponent implements OnInit {
     this.modal.dismiss(null, 'cancel');
   }
 
-  confirm(
-    userID: string,
-    tripID: string
-  ) {
+  confirm(userID: string, tripID: string) {
     const bookTrip = async () => {
       const bookingStatus = await this.bookTripService.makeTripBooking(
         tripID,
@@ -134,14 +146,14 @@ export class ActionSheetComponent implements OnInit {
       }
     };
     bookTrip();
-    console.log('Destino: ', this.destinationInput)
+    console.log('Destino: ', this.destinationInput);
     this.modal.dismiss(null, 'confirm');
   }
 
   onWillDismiss(event: Event) {
-    const ev = event as CustomEvent<OverlayEventDetail<string>>
+    const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'confirm') {
-      console.log('confirmado')
+      console.log('confirmado');
     }
   }
 }
