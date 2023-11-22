@@ -10,7 +10,7 @@ export class GoogleMapsService {
 
   constructor(private readonly mapper: GoogleMapsMappers) {
     this.loader = new Loader({
-      apiKey: 'AIzaSyCaQ0BkzROBMxoLHQZ8wYTMBa_vtp2QT5g',
+      apiKey: 'AIzaSyAGt56ySTX_4nTchOH5nCNpVwj43Dazlyg',
       version: 'weekly',
       libraries: ['maps'],
     });
@@ -74,6 +74,31 @@ export class GoogleMapsService {
       this.mapper.mapToLatLng(endPosition),
       mappedStops
     );
+
+    return map;
+  }
+
+  async createTripRequestMap(
+    endPosition: string,
+    domElement: ElementRef<HTMLElement>
+  ) {
+    await this.isLibraryLoaded();
+
+    if (!endPosition) return Promise.reject('Must provide start and end position of the trip');
+
+    const { Map } = (await google.maps.importLibrary(
+      'maps'
+    )) as google.maps.MapsLibrary;
+
+    const mapOptions: google.maps.MapOptions = {
+      center: this.mapper.mapToLatLng(endPosition),
+      zoom: 18,
+      mapId: uuidv4(),
+    };
+
+    const map = new Map(domElement.nativeElement, mapOptions);
+
+    this.addMarker(map, this.mapper.mapToLatLng(endPosition));
 
     return map;
   }

@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActionSheetButton, AlertController, IonicModule } from '@ionic/angular';
-import { TripsAgreementRepository } from 'src/app/providers/db-api/repositories/trips-agreement.repository';
 import { UserGenders } from '../../shared/domain/user-types.domain';
 import {
   IPassengerGenderFormat,
@@ -12,6 +11,8 @@ import { IRequestTripStatus } from 'src/app/modules/book-trip/domain/book-trip.d
 import { DriverStoreService } from 'src/app/stores/driver/driver.service';
 import { IDriverState } from 'src/app/stores/driver/driver.interfaces';
 import { Observable } from 'rxjs';
+import { ITripCardViewType } from '../map-card-view/domain/map-card-view.interfaces';
+import { MapCardViewComponent } from '../map-card-view/map-card-view.component';
 
 type IFinalStatus = {
   status?: keyof typeof IRequestTripStatus;
@@ -22,7 +23,7 @@ type IFinalStatus = {
   selector: 'app-request-card',
   templateUrl: './request-trip-card.component.html',
   styleUrls: ['./request-trip-card.component.scss'],
-  imports: [CommonModule, IonicModule],
+  imports: [CommonModule, IonicModule, MapCardViewComponent],
 })
 export class RequestTripCardComponent implements OnInit {
   @Input() tripRequests: IRequestTripCard[];
@@ -32,6 +33,8 @@ export class RequestTripCardComponent implements OnInit {
   public actionButtons: ActionSheetButton[] = [];
   public isAlertOpen = false;
   public currentState$: Observable<IDriverState>;
+
+  mapViewType = ITripCardViewType;
 
   constructor(
     private readonly bookTripService: BookTripService,
