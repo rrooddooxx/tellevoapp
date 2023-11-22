@@ -83,6 +83,32 @@ export class GoogleMapsService {
     return map;
   }
 
+  async createTripRequestMap(
+    endPosition: string,
+    domElement: ElementRef<HTMLElement>
+  ) {
+    await this.isLibraryLoaded();
+
+    if (!endPosition)
+      return Promise.reject('Must provide start and end position of the trip');
+
+    const { Map } = (await google.maps.importLibrary(
+      'maps'
+    )) as google.maps.MapsLibrary;
+
+    const mapOptions: google.maps.MapOptions = {
+      center: this.mapper.mapToLatLng(endPosition),
+      zoom: 18,
+      mapId: uuidv4(),
+    };
+
+    const map = new Map(domElement.nativeElement, mapOptions);
+
+    this.addMarker(map, this.mapper.mapToLatLng(endPosition));
+
+    return map;
+  }
+
   async traceDirections(
     map: google.maps.Map,
     origin: google.maps.LatLngLiteral,

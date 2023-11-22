@@ -4,6 +4,7 @@ export interface TripRequest {
   driver_id: number;
   trip_datetime: string;
   dropoff_ref: string;
+  dropoff_coords: string;
   student_id: number;
   student_name: string;
   student_lastname: string;

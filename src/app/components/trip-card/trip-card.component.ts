@@ -10,6 +10,7 @@ import {
   ITripCardState,
   ITripStatusField,
 } from './trip-card.interfaces';
+import { ITripCardViewType } from '../map-card-view/domain/map-card-view.interfaces';
 
 @Component({
   standalone: true,
@@ -26,6 +27,8 @@ import {
 export class TripCardComponent implements OnInit {
   @Input() type: ITripCardType;
   tripCardType = ITripCardType;
+
+  mapViewType = ITripCardViewType;
 
   @Input() getActiveTripsReload: () => Promise<void>;
 

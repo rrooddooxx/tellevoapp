@@ -5,6 +5,7 @@ export interface IRequestTripCard {
   trip_date: string;
   trip_time: string;
   dropoff_ref: string;
+  dropoff_coords: string;
   student_id: number;
   student_name: string;
   student_lastname: string;
