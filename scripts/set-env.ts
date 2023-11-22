@@ -11,6 +11,7 @@ const targetPath = isProduction
   : './src/environments/environment.ts';
 
 const supabaseJwt = process.env['SUPABASE_API_JWT'];
+const gCloudApiKey = process.env['GCLOUD_API_KEY'];
 
 let environmentFileContent;
 
@@ -24,6 +25,7 @@ export const environment = {
 export const environment = {
    production: ${isProduction},
    SUPABASE_API_JWT: "${supabaseJwt}",
+   GCLOUD_API_KEY: "${gCloudApiKey}",
 };`;
 }
 

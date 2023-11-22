@@ -9,14 +9,14 @@
           <ion-buttons slot="start">
             <ion-button (click)="cancel()">Cancel</ion-button>
           </ion-buttons>
-          <ion-title>Enter destination</ion-title>
+          <ion-title>Ingrese Destino:</ion-title>
           <ion-buttons slot="end">
             <ion-button (click)="confirm(userID, tripID)" [strong]="true">Confirm</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <ion-input class="input-primary rounded-t-xl" label="Destination" placeholder="Caldera 451" [(ngModel)]="destinationInput"></ion-input>
+        <ion-input class="input-primary rounded-t-xl" label="Destination" placeholder="Caldera 451" (input)="destinationInputOnChangeHandler($event)" #destinationInput (ionChange)="clickTest($event)"></ion-input>
       </ion-content>
     </ng-template>
   </ion-modal>

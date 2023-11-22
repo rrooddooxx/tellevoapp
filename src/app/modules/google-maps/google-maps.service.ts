@@ -1,18 +1,23 @@
 import { ElementRef, Injectable } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { v4 as uuidv4 } from 'uuid';
+import { environment } from '../../../environments/environment';
 import { GoogleMapsMappers } from './mappers/google-map.mappers';
 
 @Injectable()
 export class GoogleMapsService {
   private loader: Loader;
   private isLoaded: boolean = false;
+  private autoCompleteRequest: google.maps.places.Autocomplete;
+  private elementToFill: HTMLInputElement;
+  private fillPredictionCompleted: boolean = false;
+  private fillPredictionAddress: string = '';
 
   constructor(private readonly mapper: GoogleMapsMappers) {
     this.loader = new Loader({
-      apiKey: 'AIzaSyCaQ0BkzROBMxoLHQZ8wYTMBa_vtp2QT5g',
+      apiKey: environment.GCLOUD_API_KEY,
       version: 'weekly',
-      libraries: ['maps'],
+      libraries: ['maps', 'places'],
     });
   }
 
@@ -108,5 +113,67 @@ export class GoogleMapsService {
     };
     directionsRender.setMap(map);
     calcRoute();
+  }
+
+  async autoCompletePlace(inputElement: HTMLInputElement) {
+    await this.isLibraryLoaded();
+    this.fillPredictionCompleted = false;
+    const options: google.maps.places.AutocompleteOptions = {
+      componentRestrictions: {
+        country: 'cl',
+      },
+      fields: ['address_components', 'geometry', 'formatted_address'],
+      types: ['address'],
+      strictBounds: true,
+    };
+    this.autoCompleteRequest = new google.maps.places.Autocomplete(
+      inputElement,
+      options
+    );
+    inputElement.focus();
+
+    const fillAddress = async () => {
+      const place = this.autoCompleteRequest.getPlace();
+
+      const dictionary = {
+        street_address: {
+          value: '',
+        },
+        street_number: {
+          value: '',
+        },
+        administrative_area_level_1: {
+          value: '',
+        },
+      };
+
+      place.address_components.forEach((component) => {
+        const compName: string = component.types[0];
+        const compValue = component.long_name;
+        if (dictionary[compName as keyof typeof dictionary]) {
+          dictionary[compName as keyof typeof dictionary].value = compValue;
+        }
+      });
+
+      const finalAddress = `${dictionary.street_address.value || ''}${
+        dictionary.street_number.value || ''
+      }${dictionary.administrative_area_level_1.value || ''}`;
+      inputElement.value = finalAddress;
+      inputElement.focus();
+    };
+
+    inputElement.addEventListener('place_changed', fillAddress);
+  }
+
+  async convertPlaceToCoordinates(address: string) {
+    if (address.length > 0) {
+      console.log(address);
+      const geocoder = new google.maps.Geocoder();
+      const request = await geocoder.geocode({
+        address,
+      });
+      //TODO: terminar
+      request.results.forEach((result) => console.log(result));
+    }
   }
 }
