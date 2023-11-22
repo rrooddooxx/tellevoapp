@@ -23,10 +23,8 @@
         <ul>Ranking: <span class="text-[var(--ion-color-secondary)]">{{requestInfo?.student_ranking}}</span></ul>
       </li>
 
-      <!-- <div class="flex justify-center mt-2 gap-2">
-        <ion-button class="btn-primary-md" (click)="acceptTrip(requestInfo.trip_id)">ACEPTAR</ion-button>
-        <ion-button class="btn-secondary-md" (click)="rejectTrip(requestInfo.trip_id)">RECHAZAR</ion-button>
-      </div> -->
+      <app-map-card-view [endCoordinate]="requestInfo?.dropoff_coords" [mapViewType]="mapViewType.REQUEST_TRIP"/>
+
       <div class="flex justify-center mt-2 gap-2">
         <ion-button id="open-action-sheet-accept" class="btn-primary-md px-2" (click)="acceptTrip(requestInfo.trip_id)">Aceptar</ion-button>
         <ion-button id="open-action-sheet-reject" class="btn-secondary-md px-2" (click)="rejectTrip(requestInfo.trip_id)">Rechazar</ion-button>

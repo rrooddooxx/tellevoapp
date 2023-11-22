@@ -15,6 +15,7 @@ export class RequestTripMappers {
       .trip_date(DateTime.fromISO(request.trip_datetime).toFormat('dd/MM/yyyy'))
       .trip_time(DateTime.fromISO(request.trip_datetime).toFormat('HH:mm'))
       .dropoff_ref(request.dropoff_ref)
+      .dropoff_coords(request.dropoff_coords)
       .student_id(request.student_id)
       .student_name(request.student_name)
       .student_lastname(request.student_lastname)

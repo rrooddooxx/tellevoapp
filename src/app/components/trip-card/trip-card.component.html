@@ -23,9 +23,9 @@
             <ion-icon name="location-outline"></ion-icon>
             <ion-label>Paradas:</ion-label>
           </div>
-          <ion-card>
-            <img class="object-cover" src="/assets/imgs/map_1.png" alt="mapa" />
-          </ion-card>
+
+          <app-map-card-view [startCoordinate]="tripInfo.pickupCoords" [endCoordinate]="tripInfo.dropoffCoords" [stops]="tripInfo.stops" [mapViewType]="mapViewType.DEFAULT"/>
+
         </ion-card-subtitle>
 
         <div class="flex justify-center my-2 gap-2">
