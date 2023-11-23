@@ -24,7 +24,7 @@
             <ion-label>Paradas:</ion-label>
           </div>
 
-          <app-map-card-view [startCoordinate]="tripInfo.pickupCoords" [endCoordinate]="tripInfo.dropoffCoords" [stops]="tripInfo.stops" [mapViewType]="mapViewType.DEFAULT"/>
+          <app-map-card-view [startCoordinate]="tripInfo.pickupCoords" [endCoordinate]="tripInfo.dropoffCoords" [stops]="tripInfo.stops" [mapViewType]="mapViewType.DEFAULT" />
 
         </ion-card-subtitle>
 
@@ -75,7 +75,7 @@
             <ion-label>Paradas:</ion-label>
           </div>
 
-          <app-map-card-view [startCoordinate]="tripInfo.pickupCoords" [endCoordinate]="tripInfo.dropoffCoords" [stops]="tripInfo.stops" />
+          <app-map-card-view [startCoordinate]="tripInfo.pickupCoords" [endCoordinate]="tripInfo.dropoffCoords" [stops]="tripInfo.stops" [mapViewType]="mapViewType.DEFAULT" />
 
           <div *ngIf="showActionButtons" class="flex justify-center">
             <app-action-sheet [tripID]="tripInfo.id" [actionHeader]="actionHeader" [userID]="userID" [getActiveTripsReload]="getActiveTripsReload" />

@@ -1,6 +1,13 @@
 /* eslint-disable no-case-declarations */
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
@@ -11,7 +18,9 @@ import {
   NavController,
 } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
+import { Observable } from 'rxjs';
 import { GoogleMapsService } from '../../modules/google-maps/google-maps.service';
+import { IPassengerState } from '../../stores/passenger/passenger.interfaces';
 import { PassengerStoreService } from '../../stores/passenger/passenger.service';
 import { BookTripService } from './../../modules/book-trip/book-trip.service';
 
@@ -25,27 +34,35 @@ import { BookTripService } from './../../modules/book-trip/book-trip.service';
 export class ActionSheetComponent implements OnInit {
   @ViewChild(IonModal) modal: IonModal;
   @ViewChild('destinationInput') destinationInputElement: ElementRef;
-  @ViewChild('mapSearchView') mapSearchViewElement: ElementRef;
+  @ViewChild('inputMap') inputMap: ElementRef<HTMLElement>;
+  @ViewChild('infoWindowContent') infoWindowContent: ElementRef<HTMLElement>;
+  @ViewChild('pacCard') pacCard: ElementRef<HTMLElement>;
+  @ViewChild('pacContainer') pacContainer: ElementRef<HTMLElement>;
+  @ViewChild('pacInput') pacInput: ElementRef<HTMLInputElement>;
 
   public actionButtons: ActionSheetButton[] = [];
   public isAlertOpen = false;
   public destinationInput: string = '';
+  public dropOffCoords: string;
 
   @Input() userID: string;
   @Input() tripID: string;
   @Input() actionHeader: string;
   @Input() getActiveTripsReload: () => Promise<void>;
+  public currentState$: Observable<IPassengerState>;
   constructor(
     private readonly bookTripService: BookTripService,
     private alertController: AlertController,
     private passengerStore: PassengerStoreService,
     private navCtrl: NavController,
     private router: Router,
-    private googleMapsService: GoogleMapsService
+    private googleMapsService: GoogleMapsService,
+    private renderer: Renderer2
   ) {}
 
   async ngOnInit() {
     this.actionButtons = await this.getActionSheet();
+    this.currentState$ = this.passengerStore.state$;
   }
 
   setOpen(isOpen: boolean) {
@@ -53,6 +70,7 @@ export class ActionSheetComponent implements OnInit {
   }
 
   destinationInputOnChangeHandler(event: Event) {
+    if (event.cancelable) event.preventDefault();
     const inputElement = event.target as HTMLInputElement;
     this.googleMapsService.autoCompletePlace(inputElement);
   }
@@ -60,6 +78,19 @@ export class ActionSheetComponent implements OnInit {
   clickTest(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     this.googleMapsService.convertPlaceToCoordinates(inputElement.value);
+  }
+
+  createInputMap() {
+    const map = document.getElementById('map');
+    const pacInput = document.getElementById('pacInput');
+    const pacCard = document.getElementById('pacCard');
+    const infoWindowContent = document.getElementById('infoWindowContent');
+    this.googleMapsService.createPredictionMap(
+      map,
+      pacInput as HTMLInputElement,
+      pacCard,
+      infoWindowContent
+    );
   }
 
   reloadPage(): void {
@@ -77,6 +108,9 @@ export class ActionSheetComponent implements OnInit {
   public async getActionSheet(): Promise<ActionSheetButton[]> {
     const showModal = () => {
       this.modal.present();
+      this.modal.didPresent.subscribe(() => {
+        this.createInputMap();
+      });
     };
     return [
       {
@@ -101,10 +135,16 @@ export class ActionSheetComponent implements OnInit {
   }
 
   confirm(userID: string, tripID: string) {
+    this.currentState$.subscribe((val) => {
+      if (val?.mapsState?.tripBookingDropoff)
+        this.dropOffCoords = val.mapsState.tripBookingDropoff;
+    });
     const bookTrip = async () => {
+      if (!this.dropOffCoords) return;
       const bookingStatus = await this.bookTripService.makeTripBooking(
         tripID,
-        userID
+        userID,
+        this.dropOffCoords
       );
       switch (bookingStatus) {
         case 0:

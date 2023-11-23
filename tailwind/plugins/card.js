@@ -35,6 +35,18 @@ module.exports = plugin(function ({ addUtilities }) {
       width: "90vw",
       padding: "0 !important",
     },
+    ".card-map-input": {
+      backgroundColor: "white",
+      borderWidth: "2px",
+      borderColor: "#000",
+      borderRadius: "8",
+      overflow: "hidden",
+      boxShadow: "0 0 #0000, 0 0 #0000, 5px 5px #000",
+      width: "90%",
+      padding: "0 !important",
+      marginTop: 12,
+      marginLeft: 16,
+    },
   };
   addUtilities(cardClasses);
 });

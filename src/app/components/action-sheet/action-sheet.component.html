@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="currentState$ | async as currentState">
   <ion-button id="open-as" class="btn-primary-md px-2" expand="block">Reservar</ion-button>
   <ion-button (click)="updateForceActiveTripsReload()" class="btn-secondary-md px-2">Refrescar</ion-button>
   <ion-action-sheet trigger="open-as" [header]="actionHeader" [buttons]="actionButtons"></ion-action-sheet>
@@ -11,12 +11,27 @@
           </ion-buttons>
           <ion-title>Ingrese Destino:</ion-title>
           <ion-buttons slot="end">
-            <ion-button (click)="confirm(userID, tripID)" [strong]="true">Confirm</ion-button>
+            <ion-button (click)="confirm(userID, tripID)" [strong]="true">Confirmar</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <ion-input class="input-primary rounded-t-xl" label="Destination" placeholder="Caldera 451" (input)="destinationInputOnChangeHandler($event)" #destinationInput (ionChange)="clickTest($event)"></ion-input>
+        <!--  <ion-input class="input-primary rounded-t-xl" label="Destination" placeholder="Caldera 451" (input)="destinationInputOnChangeHandler($event)" #destinationInput (ionChange)="clickTest($event)"></ion-input> -->
+        <div class="card card-map-input" id="pacCard">
+          <div>
+            <div id="title">Ingresa tu bajada:</div>
+            <br />
+          </div>
+          <div id="pacContainer">
+            <input id="pacInput" class="input-primary-map rounded-t-xl" type="text" placeholder="Enter a location" />
+          </div>
+        </div>
+        <div id="map"></div>
+        <div id="infoWindowContent">
+          <span id="place-name" class="title"></span><br />
+          <span id="place-address"></span>
+        </div>
+
       </ion-content>
     </ng-template>
   </ion-modal>
