@@ -286,16 +286,6 @@ export class GoogleMapsService {
         place.formatted_address;
       infoWindow.open(map, marker);
     });
-
-    // Sets a listener on a radio button to change the filter type on Places
-    // Autocomplete.
-    function setupClickListener(id, types) {
-      const radioButton = document.getElementById(id) as HTMLInputElement;
-
-      radioButton.addEventListener('click', () => {
-        inputDomElement.value = '';
-      });
-    }
   }
 
   private formatCurrentLocation = (lat: number, lng: number) => {
