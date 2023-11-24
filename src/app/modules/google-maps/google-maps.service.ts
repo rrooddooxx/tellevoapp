@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 import { PassengerStoreService } from '../../stores/passenger/passenger.service';
 import { GoogleMapsConstants } from './config/google-maps.config.constants';
 import { GoogleMapsMappers } from './mappers/google-map.mappers';
+import { DriverStoreService } from 'src/app/stores/driver/driver.service';
 
 @Injectable()
 export class GoogleMapsService {
@@ -17,7 +18,8 @@ export class GoogleMapsService {
 
   constructor(
     private readonly mapper: GoogleMapsMappers,
-    private readonly passengerStore: PassengerStoreService
+    private readonly passengerStore: PassengerStoreService,
+    private readonly driverStore: DriverStoreService
   ) {
     this.loader = new Loader({
       apiKey: environment.GCLOUD_API_KEY,
@@ -233,7 +235,9 @@ export class GoogleMapsService {
     mapDomElement: HTMLElement,
     inputDomElement: HTMLInputElement,
     cardDomElement: HTMLElement,
-    infoWindowDomElement: HTMLElement
+    infoWindowDomElement: HTMLElement,
+    store: PassengerStoreService | DriverStoreService,
+    tripType?: 'init' | 'end'
   ) {
     const map = await this.createMap(
       this.mapper.mapToLatLng(GoogleMapsConstants.DUOC_COORDS_PLACEHOLDER),
@@ -265,14 +269,16 @@ export class GoogleMapsService {
 
       if (place.geometry.viewport) {
         map.fitBounds(place.geometry.viewport);
-        this.passengerStore.updateState({
-          mapsState: {
-            tripBookingDropoff: this.formatCurrentLocation(
-              place.geometry.location.lat(),
-              place.geometry.location.lng()
-            ),
-          },
-        });
+        if(store instanceof PassengerStoreService) {
+          this.passengerStore.updateState({
+            mapsState: {
+              tripBookingDropoff: this.formatCurrentLocation(
+                place.geometry.location.lat(),
+                place.geometry.location.lng()
+              ),
+            },
+          });
+        }
       } else {
         map.setCenter(place.geometry.location);
         map.setZoom(17);

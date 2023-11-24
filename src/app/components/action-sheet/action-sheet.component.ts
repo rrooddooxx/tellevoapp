@@ -89,7 +89,8 @@ export class ActionSheetComponent implements OnInit {
       map,
       pacInput as HTMLInputElement,
       pacCard,
-      infoWindowContent
+      infoWindowContent,
+      this.passengerStore
     );
   }
 
