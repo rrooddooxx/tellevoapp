@@ -2,6 +2,8 @@ import { ElementRef, Injectable } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { v4 as uuidv4 } from 'uuid';
 import { environment } from '../../../environments/environment';
+import { PassengerStoreService } from '../../stores/passenger/passenger.service';
+import { GoogleMapsConstants } from './config/google-maps.config.constants';
 import { GoogleMapsMappers } from './mappers/google-map.mappers';
 
 @Injectable()
@@ -13,7 +15,10 @@ export class GoogleMapsService {
   private fillPredictionCompleted: boolean = false;
   private fillPredictionAddress: string = '';
 
-  constructor(private readonly mapper: GoogleMapsMappers) {
+  constructor(
+    private readonly mapper: GoogleMapsMappers,
+    private readonly passengerStore: PassengerStoreService
+  ) {
     this.loader = new Loader({
       apiKey: environment.GCLOUD_API_KEY,
       version: 'weekly',
@@ -44,6 +49,25 @@ export class GoogleMapsService {
       position,
       title,
     });
+  }
+
+  private async createMap(
+    center: google.maps.LatLngLiteral,
+    domElement: HTMLElement,
+    mapTypeControl: boolean = true
+  ) {
+    const { Map } = (await google.maps.importLibrary(
+      'maps'
+    )) as google.maps.MapsLibrary;
+
+    const mapOptions: google.maps.MapOptions = {
+      center,
+      zoom: 18,
+      mapId: uuidv4(),
+      mapTypeControl,
+    };
+
+    return new Map(domElement, mapOptions);
   }
 
   async createTripMap(
@@ -141,21 +165,23 @@ export class GoogleMapsService {
     calcRoute();
   }
 
-  async autoCompletePlace(inputElement: HTMLInputElement) {
-    await this.isLibraryLoaded();
-    this.fillPredictionCompleted = false;
+  createAutoCompleteRequest(
+    inputElement: HTMLInputElement
+  ): google.maps.places.Autocomplete {
     const options: google.maps.places.AutocompleteOptions = {
       componentRestrictions: {
-        country: 'cl',
+        country: 'CL',
       },
       fields: ['address_components', 'geometry', 'formatted_address'],
       types: ['address'],
-      strictBounds: true,
+      strictBounds: false,
     };
-    this.autoCompleteRequest = new google.maps.places.Autocomplete(
-      inputElement,
-      options
-    );
+    return new google.maps.places.Autocomplete(inputElement, options);
+  }
+
+  async autoCompletePlace(inputElement: HTMLInputElement) {
+    await this.isLibraryLoaded();
+    this.autoCompleteRequest = this.createAutoCompleteRequest(inputElement);
     inputElement.focus();
 
     const fillAddress = async () => {
@@ -202,4 +228,68 @@ export class GoogleMapsService {
       request.results.forEach((result) => console.log(result));
     }
   }
+
+  async createPredictionMap(
+    mapDomElement: HTMLElement,
+    inputDomElement: HTMLInputElement,
+    cardDomElement: HTMLElement,
+    infoWindowDomElement: HTMLElement
+  ) {
+    const map = await this.createMap(
+      this.mapper.mapToLatLng(GoogleMapsConstants.DUOC_COORDS_PLACEHOLDER),
+      mapDomElement,
+      false
+    );
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(cardDomElement);
+
+    const autocomplete = this.createAutoCompleteRequest(inputDomElement);
+    autocomplete.bindTo('bounds', map);
+    const infoWindow = new google.maps.InfoWindow();
+    infoWindow.setContent(infoWindowDomElement);
+
+    const marker = new google.maps.Marker({
+      map,
+      anchorPoint: new google.maps.Point(0, -29),
+    });
+
+    autocomplete.addListener('place_changed', () => {
+      infoWindow.close();
+      marker.setVisible(false);
+
+      const place = autocomplete.getPlace();
+
+      if (!place.geometry || !place.geometry.location) {
+        console.log("No details available for input: '" + place.name + "'");
+        return;
+      }
+
+      if (place.geometry.viewport) {
+        map.fitBounds(place.geometry.viewport);
+        this.passengerStore.updateState({
+          mapsState: {
+            tripBookingDropoff: this.formatCurrentLocation(
+              place.geometry.location.lat(),
+              place.geometry.location.lng()
+            ),
+          },
+        });
+      } else {
+        map.setCenter(place.geometry.location);
+        map.setZoom(17);
+      }
+
+      marker.setPosition(place.geometry.location);
+      marker.setVisible(true);
+
+      infoWindowDomElement.children['place-name'].textContent = place.name;
+      infoWindowDomElement.children['place-address'].textContent =
+        place.formatted_address;
+      infoWindow.open(map, marker);
+    });
+  }
+
+  private formatCurrentLocation = (lat: number, lng: number) => {
+    if (!lat && !lng && !isNaN(lat) && !isNaN(lng)) return '';
+    return `${lat?.toString?.()},${lng?.toString?.()}` || '';
+  };
 }

@@ -56,14 +56,18 @@ export class TripsAgreementRepository {
     );
   }
 
-  makeAgreement(tripID: string, userID: string): Observable<HttpResponse<any>> {
+  makeAgreement(
+    tripID: string,
+    userID: string,
+    dropOffCoords: string
+  ): Observable<HttpResponse<any>> {
     return this.httpClient.post<any>(
       `${this.baseUrl}?trip_id=eq.${tripID}`,
       {
         trip_id: tripID,
         student_id: userID,
-        dropoff_ref: 'prueba ref',
-        dropoff_coords: 'prueba coords',
+        dropoff_ref: dropOffCoords,
+        dropoff_coords: dropOffCoords,
       },
       {
         headers: ApiDatabaseConfig.supabaseHeaders,

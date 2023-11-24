@@ -15,12 +15,14 @@ export class BookTripService {
 
   async makeTripBooking(
     tripID: string,
-    userID: string
+    userID: string,
+    dropOffCoords: string
   ): Promise<BookAgreementStatus> {
     try {
-      const isBooked = await this.tripsAgreementRepository.makeAgreement(
+      const isBooked = this.tripsAgreementRepository.makeAgreement(
         tripID,
-        userID
+        userID,
+        dropOffCoords
       );
       const booked = await lastValueFrom(isBooked);
       if (
@@ -40,8 +42,10 @@ export class BookTripService {
 
   async acceptTripBooking(tripId: number): Promise<IRequestTripStatus> {
     try {
-      const tripRequestStatus = await lastValueFrom(this.tripsAgreementRepository.acceptTripRequest(tripId))
-      
+      const tripRequestStatus = await lastValueFrom(
+        this.tripsAgreementRepository.acceptTripRequest(tripId)
+      );
+
       const dictionary = {
         [HttpStatusCode.NoContent]: {
           response: IRequestTripStatus.OK_ACCEPTED,
@@ -49,18 +53,23 @@ export class BookTripService {
         [HttpStatusCode.BadRequest]: {
           response: IRequestTripStatus.FAIL_ACCEPTED,
         },
-      }
-  
-      return dictionary[tripRequestStatus.status].response || dictionary[HttpStatusCode.BadRequest].response
+      };
+
+      return (
+        dictionary[tripRequestStatus.status].response ||
+        dictionary[HttpStatusCode.BadRequest].response
+      );
     } catch (error) {
-      return Promise.resolve(IRequestTripStatus.FAIL_ACCEPTED)
+      return Promise.resolve(IRequestTripStatus.FAIL_ACCEPTED);
     }
   }
 
   async rejectTripBooking(tripId: number): Promise<IRequestTripStatus> {
     try {
-      const tripRequestStatus = await lastValueFrom(this.tripsAgreementRepository.rejectTripRequest(tripId))
-      
+      const tripRequestStatus = await lastValueFrom(
+        this.tripsAgreementRepository.rejectTripRequest(tripId)
+      );
+
       const dictionary = {
         [HttpStatusCode.NoContent]: {
           response: IRequestTripStatus.OK_REJECTED,
@@ -68,11 +77,14 @@ export class BookTripService {
         [HttpStatusCode.BadRequest]: {
           response: IRequestTripStatus.FAIL_REJECTED,
         },
-      }
-  
-      return dictionary[tripRequestStatus.status].response || dictionary[HttpStatusCode.BadRequest].response
+      };
+
+      return (
+        dictionary[tripRequestStatus.status].response ||
+        dictionary[HttpStatusCode.BadRequest].response
+      );
     } catch (error) {
-      return Promise.resolve(IRequestTripStatus.FAIL_REJECTED)
+      return Promise.resolve(IRequestTripStatus.FAIL_REJECTED);
     }
   }
 }
