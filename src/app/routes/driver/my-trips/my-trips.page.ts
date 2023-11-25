@@ -12,8 +12,9 @@ import { DriverStoreService } from 'src/app/stores/driver/driver.service';
 import { IDriverState } from 'src/app/stores/driver/driver.interfaces';
 import { CreateTripInput } from './domain/create-trip-input.domain';
 import { CreateTripRequest } from 'src/app/providers/db-api/domain/trips.domain';
-import { TripFinalStatus, TripStatus } from 'src/app/providers/db-api/model/trips.model';
-import { GoogleMapsService, TripDirectionType } from 'src/app/modules/google-maps/google-maps.service';
+import { GoogleMapsService } from 'src/app/modules/google-maps/google-maps.service';
+import { mapNewTrip } from './mappers/my-trips.mappers';
+import { TripDirectionType } from 'src/app/modules/google-maps/domain/google-map.interfaces';
 
 @Component({
   selector: 'my-trips-app',
@@ -53,7 +54,7 @@ export class DriverTripsPage implements OnInit {
     private readonly tripsRepository: TripsRepository,
     private readonly mapper: TripMappers,
     private googleMapsService: GoogleMapsService,
-    private readonly driverStore: DriverStoreService
+    private readonly driverStore: DriverStoreService,
   ) { }
 
   async ngOnInit() {
@@ -112,18 +113,7 @@ export class DriverTripsPage implements OnInit {
         this.createTripInput.dropoff_coords = val.tripBookingDropoff;
     }
     });
-    const newTrip: CreateTripRequest = {
-      driver_id: this.currentState.userProfile.user_id,
-      vehicle_id: 1,
-      seats_offered: 4,
-      pickup_ref: this.createTripInput.pickup_ref,
-      pickup_coords: this.createTripInput.pickup_coords,
-      dropoff_ref: this.createTripInput.dropoff_ref,
-      dropoff_coords: this.createTripInput.dropoff_coords,
-      trip_seats_status: TripStatus.OPEN,
-      trip_final_status: TripFinalStatus.NOT_COMPLETED,
-      trip_datetime: this.createTripInput.trip_datetime
-    }
+    const newTrip: CreateTripRequest = mapNewTrip(this.currentState, this.createTripInput)
 
     try{
       this.tripsRepository.createNewTrip(newTrip).subscribe(() => {

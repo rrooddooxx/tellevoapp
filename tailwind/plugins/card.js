@@ -47,18 +47,6 @@ module.exports = plugin(function ({ addUtilities }) {
       marginTop: 12,
       marginLeft: 16,
     },
-    ".pac-card": {
-      backgroundColor: "white",
-      border: "0",
-      borderRadius: "2px",
-      boxShadow: "0 1px 4px -1px rgba(0, 0, 0, 0.3)",
-      margin: "10px",
-      padding: "0 0.5em",
-      fontWight: "400",
-      fontSize: "18px",
-      overflow: "hidden",
-      padding: "0"
-    }
   };
   addUtilities(cardClasses);
 });

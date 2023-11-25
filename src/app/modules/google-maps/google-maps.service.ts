@@ -6,11 +6,7 @@ import { PassengerStoreService } from '../../stores/passenger/passenger.service'
 import { GoogleMapsConstants } from './config/google-maps.config.constants';
 import { GoogleMapsMappers } from './mappers/google-map.mappers';
 import { DriverStoreService } from 'src/app/stores/driver/driver.service';
-
-export enum TripDirectionType {
-  PICKUP = 'pickup',
-  DROPOFF = 'dropoff',
-}
+import { TripDirectionType } from './domain/google-map.interfaces';
 
 @Injectable()
 export class GoogleMapsService {
