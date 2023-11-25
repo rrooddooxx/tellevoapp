@@ -7,6 +7,11 @@ import { GoogleMapsConstants } from './config/google-maps.config.constants';
 import { GoogleMapsMappers } from './mappers/google-map.mappers';
 import { DriverStoreService } from 'src/app/stores/driver/driver.service';
 
+export enum TripDirectionType {
+  PICKUP = 'pickup',
+  DROPOFF = 'dropoff',
+}
+
 @Injectable()
 export class GoogleMapsService {
   private loader: Loader;
@@ -235,7 +240,7 @@ export class GoogleMapsService {
     cardDomElement: HTMLElement,
     infoWindowDomElement: HTMLElement,
     store: PassengerStoreService | DriverStoreService,
-    tripType?: 'init' | 'end'
+    tripType?: TripDirectionType
   ) {
     const map = await this.createMap(
       this.mapper.mapToLatLng(GoogleMapsConstants.DUOC_COORDS_PLACEHOLDER),
@@ -277,18 +282,16 @@ export class GoogleMapsService {
             },
           });
         }
-        if(store instanceof DriverStoreService && tripType === 'init') {
+        if(store instanceof DriverStoreService && tripType === TripDirectionType.PICKUP) {
           store.updateState({
-            ...store.currentState,
             tripBookingPickup: this.formatCurrentLocation(
               place.geometry.location.lat(),
               place.geometry.location.lng()
             ),
           })
         }
-        if(store instanceof DriverStoreService && tripType === 'end') {
+        if(store instanceof DriverStoreService && tripType === TripDirectionType.DROPOFF) {
           store.updateState({
-            ...store.currentState,
             tripBookingDropoff: this.formatCurrentLocation(
               place.geometry.location.lat(),
               place.geometry.location.lng()

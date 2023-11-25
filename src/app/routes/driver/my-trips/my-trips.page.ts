@@ -13,7 +13,7 @@ import { IDriverState } from 'src/app/stores/driver/driver.interfaces';
 import { CreateTripInput } from './domain/create-trip-input.domain';
 import { CreateTripRequest } from 'src/app/providers/db-api/domain/trips.domain';
 import { TripFinalStatus, TripStatus } from 'src/app/providers/db-api/model/trips.model';
-import { GoogleMapsService } from 'src/app/modules/google-maps/google-maps.service';
+import { GoogleMapsService, TripDirectionType } from 'src/app/modules/google-maps/google-maps.service';
 
 @Component({
   selector: 'my-trips-app',
@@ -88,7 +88,7 @@ export class DriverTripsPage implements OnInit {
       pickupPacCard,
       pickupInfoWindowContent,
       this.driverStore,
-      'init'
+      TripDirectionType.PICKUP
     );
 
     const dropoffMap = document.getElementById('dropoffMap');
@@ -101,12 +101,11 @@ export class DriverTripsPage implements OnInit {
       dropoffPacCard,
       dropoffInfoWindowContent,
       this.driverStore,
-      'end'
+      TripDirectionType.DROPOFF
     );
   }
 
   createTrip() {
-    console.log(this.driverStore.currentState)
     this.currentState$.subscribe((val) => {
       if (val?.tripBookingDropoff && val?.tripBookingPickup) {
         this.createTripInput.pickup_coords = val.tripBookingPickup;
