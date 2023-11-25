@@ -78,7 +78,8 @@ export class DriverTripsPage implements OnInit {
     })
   }
 
-  createInputMaps() {
+  async createInputMaps() {
+    await this.googleMapsService.isLibraryLoaded();
     const pickupMap = document.getElementById('pickupMap');
     const pickupPacInput = document.getElementById('pickupPacInput');
     const pickupPacCard = document.getElementById('pickupPacCard');
