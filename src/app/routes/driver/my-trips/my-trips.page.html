@@ -20,7 +20,7 @@
 
     <app-trip-card [type]="tripCardType.DRIVER" [tripsInfo]="trips" />
 
-    <ion-button class="btn-primary-lg my-4" id="open-modal" expand="block">
+    <ion-button class="btn-primary-lg my-4" id="open-modal" expand="block" (click)="showModal()">
       Agendar nuevo viaje
     </ion-button>
 
@@ -35,38 +35,48 @@
           </ion-toolbar>
         </ion-header>
         <ion-content>
+
           <div class="grid justify-items-center gap-4">
-            <ion-card class="card text-black bg-white divide-y-2 divide-black mt-8" [(ngModel)]="createTripInput">
-              <ion-item>
-                <ion-input
-                  label="Inicio del viaje"
-                  labelPlacement="stacked"
-                  type="text"
-                  placeholder="DuocUC Viña"
-                  [(ngModel)]="createTripInput.pickup_ref"
-                ></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-input
-                  label="Destino del viaje"
-                  labelPlacement="stacked"
-                  type="text"
-                  placeholder="Plaza Viña"
-                  [(ngModel)]="createTripInput.dropoff_ref"
-                ></ion-input>
-              </ion-item>
-              <ion-item>
-                <label for="datetime" class="mr-2">Horario salida:</label>
-                <ion-datetime-button datetime="datetime"></ion-datetime-button>
-              </ion-item>
+            <div class="card card-map-input pac-card" id="pickupPacCard">
+              <div>
+                <div class="text-white bg-[var(--ion-color-secondary)] text-2xl font-medium py-2 px-3">Ingresa inicio del viaje:</div>
+                <br />
+              </div>
+              <div id="pickupPacContainer" class="pb-3 mr-3">
+                <input id="pickupPacInput" class="input-primary-map rounded-t-xl" type="text" placeholder="Enter a location" />
+              </div>
+            </div>
+            <div id="pickupMap" class="h-[40%] inline"></div>
+            <div id="pickupInfoWindowContent" class="inline">
+              <span id="place-name" class="title"></span><br />
+              <span id="place-address"></span>
+            </div>
+
+            <div class="card card-map-input pac-card" id="dropoffPacCard">
+              <div>
+                <div class="text-white bg-[var(--ion-color-secondary)] text-2xl font-medium py-2 px-3">Ingresa final del viaje:</div>
+                <br />
+              </div>
+              <div id="dropoffPacContainer" class="pb-3 mr-3">
+                <input id="dropoffPacInput" class="input-primary-map rounded-t-xl" type="text" placeholder="Enter a location" />
+              </div>
+            </div>
+            <div id="dropoffMap" class="h-full inline"></div>
+            <div id="dropoffInfoWindowContent" class="inline">
+              <span id="place-name" class="title"></span><br />
+              <span id="place-address"></span>
+            </div>
+              
+            <ion-item>
+              <label for="datetime" class="mr-2">Horario salida:</label>
+              <ion-datetime-button datetime="datetime"></ion-datetime-button>
+            </ion-item>
   
-              <ion-modal [keepContentsMounted]="true">
-                <ng-template>
-                  <ion-datetime id="datetime" presentation="date-time" [preferWheel]="true" [(ngModel)]="createTripInput.trip_datetime"
-                  (ionChange)="showDate()"></ion-datetime>
-                </ng-template>
-              </ion-modal>
-            </ion-card>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime id="datetime" presentation="date-time" [preferWheel]="true" [(ngModel)]="createTripInput.trip_datetime"></ion-datetime>
+              </ng-template>
+            </ion-modal>
   
             <ion-button class="btn-primary-md" (click)="createTrip()">CREAR VIAJE</ion-button>
           </div>

@@ -18,8 +18,6 @@ export class GoogleMapsService {
 
   constructor(
     private readonly mapper: GoogleMapsMappers,
-    private readonly passengerStore: PassengerStoreService,
-    private readonly driverStore: DriverStoreService
   ) {
     this.loader = new Loader({
       apiKey: environment.GCLOUD_API_KEY,
@@ -270,7 +268,7 @@ export class GoogleMapsService {
       if (place.geometry.viewport) {
         map.fitBounds(place.geometry.viewport);
         if(store instanceof PassengerStoreService) {
-          this.passengerStore.updateState({
+          store.updateState({
             mapsState: {
               tripBookingDropoff: this.formatCurrentLocation(
                 place.geometry.location.lat(),
@@ -278,6 +276,24 @@ export class GoogleMapsService {
               ),
             },
           });
+        }
+        if(store instanceof DriverStoreService && tripType === 'init') {
+          store.updateState({
+            ...store.currentState,
+            tripBookingPickup: this.formatCurrentLocation(
+              place.geometry.location.lat(),
+              place.geometry.location.lng()
+            ),
+          })
+        }
+        if(store instanceof DriverStoreService && tripType === 'end') {
+          store.updateState({
+            ...store.currentState,
+            tripBookingDropoff: this.formatCurrentLocation(
+              place.geometry.location.lat(),
+              place.geometry.location.lng()
+            ),
+          })
         }
       } else {
         map.setCenter(place.geometry.location);
