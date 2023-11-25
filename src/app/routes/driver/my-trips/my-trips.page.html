@@ -51,6 +51,21 @@
             <span id="place-name" class="title"></span><br />
             <span id="place-address"></span>
           </div>
+
+          <div class="fixed z-[3] bottom-0 bg-white w-full p-8 grid place-items-center gap-5">
+            <ion-item>
+              <label for="datetime" class="mr-2">Horario salida:</label>
+              <ion-datetime-button datetime="datetime"></ion-datetime-button>
+            </ion-item>
+  
+            <ion-button class="btn-primary-md" (click)="createTrip()">CREAR VIAJE</ion-button>
+          </div>
+
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime id="datetime" presentation="date-time" [preferWheel]="true" [(ngModel)]="createTripInput.trip_datetime"></ion-datetime>
+            </ng-template>
+          </ion-modal>
         </ion-content>
       </ng-template>
     </ion-modal>
