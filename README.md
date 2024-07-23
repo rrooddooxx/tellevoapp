@@ -8,7 +8,7 @@ DUOC UC, Sede Viña Del Mar
 ## Desarrolladores
 
 - Juan Valdés (@ponytakxn)
-- Sebastián Kravetz (@wwiiddeeweb)
+- Sebastián Kravetz (@rrooddooxx)
 
 ## Stack Utilizado
 
