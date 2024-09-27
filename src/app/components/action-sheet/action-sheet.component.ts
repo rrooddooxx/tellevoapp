@@ -87,9 +87,10 @@ export class ActionSheetComponent implements OnInit {
     const infoWindowContent = document.getElementById('infoWindowContent');
     this.googleMapsService.createPredictionMap(
       map,
-      pacInput as HTMLInputElement,
+      [pacInput as HTMLInputElement],
       pacCard,
-      infoWindowContent
+      infoWindowContent,
+      this.passengerStore
     );
   }
 

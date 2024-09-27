@@ -1,87 +1,139 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonModal, IonicModule } from '@ionic/angular';
-import { ITripCardType } from 'src/app/shared/enums/trip-card.enum';
-import { ITripCardState } from 'src/app/components/trip-card/trip-card.interfaces';
 import { TripCardComponent } from 'src/app/components/trip-card/trip-card.component';
+import { ITripCardState } from 'src/app/components/trip-card/trip-card.interfaces';
+import { TripDirectionType } from 'src/app/modules/google-maps/domain/google-map.interfaces';
+import { GoogleMapsService } from 'src/app/modules/google-maps/google-maps.service';
+import { DbModule } from 'src/app/providers/db-api/db.module';
+import { CreateTripRequest } from 'src/app/providers/db-api/domain/trips.domain';
 import { TripMappers } from 'src/app/providers/db-api/mappers/trips.mappers';
 import { TripsRepository } from 'src/app/providers/db-api/repositories/trips.repository';
-import { DbModule } from 'src/app/providers/db-api/db.module';
-import { DriverStoreService } from 'src/app/stores/driver/driver.service';
+import { ITripCardType } from 'src/app/shared/enums/trip-card.enum';
 import { IDriverState } from 'src/app/stores/driver/driver.interfaces';
+import { DriverStoreService } from 'src/app/stores/driver/driver.service';
 import { CreateTripInput } from './domain/create-trip-input.domain';
-import { CreateTripRequest } from 'src/app/providers/db-api/domain/trips.domain';
-import { TripFinalStatus, TripStatus } from 'src/app/providers/db-api/model/trips.model';
+import { mapNewTrip } from './mappers/my-trips.mappers';
 
 @Component({
   selector: 'my-trips-app',
   templateUrl: './my-trips.page.html',
   styleUrls: ['./my-trips.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, TripCardComponent, DbModule],
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule,
+    TripCardComponent,
+    DbModule,
+  ],
 })
 export class DriverTripsPage implements OnInit {
   @ViewChild(IonModal) modal: IonModal;
-  
+  @ViewChild('pickupInfoWindowContent')
+  pickupInfoWindowContent: ElementRef<HTMLElement>;
+  @ViewChild('pickupPacCard') pickupPacCard: ElementRef<HTMLElement>;
+  @ViewChild('pickupPacContainer') pickupPacContainer: ElementRef<HTMLElement>;
+  @ViewChild('pickupPacInput') pickupPacInput: ElementRef<HTMLInputElement>;
+  @ViewChild('dropoffInfoWindowContent')
+  dropoffInfoWindowContent: ElementRef<HTMLElement>;
+  @ViewChild('dropoffPacCard') dropoffPacCard: ElementRef<HTMLElement>;
+  @ViewChild('dropoffPacContainer')
+  dropoffPacContainer: ElementRef<HTMLElement>;
+  @ViewChild('dropoffPacInput') dropoffPacInput: ElementRef<HTMLInputElement>;
+
   tripCardType = ITripCardType;
   trips: ITripCardState[] = [];
-  dateNow = new Date().toISOString()
+  dateNow = new Date().toISOString();
 
   public currentState: IDriverState;
+
+  public currentState$ = this.driverStore.state$;
 
   public createTripInput: CreateTripInput = {
     pickup_ref: '',
     dropoff_ref: '',
-    trip_datetime: this.dateNow
-  }
+    pickup_coords: '',
+    dropoff_coords: '',
+    trip_datetime: this.dateNow,
+  };
 
   constructor(
     private readonly tripsRepository: TripsRepository,
     private readonly mapper: TripMappers,
+    private googleMapsService: GoogleMapsService,
     private readonly driverStore: DriverStoreService
-  ) { }
+  ) {}
 
   async ngOnInit() {
     this.currentState = this.driverStore.getState();
-    this.getTrips()
+    this.getTrips();
   }
 
   async getTrips() {
-    return this.tripsRepository.getTripsByDriverIdRPC(this.currentState.userProfile.user_id).subscribe((trips) => {
-      this.trips = this.mapper.mapActiveTripsToDomain(trips)
-    })
+    return this.tripsRepository
+      .getTripsByDriverIdRPC(this.currentState.userProfile.user_id)
+      .subscribe((trips) => {
+        this.trips = this.mapper.mapActiveTripsToDomain(trips);
+      });
   }
 
   cancel() {
     this.modal.dismiss(null, 'cancel');
   }
 
-  showDate() {
-    console.log(this.createTripInput.trip_datetime)
+  showModal() {
+    this.modal.didPresent.subscribe(() => {
+      this.createInputMaps();
+    });
+  }
+
+  async createInputMaps() {
+    await this.googleMapsService.isLibraryLoaded();
+    const pickupMap = document.getElementById('pickupMap');
+    const pickupPacInputOrigin = document.getElementById(
+      'pickupPacInputOrigin'
+    );
+    const pickupPacInputDestination = document.getElementById(
+      'pickupPacInputDestination'
+    );
+    const pickupPacCard = document.getElementById('pickupPacCard');
+    const pickupInfoWindowContent = document.getElementById(
+      'pickupInfoWindowContent'
+    );
+    await this.googleMapsService.createPredictionMap(
+      pickupMap,
+      [
+        pickupPacInputOrigin as HTMLInputElement,
+        pickupPacInputDestination as HTMLInputElement,
+      ],
+      pickupPacCard,
+      pickupInfoWindowContent,
+      this.driverStore,
+      TripDirectionType.PICKUP
+    );
   }
 
   createTrip() {
-    const newTrip: CreateTripRequest = {
-      driver_id: this.currentState.userProfile.user_id,
-      vehicle_id: 1,
-      seats_offered: 4,
-      pickup_ref: this.createTripInput.pickup_ref,
-      pickup_coords: 'xx:00z',
-      dropoff_ref: this.createTripInput.dropoff_ref,
-      dropoff_coords: 'xx:zz0',
-      trip_seats_status: TripStatus.OPEN,
-      trip_final_status: TripFinalStatus.NOT_COMPLETED,
-      trip_datetime: this.createTripInput.trip_datetime
-    }
+    this.currentState$.subscribe((val) => {
+      if (val?.tripBookingDropoff && val?.tripBookingPickup) {
+        this.createTripInput.pickup_coords = val.tripBookingPickup;
+        this.createTripInput.dropoff_coords = val.tripBookingDropoff;
+      }
+    });
+    const newTrip: CreateTripRequest = mapNewTrip(
+      this.currentState,
+      this.createTripInput
+    );
 
-    try{
+    try {
       this.tripsRepository.createNewTrip(newTrip).subscribe(() => {
-        this.getTrips()
-        this.cancel()
-      })
+        this.getTrips();
+        this.cancel();
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 }

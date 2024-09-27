@@ -1,9 +1,11 @@
 import { ElementRef, Injectable } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
+import { DriverStoreService } from 'src/app/stores/driver/driver.service';
 import { v4 as uuidv4 } from 'uuid';
 import { environment } from '../../../environments/environment';
 import { PassengerStoreService } from '../../stores/passenger/passenger.service';
 import { GoogleMapsConstants } from './config/google-maps.config.constants';
+import { TripDirectionType } from './domain/google-map.interfaces';
 import { GoogleMapsMappers } from './mappers/google-map.mappers';
 
 @Injectable()
@@ -15,10 +17,7 @@ export class GoogleMapsService {
   private fillPredictionCompleted: boolean = false;
   private fillPredictionAddress: string = '';
 
-  constructor(
-    private readonly mapper: GoogleMapsMappers,
-    private readonly passengerStore: PassengerStoreService
-  ) {
+  constructor(private readonly mapper: GoogleMapsMappers) {
     this.loader = new Loader({
       apiKey: environment.GCLOUD_API_KEY,
       version: 'weekly',
@@ -231,9 +230,11 @@ export class GoogleMapsService {
 
   async createPredictionMap(
     mapDomElement: HTMLElement,
-    inputDomElement: HTMLInputElement,
+    inputDomElementList: HTMLInputElement[],
     cardDomElement: HTMLElement,
-    infoWindowDomElement: HTMLElement
+    infoWindowDomElement: HTMLElement,
+    store: PassengerStoreService | DriverStoreService,
+    tripType?: TripDirectionType
   ) {
     const map = await this.createMap(
       this.mapper.mapToLatLng(GoogleMapsConstants.DUOC_COORDS_PLACEHOLDER),
@@ -241,9 +242,7 @@ export class GoogleMapsService {
       false
     );
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(cardDomElement);
-
-    const autocomplete = this.createAutoCompleteRequest(inputDomElement);
-    autocomplete.bindTo('bounds', map);
+    google.maps.event.trigger(map, 'resize');
     const infoWindow = new google.maps.InfoWindow();
     infoWindow.setContent(infoWindowDomElement);
 
@@ -252,40 +251,70 @@ export class GoogleMapsService {
       anchorPoint: new google.maps.Point(0, -29),
     });
 
-    autocomplete.addListener('place_changed', () => {
-      infoWindow.close();
-      marker.setVisible(false);
+    const autocompleteRequests: google.maps.places.Autocomplete[] =
+      inputDomElementList.map((input) => this.createAutoCompleteRequest(input));
 
-      const place = autocomplete.getPlace();
+    autocompleteRequests.forEach((input) => input.bindTo('bounds', map));
+    autocompleteRequests.forEach((autocomplete) =>
+      autocomplete.addListener('place_changed', () => {
+        infoWindow.close();
+        marker.setVisible(false);
 
-      if (!place.geometry || !place.geometry.location) {
-        console.log("No details available for input: '" + place.name + "'");
-        return;
-      }
+        const place = autocomplete.getPlace();
 
-      if (place.geometry.viewport) {
-        map.fitBounds(place.geometry.viewport);
-        this.passengerStore.updateState({
-          mapsState: {
-            tripBookingDropoff: this.formatCurrentLocation(
-              place.geometry.location.lat(),
-              place.geometry.location.lng()
-            ),
-          },
-        });
-      } else {
-        map.setCenter(place.geometry.location);
-        map.setZoom(17);
-      }
+        if (!place.geometry || !place.geometry.location) {
+          console.log("No details available for input: '" + place.name + "'");
+          return;
+        }
 
-      marker.setPosition(place.geometry.location);
-      marker.setVisible(true);
+        if (place.geometry.viewport) {
+          map.fitBounds(place.geometry.viewport);
+          if (store instanceof PassengerStoreService) {
+            store.updateState({
+              mapsState: {
+                tripBookingDropoff: this.formatCurrentLocation(
+                  place.geometry.location.lat(),
+                  place.geometry.location.lng()
+                ),
+              },
+            });
+          }
+          if (
+            store instanceof DriverStoreService &&
+            tripType === TripDirectionType.PICKUP
+          ) {
+            store.updateState({
+              tripBookingPickup: this.formatCurrentLocation(
+                place.geometry.location.lat(),
+                place.geometry.location.lng()
+              ),
+            });
+          }
+          if (
+            store instanceof DriverStoreService &&
+            tripType === TripDirectionType.DROPOFF
+          ) {
+            store.updateState({
+              tripBookingDropoff: this.formatCurrentLocation(
+                place.geometry.location.lat(),
+                place.geometry.location.lng()
+              ),
+            });
+          }
+        } else {
+          map.setCenter(place.geometry.location);
+          map.setZoom(17);
+        }
 
-      infoWindowDomElement.children['place-name'].textContent = place.name;
-      infoWindowDomElement.children['place-address'].textContent =
-        place.formatted_address;
-      infoWindow.open(map, marker);
-    });
+        marker.setPosition(place.geometry.location);
+        marker.setVisible(true);
+
+        infoWindowDomElement.children['place-name'].textContent = place.name;
+        infoWindowDomElement.children['place-address'].textContent =
+          place.formatted_address;
+        infoWindow.open(map, marker);
+      })
+    );
   }
 
   private formatCurrentLocation = (lat: number, lng: number) => {
